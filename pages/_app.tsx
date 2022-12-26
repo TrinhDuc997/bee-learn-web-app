@@ -7,15 +7,14 @@ import { CacheProvider } from "@emotion/react";
 import { theme, createEmotionCache } from "../utils/index";
 import { EmptyLayout } from "../components/layouts";
 import { AppPropsWithLayout } from "../models";
+import { AppProps } from "next/app";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
-// interface MyAppProps extends AppProps {
-//   emotionCache?: EmotionCache;
-// }
+interface MyAppProps extends AppProps {}
 
-export default function MyApp(props: AppPropsWithLayout) {
+export default function MyApp(props: AppPropsWithLayout<MyAppProps>) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   const Layout = Component.Layout ?? EmptyLayout;
 

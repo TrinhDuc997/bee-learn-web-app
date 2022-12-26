@@ -4,6 +4,7 @@ import React from "react";
 import { LayoutProps } from "../../models";
 import Footer from "../common/footer";
 import Header from "../common/header";
+import { NextBreadcrumbs } from "../common/nextBreadcrumbs";
 
 export const MainLayout = (props: LayoutProps) => {
   const { children } = props;
@@ -16,7 +17,8 @@ export const MainLayout = (props: LayoutProps) => {
         }}
         component="main"
       >
-        <Container sx={{ backgroundColor: "primary.light" }} maxWidth="lg">
+        <Container maxWidth="lg">
+          <NextBreadcrumbs />
           {children}
         </Container>
       </Box>

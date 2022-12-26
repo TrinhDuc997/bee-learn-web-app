@@ -9,6 +9,7 @@ export function FooterDesktop(props: FooterProps) {
     <Box
       py={2}
       sx={{
+        mt: "2rem",
         padding: "5px",
         backgroundColor: "secondary.main",
       }}

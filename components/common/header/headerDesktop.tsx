@@ -21,7 +21,7 @@ export function HeaderDesktop(props: HeaderDesktopProps) {
         }}
         className="headerLeft"
       >
-        <img style={{ width: "240px", height: "70px" }} src="/logo.png" />
+        <img style={{ width: "240px", height: "70px" }} src="/Logo.png" />
       </Box>
       <Box
         sx={{

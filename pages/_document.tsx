@@ -10,11 +10,20 @@ export default class MyDocument extends Document {
         <Head>
           {/* PWA primary color */}
           <meta name="theme-color" content={theme.palette.primary.main} />
-          <link rel="shortcut icon" href="/favicon.ico" />
-          <link
+          <link rel="shortcut icon" href="/BeeIcon.png" />
+          {/* <link
             rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-          />
+            href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap"
+          /> */}
+          <link
+            href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap"
+            rel="stylesheet"
+          ></link>
+          {/* <link
+            href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap"
+            rel="stylesheet"
+          ></link> */}
+          {/* <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700&display=swap" rel="stylesheet"></link> */}
           <meta name="emotion-insertion-point" content="" />
           {(this.props as any).emotionStyleTags}
         </Head>

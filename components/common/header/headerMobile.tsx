@@ -21,7 +21,7 @@ export function HeaderMobile(props: HeaderMobileProps) {
         }}
         className="headerLeft"
       >
-        <img style={{ width: "140px", height: "35px" }} src="/logo.png" />
+        <img style={{ width: "140px", height: "35px" }} src="/Logo.png" />
       </Box>
       <Box
         sx={{

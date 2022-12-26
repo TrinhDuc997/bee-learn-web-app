@@ -7,11 +7,11 @@ export interface LayoutProps {
   children: ReactNode;
 }
 
-export type NextPageWithLayout = NextPage & {
+export type NextPageWithLayout<props> = NextPage<props> & {
   Layout?: (Props: LayoutProps) => ReactElement;
 };
 
-export type AppPropsWithLayout = AppProps & {
-  Component: NextPageWithLayout;
+export type AppPropsWithLayout<props> = AppProps<props> & {
+  Component: NextPageWithLayout<props>;
   emotionCache?: EmotionCache;
 };

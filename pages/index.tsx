@@ -1,13 +1,32 @@
+import { Container, Grid } from "@mui/material";
 import { Box } from "@mui/system";
+import { ListPostsSection } from "../components/home/listPostsSection";
 import { MainLayout } from "../components/layouts";
 import { NextPageWithLayout } from "../models";
+import { HeroSection } from "./../components/home";
 // const soundPH = new Audio("/soundIPA/∫.mp3");
-const Home: NextPageWithLayout = () => {
-  const playSound = () => {
-    // soundPH.play();
-  };
-  return <Box>Home Page</Box>;
+
+export interface IHomePageProps {
+  listPosts: Array<any>;
+}
+
+const Home: NextPageWithLayout<IHomePageProps> = (props: IHomePageProps) => {
+  const { listPosts = [1, 2, 3, 4] } = props;
+  return (
+    <Box>
+      <HeroSection />
+      <ListPostsSection data={listPosts} />
+    </Box>
+  );
 };
 Home.Layout = MainLayout;
+
+export async function getServerSideProps() {
+  return {
+    props: {
+      listPosts: [1, 2, 3, 4, 5],
+    },
+  };
+}
 
 export default Home;

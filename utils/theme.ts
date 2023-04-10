@@ -1,5 +1,8 @@
-import { createTheme } from "@mui/material/styles";
-import { blue, green, grey, red, yellow } from "@mui/material/colors";
+import {
+  createTheme,
+  experimental_extendTheme as extendTheme,
+} from "@mui/material/styles";
+import { green, red, yellow } from "@mui/material/colors";
 
 // Create a theme instance.
 export const theme = createTheme({
@@ -15,15 +18,60 @@ export const theme = createTheme({
       light: green[200],
       dark: green[700],
       contrastText: "#000000",
+      gradient: `linear-gradient(to right, ${green[700]}, ${green[400]})`,
     },
     secondary: {
       main: yellow[700],
       light: yellow[600],
       dark: yellow[800],
-      contrastText: "#000000",
+      contrastText: "#ffffff",
+      gradient: `linear-gradient(to right, ${yellow[400]}, ${yellow[800]})`,
     },
     error: {
       main: red.A400,
     },
   },
 });
+
+// export const themeExtend = extendTheme({
+//   typography: {
+//     fontFamily: "Open Sans, sans-serif",
+//     strong: {
+//       fontWeight: "bold",
+//     },
+//   },
+//   colorSchemes: {
+//     light: {
+//       palette: {
+//         primary: {
+//           main: green[500],
+//           contrastText: "#000000",
+//         },
+//         secondary: {
+//           main: yellow[600],
+//           contrastText: "#000000",
+//         },
+//         gradient:
+//           "linear-gradient(to right, var(--mui-palette-primary-main), var(--mui-palette-primary-light))",
+//         border: {
+//           subtle: "var(--mui-palette-neutral-200)",
+//         },
+//       },
+//     },
+//     dark: {
+//       palette: {
+//         primary: {
+//           main: "#56ab2f",
+//           contrastText: "#000000",
+//         },
+//         secondary: {
+//           main: yellow[800],
+//           contrastText: "#000000",
+//         },
+//         border: {
+//           subtle: "var(--mui-palette-neutral-600)",
+//         },
+//       },
+//     },
+//   },
+// });

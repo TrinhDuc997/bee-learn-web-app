@@ -1,7 +1,11 @@
 import * as React from "react";
 import Head from "next/head";
+import "../styles/globals.css";
 // import { AppProps } from "next/app";
-import { ThemeProvider } from "@mui/material/styles";
+import {
+  ThemeProvider,
+  Experimental_CssVarsProvider as CssVarsProvider,
+} from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider } from "@emotion/react";
 import { theme, createEmotionCache } from "../utils/index";
@@ -19,6 +23,17 @@ export default function MyApp(props: AppPropsWithLayout<MyAppProps>) {
   const Layout = Component.Layout ?? EmptyLayout;
 
   return (
+    // <CacheProvider value={emotionCache}>
+    //   <Head>
+    //     <meta name="viewport" content="initial-scale=1, width=device-width" />
+    //   </Head>
+    //   <CssVarsProvider theme={themeExtend}>
+    //     <CssBaseline />
+    //     <Layout>
+    //       <Component {...pageProps} />
+    //     </Layout>
+    //   </CssVarsProvider>
+    // </CacheProvider>
     <CacheProvider value={emotionCache}>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />

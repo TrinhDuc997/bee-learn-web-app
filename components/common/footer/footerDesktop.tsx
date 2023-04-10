@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import * as React from "react";
 import CopyrightIcon from "@mui/icons-material/Copyright";
+import { theme } from "../../../utils";
 
 export interface FooterProps {}
 
@@ -11,7 +12,7 @@ export function FooterDesktop(props: FooterProps) {
       sx={{
         mt: "2rem",
         padding: "5px",
-        backgroundColor: "secondary.main",
+        background: theme.palette.secondary.gradient,
       }}
       className="footer"
       display={{ xs: "none", md: "block" }}

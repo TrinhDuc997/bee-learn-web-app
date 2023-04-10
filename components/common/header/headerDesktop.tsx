@@ -1,14 +1,17 @@
 import { Box } from "@mui/material";
+import { useRouter } from "next/router";
 import * as React from "react";
+import { theme } from "../../../utils";
 
 export interface HeaderDesktopProps {}
 
 export function HeaderDesktop(props: HeaderDesktopProps) {
+  const router = useRouter();
   return (
     <Box
       sx={{
         padding: "5px",
-        backgroundColor: "primary.main",
+        background: theme.palette.primary.gradient,
       }}
       className="header"
       display={{ xs: "none", md: "block" }}
@@ -21,7 +24,14 @@ export function HeaderDesktop(props: HeaderDesktopProps) {
         }}
         className="headerLeft"
       >
-        <img style={{ width: "240px", height: "70px" }} src="/Logo.png" />
+        <a
+          onClick={() => {
+            router.push("/");
+          }}
+          style={{ cursor: "pointer" }}
+        >
+          <img style={{ width: "160px", height: "50px" }} src="/Logo.png" />
+        </a>
       </Box>
       <Box
         sx={{

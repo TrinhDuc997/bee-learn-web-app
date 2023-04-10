@@ -27,7 +27,7 @@ export function ListPostsSection(props: IListPostsSectionProps) {
       >
         {data.map((item, index) => {
           return (
-            <Grid key={index} item xs={4} sx={{ pb: "16px" }}>
+            <Grid key={index} item xs={12} sm={4} sx={{ pb: "16px" }}>
               <Card
                 sx={{
                   width: 300,

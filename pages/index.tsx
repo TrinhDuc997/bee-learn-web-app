@@ -1,5 +1,6 @@
 import { Container, Grid } from "@mui/material";
 import { Box } from "@mui/system";
+import { HeroSectionMobile } from "../components/home/heroSectionMobile";
 import { ListPostsSection } from "../components/home/listPostsSection";
 import { MainLayout } from "../components/layouts";
 import { NextPageWithLayout } from "../models";
@@ -15,6 +16,7 @@ const Home: NextPageWithLayout<IHomePageProps> = (props: IHomePageProps) => {
   return (
     <Box>
       <HeroSection />
+      <HeroSectionMobile />
       <ListPostsSection data={listPosts} />
     </Box>
   );

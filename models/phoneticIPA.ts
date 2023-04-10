@@ -16,3 +16,9 @@ export interface word {
   word: string;
   phonetic?: string;
 }
+
+export interface IVocabularySubjects {
+  title: string;
+  subTitle: string;
+  hrefImg: string;
+}

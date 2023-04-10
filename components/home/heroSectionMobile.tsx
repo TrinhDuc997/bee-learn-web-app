@@ -1,29 +1,27 @@
 import { Box, Button, Typography } from "@mui/material";
 import { Container, Stack } from "@mui/system";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import * as React from "react";
 import englishVocab from "../../public/sectionPicture/english-vocab2.png";
 import sectionGrammar from "../../public/sectionPicture/sectionGrammar.jpeg";
 import sectionToeicIelts from "../../public/sectionPicture/sectionToeicIelts.jpeg";
-export function HeroSection() {
-  const router = useRouter();
+export function HeroSectionMobile() {
   return (
     <Box
-      display={{ xs: "none", md: "block" }}
-      sx={{ m: "1rem" }}
+      display={{ xs: "block", md: "none" }}
+      textAlign="center"
       component="section"
     >
       <Container>
         <Stack
-          direction={"row"}
+          direction={"column"}
           justifyContent="flex-start"
           sx={{
             pb: "3rem",
             pt: "2rem",
           }}
         >
-          <Box padding={"2rem"} width={"60%"}>
+          <Box width={"100%"}>
             <Typography
               sx={{ mb: "2rem" }}
               color={"primary.dark"}
@@ -43,17 +41,9 @@ export function HeroSection() {
             <Typography sx={{ mb: "1rem" }}>
               6000 từ vựng chia theo từng chủ để
             </Typography>
-            <Button
-              sx={{ ml: "1rem" }}
-              variant="contained"
-              onClick={() => {
-                router.push("/learnVocabulary");
-              }}
-            >
-              HỌC THỬ NGAY
-            </Button>
+            <Button variant="contained">HỌC THỬ NGAY</Button>
           </Box>
-          <Box width={"40%"}>
+          <Box sx={{ mt: "1rem" }} width={"100%"}>
             <Image
               src={englishVocab}
               layout="responsive"
@@ -63,21 +53,14 @@ export function HeroSection() {
         </Stack>
 
         <Stack
-          direction={"row"}
+          direction={"column"}
           justifyContent="flex-start"
           sx={{
             pb: "3rem",
             pt: "2rem",
           }}
         >
-          <Box width={"40%"}>
-            <Image
-              src={sectionGrammar}
-              layout="responsive"
-              alt="english-grammar"
-            />
-          </Box>
-          <Box padding={"2rem"} width={"60%"}>
+          <Box width={"100%"}>
             <Typography
               sx={{ mb: "2rem" }}
               color={"primary.dark"}
@@ -98,21 +81,26 @@ export function HeroSection() {
               các câu đố, trò chơi giải trí.
             </Typography>
             <Typography sx={{ mb: "1rem" }}></Typography>
-            <Button sx={{ ml: "1rem" }} variant="contained">
-              BẮT ĐẦU NGAY
-            </Button>
+            <Button variant="contained">BẮT ĐẦU NGAY</Button>
+          </Box>
+          <Box width={"100%"} sx={{ mt: "1rem" }}>
+            <Image
+              src={sectionGrammar}
+              layout="responsive"
+              alt="english-grammar"
+            />
           </Box>
         </Stack>
 
         <Stack
-          direction={"row"}
+          direction={"column"}
           justifyContent="flex-start"
           sx={{
             pb: "3rem",
             pt: "2rem",
           }}
         >
-          <Box padding={"2rem"} width={"60%"}>
+          <Box width={"100%"}>
             <Typography
               sx={{ mb: "2rem" }}
               color={"primary.dark"}
@@ -134,7 +122,7 @@ export function HeroSection() {
             </Typography>
             <Typography sx={{ mb: "1rem" }}></Typography>
           </Box>
-          <Box width={"40%"} pt={"30px"}>
+          <Box width={"100%"} sx={{ mt: "1rem" }}>
             <Image
               src={sectionToeicIelts}
               layout="responsive"

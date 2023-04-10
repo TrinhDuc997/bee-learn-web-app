@@ -18,26 +18,23 @@ import { Box } from "@mui/system";
 
 export interface PhoneticChartIPAProps {
   phoneticIPAData: Array<IPhoneticIPA>;
-}
-export interface PhoneticChartIPAProps {
-  phoneticIPAData: Array<IPhoneticIPA>;
-  phoneticIPAData2: {
+  phoneticIPADataMobile: {
     vowelsAndMonophthongs: Array<IPhoneticIPA>;
     vowelsAndDiphthongs: Array<IPhoneticIPA>;
     consonantsAndMonophthongs: Array<IPhoneticIPA>;
     consonantsAndDiphthongs: Array<IPhoneticIPA>;
   };
-  phoneticIPAData3: Array<Array<IPhoneticIPA>>;
+  phoneticIPADataDesktop: Array<Array<IPhoneticIPA>>;
 }
 
 export default function PhoneticChartIPA(props: PhoneticChartIPAProps) {
-  const { phoneticIPAData, phoneticIPAData2, phoneticIPAData3 } = props;
+  const { phoneticIPADataMobile, phoneticIPADataDesktop } = props;
   const {
     vowelsAndDiphthongs,
     vowelsAndMonophthongs,
     consonantsAndDiphthongs,
     consonantsAndMonophthongs,
-  } = phoneticIPAData2;
+  } = phoneticIPADataMobile;
   return (
     <Container>
       <Typography
@@ -113,189 +110,96 @@ export default function PhoneticChartIPA(props: PhoneticChartIPAProps) {
           </Typography>{" "}
           để các bạn tham khảo:
         </Typography>
-        {/* <Table>
-          <TableBody>
-            <TableRow sx={{ mb: "2rem" }}>
-              <TableCell colSpan={2} component="th" align="center" sx={{}}>
-                <Typography variant="strong" sx={{ fontSize: "16px" }}>
-                  Monophthongs
-                </Typography>
-              </TableCell>
-              <TableCell component="th" align="center">
-                <Typography variant="strong" sx={{ fontSize: "16px" }}>
-                  Diphthongs
-                </Typography>
-              </TableCell>
-            </TableRow>
-            <TableRow sx={{ mb: "2rem" }}>
-              <TableCell component="th" align="center">
-                <Typography
-                  variant="strong"
+
+        <Box display={{ xs: "none", md: "block" }}>
+          <Table>
+            <TableHead>
+              <TableRow sx={{ mb: "2rem" }}>
+                <TableCell
+                  colSpan={5}
+                  component="th"
+                  align="center"
                   sx={{
-                    display: "inline-block",
-                    transform: "rotate(270deg)",
-                    fontSize: "16px",
+                    border: "none",
+                    borderRight: "4px solid #fcbf2d",
+                    padding: "5px",
                   }}
                 >
-                  Vowels
-                </Typography>
-              </TableCell>
-              <TableCell>
-                <Box>
-                  <Grid container spacing={1}>
-                    {vowelsAndMonophthongs.map((item, index) => {
-                      return (
-                        <Grid
-                          key={item._id}
-                          item={true}
-                          xs={1}
-                          md={1.2}
-                          minWidth={100}
-                        >
-                          <PhoneticItem index={index} data={item} />
-                        </Grid>
-                      );
-                    })}
-                  </Grid>
-                </Box>
-              </TableCell>
-              <TableCell>
-                <Box>
-                  <Grid container spacing={1}>
-                    {vowelsAndDiphthongs.map((item, index) => {
-                      return (
-                        <Grid
-                          key={item._id}
-                          item={true}
-                          xs={1}
-                          md={1.2}
-                          minWidth={100}
-                        >
-                          <PhoneticItem index={index} data={item} />
-                        </Grid>
-                      );
-                    })}
-                  </Grid>
-                </Box>
-              </TableCell>
-            </TableRow>
-            <TableRow sx={{ mb: "2rem" }}>
-              <TableCell component="th" align="center">
-                <Typography
-                  variant="strong"
+                  <Typography variant="strong" sx={{ fontSize: "16px" }}>
+                    Monophthongs
+                  </Typography>
+                </TableCell>
+                <TableCell
+                  colSpan={4}
+                  component="th"
+                  align="center"
                   sx={{
-                    display: "inline-block",
-                    transform: "rotate(270deg)",
-                    fontSize: "16px",
+                    border: "none",
+                    borderLeft: "4px solid #fcbf2d",
+                    padding: "5px",
                   }}
                 >
-                  Consonants
-                </Typography>
-              </TableCell>
-              <TableCell>
-                <Box>
-                  <Grid container spacing={1}>
-                    {consonantsAndMonophthongs.map((item, index) => {
-                      return (
-                        <Grid
-                          key={item._id}
-                          item={true}
-                          xs={1}
-                          md={1.2}
-                          minWidth={100}
-                        >
-                          <PhoneticItem index={index} data={item} />
-                        </Grid>
-                      );
-                    })}
-                  </Grid>
-                </Box>
-              </TableCell>
-              <TableCell>
-                <Grid container spacing={1}>
-                  {consonantsAndDiphthongs.map((item, index) => {
-                    return (
-                      <Grid
-                        key={item._id}
-                        item={true}
-                        xs={1}
-                        md={1.2}
-                        minWidth={100}
-                      >
-                        <PhoneticItem index={index} data={item} />
-                      </Grid>
-                    );
-                  })}
-                </Grid>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table> */}
-        <Table>
-          <TableHead>
-            <TableRow sx={{ mb: "2rem" }}>
-              <TableCell
-                colSpan={5}
-                component="th"
-                align="center"
-                sx={{
-                  border: "none",
-                  borderRight: "4px solid #fcbf2d",
-                  padding: "5px",
-                }}
-              >
-                <Typography variant="strong" sx={{ fontSize: "16px" }}>
-                  Monophthongs
-                </Typography>
-              </TableCell>
-              <TableCell
-                colSpan={4}
-                component="th"
-                align="center"
-                sx={{
-                  border: "none",
-                  borderLeft: "4px solid #fcbf2d",
-                  padding: "5px",
-                }}
-              >
-                <Typography variant="strong" sx={{ fontSize: "16px" }}>
-                  Diphthongs
-                </Typography>
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {phoneticIPAData3.map((arrIPhoneticIPA, index) => {
-              return (
-                <TableRow key={index}>
-                  {arrIPhoneticIPA.map((item, subIndex) => {
-                    if ((index === 0 || index === 3) && subIndex === 0) {
-                      return (
-                        <React.Fragment
-                          key={index === 0 ? "Vowels" : "Consonants"}
-                        >
-                          <TableCell
-                            rowSpan={3}
-                            sx={{
-                              borderBottom:
-                                index === 0 ? "4px solid #fcbf2d" : "none",
-                              padding: "5px",
-                            }}
+                  <Typography variant="strong" sx={{ fontSize: "16px" }}>
+                    Diphthongs
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {phoneticIPADataDesktop.map((arrIPhoneticIPA, index) => {
+                return (
+                  <TableRow key={index}>
+                    {arrIPhoneticIPA.map((item, subIndex) => {
+                      if ((index === 0 || index === 3) && subIndex === 0) {
+                        return (
+                          <React.Fragment
+                            key={index === 0 ? "Vowels" : "Consonants"}
                           >
-                            <Typography
-                              variant="strong"
+                            <TableCell
+                              rowSpan={3}
                               sx={{
-                                display: "inline-block",
-                                transform: "rotate(270deg)",
-                                fontSize: "16px",
+                                borderBottom:
+                                  index === 0 ? "4px solid #fcbf2d" : "none",
+                                padding: "5px",
                               }}
                             >
-                              {index === 0 ? "Vowels" : "Consonants"}
-                            </Typography>
-                          </TableCell>
+                              <Typography
+                                variant="strong"
+                                sx={{
+                                  display: "inline-block",
+                                  transform: "rotate(270deg)",
+                                  fontSize: "16px",
+                                }}
+                              >
+                                {index === 0 ? "Vowels" : "Consonants"}
+                              </Typography>
+                            </TableCell>
+                            <TableCell
+                              sx={{
+                                border: "2px solid #fcbf2d",
+                                borderTop:
+                                  index === 3
+                                    ? "4px solid #fcbf2d"
+                                    : "2px solid #fcbf2d",
+                                padding: "5px",
+                              }}
+                              key={item._id}
+                            >
+                              <Grid item={true} xs={1} md={1.2}>
+                                <PhoneticItem data={item} />
+                              </Grid>
+                            </TableCell>
+                          </React.Fragment>
+                        );
+                      } else {
+                        return (
                           <TableCell
                             sx={{
                               border: "2px solid #fcbf2d",
+                              borderRight:
+                                subIndex === 3
+                                  ? "4px solid #fcbf2d"
+                                  : "2px solid #fcbf2d",
                               borderTop:
                                 index === 3
                                   ? "4px solid #fcbf2d"
@@ -308,37 +212,69 @@ export default function PhoneticChartIPA(props: PhoneticChartIPAProps) {
                               <PhoneticItem data={item} />
                             </Grid>
                           </TableCell>
-                        </React.Fragment>
-                      );
-                    } else {
-                      return (
-                        <TableCell
-                          sx={{
-                            border: "2px solid #fcbf2d",
-                            borderRight:
-                              subIndex === 3
-                                ? "4px solid #fcbf2d"
-                                : "2px solid #fcbf2d",
-                            borderTop:
-                              index === 3
-                                ? "4px solid #fcbf2d"
-                                : "2px solid #fcbf2d",
-                            padding: "5px",
-                          }}
-                          key={item._id}
-                        >
-                          <Grid item={true} xs={1} md={1.2}>
-                            <PhoneticItem data={item} />
-                          </Grid>
-                        </TableCell>
-                      );
-                    }
-                  })}
-                </TableRow>
+                        );
+                      }
+                    })}
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </Box>
+        <Box display={{ xs: "block", md: "none" }}>
+          <Typography component={"h3"} variant="strong">
+            {" "}
+            Vowel & Monophthongs{" "}
+          </Typography>
+          <Grid justifyContent={"center"} container spacing={1}>
+            {vowelsAndMonophthongs.map((item, index) => {
+              return (
+                <Grid key={item._id} item={true} xs={1} md={1.2} minWidth={100}>
+                  <PhoneticItem data={{ ...item, ordinalNumber: index + 1 }} />
+                </Grid>
               );
             })}
-          </TableBody>
-        </Table>
+          </Grid>
+          <Typography component={"h3"} variant="strong">
+            {" "}
+            Vowels & Diphthongs{" "}
+          </Typography>
+          <Grid justifyContent={"center"} container spacing={1}>
+            {vowelsAndDiphthongs.map((item, index) => {
+              return (
+                <Grid key={item._id} item={true} xs={1} md={1.2} minWidth={100}>
+                  <PhoneticItem data={{ ...item, ordinalNumber: index + 1 }} />
+                </Grid>
+              );
+            })}
+          </Grid>
+          <Typography component={"h3"} variant="strong">
+            {" "}
+            Consonants & Monophthongs{" "}
+          </Typography>
+          <Grid justifyContent={"center"} container spacing={1}>
+            {consonantsAndMonophthongs.map((item, index) => {
+              return (
+                <Grid key={item._id} item={true} xs={1} md={1.2} minWidth={100}>
+                  <PhoneticItem data={{ ...item, ordinalNumber: index + 1 }} />
+                </Grid>
+              );
+            })}
+          </Grid>
+          <Typography component={"h3"} variant="strong">
+            {" "}
+            Consonants & Diphthongs{" "}
+          </Typography>
+          <Grid justifyContent={"center"} container spacing={1}>
+            {consonantsAndDiphthongs.map((item, index) => {
+              return (
+                <Grid key={item._id} item={true} xs={1} md={1.2} minWidth={100}>
+                  <PhoneticItem data={{ ...item, ordinalNumber: index + 1 }} />
+                </Grid>
+              );
+            })}
+          </Grid>
+        </Box>
         <Typography variant="strong">Ký hiệu:</Typography>
         <Typography>- Vowels: Nguyên âm </Typography>
         <Typography>- Consonants: Phụ âm </Typography>
@@ -351,9 +287,9 @@ export default function PhoneticChartIPA(props: PhoneticChartIPAProps) {
 
 PhoneticChartIPA.Layout = MainLayout;
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   let phoneticIPAData: IPhoneticIPA[] = await postsAPI.getPhoneticData();
-  let phoneticIPAData3 = [
+  let phoneticIPADataDesktop = [
     [
       ...phoneticIPAData.filter(
         (i) => i.ordinalNumber > 0 && i.ordinalNumber <= 6
@@ -386,7 +322,7 @@ export async function getServerSideProps() {
     ],
   ];
 
-  let phoneticIPAData2 = {
+  let phoneticIPADataMobile = {
     vowelsAndMonophthongs: phoneticIPAData.filter(
       (i) => i.vowels && i.Monophthongs
     ),
@@ -402,9 +338,8 @@ export async function getServerSideProps() {
   };
   return {
     props: {
-      phoneticIPAData,
-      phoneticIPAData2,
-      phoneticIPAData3,
+      phoneticIPADataMobile,
+      phoneticIPADataDesktop,
     },
   };
 }

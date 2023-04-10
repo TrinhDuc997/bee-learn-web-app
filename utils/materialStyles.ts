@@ -9,6 +9,15 @@ declare module "@mui/material/styles" {
   interface TypographyVariantsOptions {
     strong?: React.CSSProperties;
   }
+  interface PaletteColor {
+    gradient: string;
+  }
+  interface SimplePaletteColorOptions {
+    gradient?: string;
+    border?: {
+      subtle: string;
+    };
+  }
 }
 
 // Update the Typography's variant prop options

@@ -44,7 +44,9 @@ export const PhoneticItem = (props: PhoneticItemProps) => {
   const { exampleWords = [] } = data;
   return (
     <Stack sx={{ mx: "2px" }} spacing={1} direction={"column"}>
-      <Paper sx={{ padding: "4px", border: "lightgreen", boxShadow: "none" }}>
+      <Paper
+        sx={{ padding: "4px", border: "lightgreen", boxShadow: { md: "none" } }}
+      >
         <Stack justifyContent={"space-between"} direction={"row"}>
           <Box color={"GrayText"}>{data.ordinalNumber}</Box>
           <Box>

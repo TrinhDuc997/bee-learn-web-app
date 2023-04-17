@@ -18,7 +18,9 @@ export interface word {
 }
 
 export interface IVocabularySubjects {
-  title: string;
-  subTitle: string;
-  hrefImg: string;
+  _id?: string;
+  src?: string;
+  title?: string;
+  subTitle?: string;
+  hrefImg?: string;
 }

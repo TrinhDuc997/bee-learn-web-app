@@ -1,3 +1,3 @@
-export * from "./main";
-export * from "./empty";
-export * from "./layoutsLearnVocab";
+export * from "./Main";
+export * from "./Empty";
+export * from "./LayoutsLearnVocab";

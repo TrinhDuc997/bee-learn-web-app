@@ -3,9 +3,9 @@ import { Container, Stack } from "@mui/system";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import * as React from "react";
-import englishVocab from "../../public/sectionPicture/english-vocab2.png";
-import sectionGrammar from "../../public/sectionPicture/sectionGrammar.jpeg";
-import sectionToeicIelts from "../../public/sectionPicture/sectionToeicIelts.jpeg";
+import englishVocab from "@public/sectionPicture/english-vocab2.png";
+import sectionGrammar from "@public/sectionPicture/sectionGrammar.jpeg";
+import sectionToeicIelts from "@public/sectionPicture/sectionToeicIelts.jpeg";
 export function HeroSection() {
   const router = useRouter();
   return (
@@ -47,7 +47,7 @@ export function HeroSection() {
               sx={{ ml: "1rem" }}
               variant="contained"
               onClick={() => {
-                router.push("/learnVocabulary");
+                router.push("/learning/vocabulary");
               }}
             >
               HỌC THỬ NGAY

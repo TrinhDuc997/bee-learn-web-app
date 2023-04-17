@@ -18,6 +18,9 @@ declare module "@mui/material/styles" {
       subtle: string;
     };
   }
+  interface TypeBackground {
+    second: string;
+  }
 }
 
 // Update the Typography's variant prop options

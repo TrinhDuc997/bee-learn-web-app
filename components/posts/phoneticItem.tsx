@@ -1,6 +1,6 @@
 import { Box } from "@mui/system";
 import InfoIcon from "@mui/icons-material/Info";
-import { IPhoneticIPA } from "../../models";
+import { IPhoneticIPA } from "@interfaces";
 import {
   Button,
   IconButton,
@@ -45,7 +45,12 @@ export const PhoneticItem = (props: PhoneticItemProps) => {
   return (
     <Stack sx={{ mx: "2px" }} spacing={1} direction={"column"}>
       <Paper
-        sx={{ padding: "4px", border: "lightgreen", boxShadow: { md: "none" } }}
+        sx={{
+          padding: "4px",
+          border: "lightgreen",
+          boxShadow: { md: "none" },
+          backgroundColor: "#f5f5f5",
+        }}
       >
         <Stack justifyContent={"space-between"} direction={"row"}>
           <Box color={"GrayText"}>{data.ordinalNumber}</Box>

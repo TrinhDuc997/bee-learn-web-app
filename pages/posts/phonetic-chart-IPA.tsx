@@ -10,10 +10,10 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import { MainLayout } from "../../components/layouts";
-import { postsAPI } from "../../api-client";
-import { IPhoneticIPA } from "../../models";
-import { PhoneticItem } from "../../components/posts";
+import { MainLayout } from "@components/layouts";
+import { postsAPI } from "@api-client";
+import { IPhoneticIPA } from "@interfaces";
+import { PhoneticItem } from "@components/posts";
 import { Box } from "@mui/system";
 
 export interface PhoneticChartIPAProps {

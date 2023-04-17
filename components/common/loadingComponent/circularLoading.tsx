@@ -18,8 +18,7 @@ function CircularLoading(props: CircularProgressProps) {
         variant="indeterminate"
         disableShrink
         sx={{
-          color: (theme) =>
-            theme.palette.mode === "light" ? "primary.main" : "primary.dark",
+          color: "primary.main",
           animationDuration: "550ms",
           position: "absolute",
           left: `-${Number(size) / 2}px`,

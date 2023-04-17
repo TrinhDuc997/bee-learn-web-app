@@ -1,6 +1,6 @@
 import * as React from "react";
-import { HeaderDesktop } from "./headerDesktop";
-import { HeaderMobile } from "./headerMobile";
+import { HeaderDesktop } from "./HeaderDesktop";
+import { HeaderMobile } from "./HeaderMobile";
 
 export interface HeaderProps {}
 

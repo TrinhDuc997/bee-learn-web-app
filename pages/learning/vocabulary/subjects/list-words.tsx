@@ -1,15 +1,14 @@
 import { Button, CircularProgress, Grid } from "@mui/material";
 import { useRouter } from "next/router";
 import * as React from "react";
-import { wordsAPI } from "../../../api-client/words-api";
-import CustomizedProgressBars from "../../../components/common/loadingComponent/circularLoading";
-import BasicPagination from "../../../components/common/navigate/pagination";
-import { LearnVocabLayouts } from "../../../components/layouts";
-import { VocabularyCard } from "../../../components/learnVocabulary";
-import { IWordsExpand, Propperties } from "../../../models";
-import actionCommon from "../../../components/common/action/actionCommon";
+import { wordsAPI } from "@api-client";
+import CustomizedProgressBars from "@components/common/loadingComponent/CircularLoading";
+import BasicPagination from "@components/common/navigate/Pagination";
+import { LearnVocabLayouts } from "@components/layouts";
+import { VocabularyCard } from "@components/learnVocabulary";
+import _ from "@components/common";
 // import axios from "axios";
-import { IWords } from "../../../models/word";
+import { IWords } from "@interfaces";
 export interface IListWordsProps {}
 
 export default function ListWords(props: IListWordsProps) {
@@ -24,54 +23,33 @@ export default function ListWords(props: IListWordsProps) {
   const dataFetchedRef = React.useRef(false);
   // const [topics, setTopics] = React.useState<any[]>([]);
   // Read file PDF --- START
-  async function handleFileChange(file: File) {
-    // const { name = "" } = file;
-    // const data = (await actionCommon.readFileExcel(file)) || [];
-    // let formatData: any[] = [];
-    // let listTopics: any[] = topics;
-    // let type = "";
-    // data.forEach((element: any, index: number) => {
-    //   if (index > 0) {
-    //     if (element[0] !== "" && element[1] === null) {
-    //       type = element[0];
-    //       const checkExist = topics.findIndex(
-    //         (i) => i.title === type.split(" - ")[0]
-    //       );
-    //       if (checkExist > -1) {
-    //         listTopics[checkExist] = {
-    //           title: type.split(" - ")[0],
-    //           subTitle: type.split(" - ")[1],
-    //           tag: ["TOEIC", "IELTS"],
-    //         };
-    //       } else {
-    //         listTopics.push({
-    //           title: type.split(" - ")[0],
-    //           subTitle: type.split(" - ")[1],
-    //           tag: name.search("IELTS") > 0 ? ["IELTS"] : ["TOEIC"],
-    //         });
-    //       }
-    //     } else {
-    //       formatData.push({
-    //         word: element[1],
-    //         type: element[2],
-    //         phonetic: element[3],
-    //         meaning: element[4],
-    //         topics: [type],
-    //       });
-    //     }
-    //   }
-    // });
-    // console.log(
-    //   "🚀 ~ file: listWords.tsx:70 ~ handleFileChange ~ listTopics:",
-    //   listTopics
-    // );
-    // setTopics(listTopics);
-    // const newData = await wordsAPI.updateListWords(formatData);
-    // console.log(
-    //   "🚀 ~ file: listWords.tsx:49 ~ handleFileChange ~ newData:",
-    //   newData
-    // );
-  }
+  // async function handleFileChange(file: File) {
+  //   const { name = "" } = file;
+  //   const data = (await _.readFileExcel(file)) || [];
+  //   let formatData: any[] = [];
+  //   let listTopics: any[] = [];
+  //   let type = "";
+  //   data.forEach((element: any, index: number) => {
+  //     if (index > 0) {
+  //       formatData.push({
+  //         word: element[1],
+  //         type: element[2],
+  //         phonetic: element[3],
+  //         meaning: element[4],
+  //         topics: ["BASIC"],
+  //       });
+  //     }
+  //   });
+  //   console.log(
+  //     "🚀 ~ file: listWords.tsx:30 ~ handleFileChange ~ data:",
+  //     formatData
+  //   );
+  //   const newData = await wordsAPI.updateListWords(formatData);
+  //   console.log(
+  //     "🚀 ~ file: listWords.tsx:49 ~ handleFileChange ~ newData:",
+  //     newData
+  //   );
+  // }
   // Read file PDF --- END
   //ComponentDidMount run first times --- start
   React.useEffect(() => {

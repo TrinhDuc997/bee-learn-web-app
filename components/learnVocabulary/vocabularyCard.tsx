@@ -1,8 +1,7 @@
 import { Grid, Paper, Typography } from "@mui/material";
 import * as React from "react";
-import { Propperties } from "../../models";
-import { IWord } from "../../models/word";
-import actionCommon from "../common/action/actionCommon";
+import { IWord } from "@interfaces";
+import _ from "../common";
 
 export interface IVocabularyCardProps {
   detailWord: IWord;
@@ -34,9 +33,7 @@ export function VocabularyCard(props: IVocabularyCardProps) {
           sx={{ alignItems: "center" }}
         >
           <Grid item>
-            <Typography variant="h5">
-              {actionCommon.capitalizeWord(word)}
-            </Typography>
+            <Typography variant="h5">{_.capitalizeWord(word)}</Typography>
           </Grid>
           <Grid item>
             <Typography variant="body1">/{pronounce}/</Typography>

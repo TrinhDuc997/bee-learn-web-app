@@ -1,1 +1,1 @@
-export * from "./phoneticItem";
+export * from "./PhoneticItem";

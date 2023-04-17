@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import * as React from "react";
-import { theme } from "../../../utils";
+import { theme } from "@utils";
 
 export function BannerTitle(props: { title: string }) {
   const { title } = props;

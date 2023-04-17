@@ -2,9 +2,9 @@ import { Box, Button, Typography } from "@mui/material";
 import { Container, Stack } from "@mui/system";
 import Image from "next/image";
 import * as React from "react";
-import englishVocab from "../../public/sectionPicture/english-vocab2.png";
-import sectionGrammar from "../../public/sectionPicture/sectionGrammar.jpeg";
-import sectionToeicIelts from "../../public/sectionPicture/sectionToeicIelts.jpeg";
+import englishVocab from "@public/sectionPicture/english-vocab2.png";
+import sectionGrammar from "@public/sectionPicture/sectionGrammar.jpeg";
+import sectionToeicIelts from "@public/sectionPicture/sectionToeicIelts.jpeg";
 export function HeroSectionMobile() {
   return (
     <Box

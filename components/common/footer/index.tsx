@@ -1,6 +1,6 @@
 import * as React from "react";
-import { FooterDesktop } from "./footerDesktop";
-import { FooterMobile } from "./footerMobile";
+import { FooterDesktop } from "./FooterDesktop";
+import { FooterMobile } from "./FooterMobile";
 
 export interface FooterProps {}
 

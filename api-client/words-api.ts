@@ -1,10 +1,5 @@
-import {
-  IPhoneticIPA,
-  IVocabularySubjects,
-  IWordsExpand,
-  word,
-} from "../models";
-import { IWord, IWords } from "../models/word";
+import { IPhoneticIPA, IVocabularySubjects, word } from "../interfaces";
+import { IWord, IWords } from "../interfaces/word.interface";
 import axiosClient from "./general-api";
 
 export const wordsAPI = {

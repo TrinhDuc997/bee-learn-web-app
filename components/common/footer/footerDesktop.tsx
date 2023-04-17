@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import * as React from "react";
 import CopyrightIcon from "@mui/icons-material/Copyright";
-import { theme } from "../../../utils";
+import { theme } from "@utils";
 
 export interface FooterProps {}
 

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { LearnVocabLayouts } from "../../components/layouts";
+import { LearnVocabLayouts } from "@components/layouts";
 
 export interface INoteBookProps {}
 

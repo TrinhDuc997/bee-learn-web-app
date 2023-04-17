@@ -13,7 +13,16 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["components/*"],
+      "@interfaces": ["interfaces/index.ts"],
+      "@interfaces/*": ["interfaces/*"],
+      "@api-client": ["api-client/index.ts"],
+      "@utils": ["utils/index.ts"],
+      "@public/*": ["public/*"],
+    }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]

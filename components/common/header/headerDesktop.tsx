@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { useRouter } from "next/router";
 import * as React from "react";
-import { theme } from "../../../utils";
+import { theme } from "@utils";
 
 export interface HeaderDesktopProps {}
 

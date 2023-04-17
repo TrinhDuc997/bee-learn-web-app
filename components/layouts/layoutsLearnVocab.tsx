@@ -1,9 +1,9 @@
 import { Grid } from "@mui/material";
 import { Box, Container, Stack } from "@mui/system";
 import * as React from "react";
-import { LayoutProps } from "../../models";
-import HeaderPageLearningVocab from "../common/header/headerPageLearningVocab";
-import NavTabs from "../common/navigate/navTabs";
+import { LayoutProps } from "@interfaces";
+import HeaderPageLearningVocab from "../common/header/HeaderPageLearningVocab";
+import NavTabs from "../common/navigate/NavTabs";
 
 export const LearnVocabLayouts = (props: LayoutProps) => {
   const { children } = props;

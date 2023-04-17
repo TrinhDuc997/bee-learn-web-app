@@ -1,15 +1,3 @@
-export interface IPhoneticIPA {
-  character: string;
-  urlSoundIPA?: string;
-  nameIconSoundIPA?: string;
-  exampleWords?: IWord[];
-  exampleWord: string;
-  pronunciationGuide?: string;
-  vowels?: boolean;
-  consonants?: boolean;
-  ordinalNumber: number;
-}
-
 interface ITranslation {
   lang: string;
   trans: string;

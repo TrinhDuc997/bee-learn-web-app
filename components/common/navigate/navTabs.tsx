@@ -2,15 +2,15 @@ import React, { useEffect } from "react";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import { Container, createTheme, SxProps } from "@mui/material";
+import { SxProps } from "@mui/material";
 import { Theme } from "@mui/system";
 import { green } from "@mui/material/colors";
 import { useRouter } from "next/router";
 
 enum HrefTab {
-  "/learnVocabulary",
-  "/learnVocabulary/subjects",
-  "/learnVocabulary/noteBook",
+  "/learning/vocabulary",
+  "/learning/vocabulary/subjects",
+  "/learning/vocabulary/note-book",
 }
 
 interface LinkTabProps {
@@ -32,16 +32,11 @@ function LinkTab(props: LinkTabProps) {
 }
 
 function getDefaultTabHighlight(href: string) {
-  let formatHref = `/${href.split("/")[1]}/${href.split("/")[2]}`;
-  // when load page check href and match HrefTab to set default tabHighLight
   let defaultTabHighlight = 0;
-  switch (formatHref) {
-    case HrefTab[1]:
-      defaultTabHighlight = 1;
-      break;
-    case HrefTab[2]:
-      defaultTabHighlight = 2;
-      break;
+  if (href.search(HrefTab[1]) > -1) {
+    defaultTabHighlight = 1;
+  } else if (href.search(HrefTab[2]) > -1) {
+    defaultTabHighlight = 2;
   }
   return defaultTabHighlight;
 }

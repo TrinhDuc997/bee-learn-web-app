@@ -10,7 +10,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider } from "@emotion/react";
 import { theme, createEmotionCache } from "../utils/index";
 import { EmptyLayout } from "../components/layouts";
-import { AppPropsWithLayout } from "../models";
+import { AppPropsWithLayout } from "../interfaces";
 import { AppProps } from "next/app";
 
 // Client-side cache, shared for the whole session of the user in the browser.

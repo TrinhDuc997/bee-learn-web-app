@@ -1,1 +1,1 @@
-export * from "./navTabs";
+export * from "./NavTabs";

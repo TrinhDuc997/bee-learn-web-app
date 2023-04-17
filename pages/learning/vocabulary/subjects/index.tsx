@@ -1,11 +1,11 @@
 import { Box, ButtonBase, Grid, Paper, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import * as React from "react";
-import { wordsAPI } from "../../../api-client/words-api";
-import { BannerTitle } from "../../../components/common/header/bannerTitle";
-import CustomizedProgressBars from "../../../components/common/loadingComponent/circularLoading";
-import { LearnVocabLayouts } from "../../../components/layouts";
-import { IVocabularySubjects } from "../../../models";
+import { wordsAPI } from "@api-client";
+import { BannerTitle } from "@components/common/header/BannerTitle";
+import CustomizedProgressBars from "@components/common/loadingComponent/CircularLoading";
+import { LearnVocabLayouts } from "@components/layouts";
+import { IVocabularySubjects } from "@interfaces";
 
 export interface ISubjectVocabularyProps {}
 
@@ -24,7 +24,14 @@ export default function SubjectVocabulary(props: ISubjectVocabularyProps) {
     const fetchDataVocabSubject = async () => {
       const dataVocabularySubjects: IVocabularySubjects[] =
         await wordsAPI.getListVocabularySubjects();
-      setDataSubject(dataVocabularySubjects);
+      setDataSubject([
+        ...dataVocabularySubjects,
+        {
+          title: "ALL",
+          subTitle: "TẤT CẢ TỪ",
+          hrefImg: "ALLWords",
+        },
+      ]);
       setLoading(false);
     };
     fetchDataVocabSubject().catch(console.error);
@@ -53,7 +60,7 @@ export default function SubjectVocabulary(props: ISubjectVocabularyProps) {
               }}
               onClick={() => {
                 router.push({
-                  pathname: router.asPath + "/listWords",
+                  pathname: router.asPath + "/list-words",
                   query: { subject: item.title },
                 });
               }}
@@ -111,4 +118,5 @@ export default function SubjectVocabulary(props: ISubjectVocabularyProps) {
     </Grid>
   );
 }
+
 SubjectVocabulary.Layout = LearnVocabLayouts;

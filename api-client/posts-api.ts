@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { IPhoneticIPA } from "../models";
+import { IPhoneticIPA } from "../interfaces";
 import axiosClient from "./general-api";
 
 export const postsAPI = {

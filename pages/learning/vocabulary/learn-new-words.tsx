@@ -1,9 +1,9 @@
 import { Box, ButtonBase, Grid, Paper, Typography } from "@mui/material";
 import * as React from "react";
-import { wordsAPI } from "../../api-client/words-api";
-import { BannerTitle } from "../../components/common/header/bannerTitle";
-import { LearnVocabLayouts } from "../../components/layouts";
-import { IVocabularySubjects } from "../../models";
+import { wordsAPI } from "@api-client";
+import { BannerTitle } from "@components/common/header/BannerTitle";
+import { LearnVocabLayouts } from "@components/layouts";
+import { IVocabularySubjects } from "@interfaces";
 
 export interface ILearnNewWordsProps {}
 

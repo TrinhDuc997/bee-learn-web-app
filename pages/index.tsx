@@ -1,10 +1,10 @@
 import { Container, Grid } from "@mui/material";
 import { Box } from "@mui/system";
-import { HeroSectionMobile } from "../components/home/heroSectionMobile";
-import { ListPostsSection } from "../components/home/listPostsSection";
+import { HeroSectionMobile } from "../components/home/HeroSectionMobile";
+import { ListPostsSection } from "../components/home/ListPostsSection";
 import { MainLayout } from "../components/layouts";
-import { NextPageWithLayout } from "../models";
-import { HeroSection } from "./../components/home";
+import { NextPageWithLayout } from "../interfaces";
+import { HeroSection } from "@components/home";
 // const soundPH = new Audio("/soundIPA/∫.mp3");
 
 export interface IHomePageProps {

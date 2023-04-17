@@ -2,7 +2,7 @@ import {
   createTheme,
   experimental_extendTheme as extendTheme,
 } from "@mui/material/styles";
-import { green, red, yellow } from "@mui/material/colors";
+import { green, grey, red, yellow } from "@mui/material/colors";
 
 // Create a theme instance.
 export const theme = createTheme({
@@ -22,13 +22,35 @@ export const theme = createTheme({
     },
     secondary: {
       main: yellow[700],
-      light: yellow[600],
-      dark: yellow[800],
       contrastText: "#ffffff",
       gradient: `linear-gradient(to right, ${yellow[400]}, ${yellow[800]})`,
     },
+
+    background: {
+      default: grey[50],
+      second: grey[200],
+      paper: grey[300],
+    },
     error: {
       main: red.A400,
+    },
+  },
+  components: {
+    MuiListItemButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: "10px",
+          "&.Mui-selected": {
+            backgroundColor: green[600],
+            "&:hover": {
+              backgroundColor: green[800],
+            },
+          },
+          "&:hover": {
+            backgroundColor: green[200],
+          },
+        },
+      },
     },
   },
 });

@@ -1,8 +1,8 @@
 import { Avatar, Box, Chip, Grid, Stack } from "@mui/material";
 import { useRouter } from "next/router";
 import * as React from "react";
-import { theme /*themeExtend*/ } from "../../../utils";
-import AccountMenu from "../accountSetting";
+import { theme /*themeExtend*/ } from "@utils";
+import AccountMenu from "../AccountSetting";
 
 export default function HeaderPageLearningVocab() {
   const router = useRouter();

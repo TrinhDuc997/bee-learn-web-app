@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import httpProxy from "http-proxy";
-import cookies from "js-cookie";
+// import cookies from "js-cookie";
 const proxy = httpProxy.createProxyServer();
 
 export default function handler(

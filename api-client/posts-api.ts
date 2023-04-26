@@ -1,4 +1,3 @@
-import { AxiosResponse } from "axios";
 import { IPhoneticIPA } from "../interfaces";
 import axiosClient from "./general-api";
 

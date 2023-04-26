@@ -5,10 +5,6 @@ import { useAuth } from "@hooks";
 import AccountMenu from "@components/common/AccountSetting";
 function DashboardHeader() {
   const { profile = {} } = useAuth();
-  console.log(
-    "🚀 ~ file: DashboardHeader.tsx:7 ~ DashboardHeader ~ profile:",
-    profile
-  );
   const { name = "" } = profile;
   return (
     <Grid

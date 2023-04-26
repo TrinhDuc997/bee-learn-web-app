@@ -5,7 +5,7 @@ import { theme } from "@utils";
 
 export interface FooterProps {}
 
-export function FooterDesktop(props: FooterProps) {
+export default function FooterDesktop(props: FooterProps) {
   return (
     <Box
       py={2}

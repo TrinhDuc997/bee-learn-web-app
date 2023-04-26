@@ -4,7 +4,7 @@ import CopyrightIcon from "@mui/icons-material/Copyright";
 
 export interface FooterProps {}
 
-export function FooterMobile(props: FooterProps) {
+export default function FooterMobile(props: FooterProps) {
   return (
     <Box
       py={2}

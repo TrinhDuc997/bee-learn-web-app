@@ -47,7 +47,7 @@ export function HeroSection() {
               sx={{ ml: "1rem" }}
               variant="contained"
               onClick={() => {
-                router.push("/learning/vocabulary");
+                router.push("/learning/vocabulary/review");
               }}
             >
               HỌC THỬ NGAY
@@ -56,6 +56,7 @@ export function HeroSection() {
           <Box width={"40%"}>
             <Image
               src={englishVocab}
+              priority
               layout="responsive"
               alt="english-vocab2"
             />
@@ -73,6 +74,7 @@ export function HeroSection() {
           <Box width={"40%"}>
             <Image
               src={sectionGrammar}
+              priority
               layout="responsive"
               alt="english-grammar"
             />
@@ -137,6 +139,7 @@ export function HeroSection() {
           <Box width={"40%"} pt={"30px"}>
             <Image
               src={sectionToeicIelts}
+              priority
               layout="responsive"
               alt="english-vocab2"
             />

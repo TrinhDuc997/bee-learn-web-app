@@ -13,7 +13,9 @@ export const wordsAPI = {
     req?: any,
     version = "v1"
   ): Promise<IVocabularySubjects[]> {
-    return axiosClient.get(`/${version}/words/getListVocabularySubjects`, req);
+    return axiosClient.get(`/${version}/words/getListVocabularySubjects`, {
+      params: req,
+    });
   },
   getListVocabulary: function (req?: any, version = "v1"): Promise<IWords> {
     return axiosClient.get(`/${version}/words/getListWords`, { params: req });

@@ -46,8 +46,15 @@ export const theme = createTheme({
               backgroundColor: green[800],
             },
           },
+
           "&:hover": {
             backgroundColor: green[200],
+          },
+          "&.Mui-selected .MuiListItemIcon-root": {
+            color: yellow[700],
+          },
+          "&.Mui-selected .MuiTypography-root": {
+            color: yellow[700],
           },
         },
       },

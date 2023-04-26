@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import Image from "next/image";
 import * as React from "react";
 
 export interface HeaderMobileProps {}
@@ -21,7 +22,7 @@ export function HeaderMobile(props: HeaderMobileProps) {
         }}
         className="headerLeft"
       >
-        <img style={{ width: "140px", height: "35px" }} src="/Logo.png" />
+        <Image width={140} height={35} layout="intrinsic" src="/Logo.png" />
       </Box>
       <Box
         sx={{

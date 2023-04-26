@@ -13,7 +13,8 @@ import {
   Typography,
 } from "@mui/material";
 import { generateText } from "api-client/common-api";
-import { useRouter } from "next/router";
+import Image from "next/image";
+import LoadingButton from "@mui/lab/LoadingButton";
 import * as React from "react";
 
 export interface ISubjectItemProps {
@@ -46,13 +47,65 @@ export function SubjectItem(props: ISubjectItemProps) {
   const [openModel, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleCloseModel = () => setOpen(false);
-  const [description, setDescription] = React.useState("");
+  const [description, setDescription] = React.useState(item.title);
   const [createdPic, setCreatedPic] = React.useState<any>({});
+  const filename = item.title?.replaceAll(" ", "") + ".png";
+  const [imageUrl, setImageUrl] = React.useState(
+    `/VocabSubjectsPic/${filename}?timestamp=${Date.now()}`
+  );
+  const [loadingCreatePic, setLoadingCreatePic] = React.useState(false);
+  const [loadingSavePic, setLoadingSavePic] = React.useState(false);
 
   const createPicture = async (description: string) => {
+    setLoadingCreatePic(true);
     const res = await generateText(description);
     setCreatedPic(res.data.data[0]);
+    setLoadingCreatePic(false);
   };
+
+  // Handle Save Picture import func --- START
+  const inputFileRef = React.useRef<HTMLInputElement>(null);
+
+  function handleButtonClick() {
+    inputFileRef.current?.click();
+  }
+
+  async function handleFileChange(event: any) {
+    const file = await event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      handleSubmit(reader.result);
+    };
+    reader.readAsDataURL(file);
+  }
+  async function handleSubmit(file: string | ArrayBuffer | null) {
+    const filename = item.title?.replaceAll(" ", "") + ".png";
+    const response = await fetch("/api/import-subject-picture", {
+      method: "POST",
+      body: JSON.stringify({ file, filename }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    setImageUrl(`/VocabSubjectsPic/${filename}?timestamp=${Date.now()}`);
+  }
+
+  async function handleSubmitPicCreated(url: string) {
+    const filename = item.title?.replaceAll(" ", "") + ".png";
+    setLoadingSavePic(true);
+    const response = await fetch("/api/download-image-and-import", {
+      method: "POST",
+      body: JSON.stringify({ imageUrl: url, filename }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    setImageUrl(`/VocabSubjectsPic/${filename}?timestamp=${Date.now()}`);
+    setLoadingSavePic(false);
+  }
+  // Handle Save Picture --- END
   return (
     <Grid key={item.title} item xs={4} marginBottom={"2rem"}>
       <Paper
@@ -79,20 +132,20 @@ export function SubjectItem(props: ISubjectItemProps) {
               style={{
                 objectFit: "cover",
                 borderRadius: "50%",
+                border: "5px solid #fbc02d",
               }}
               onClick={(e) => {
                 handleClick(e);
               }}
             >
-              <img
-                src={item.src}
-                alt="english-vocab2"
+              <Image
+                src={imageUrl}
+                alt="subject-vocab"
                 width={90}
                 height={90}
+                layout="intrinsic"
                 style={{
-                  objectFit: "cover",
                   borderRadius: "50%",
-                  border: "5px solid #fbc02d",
                 }}
               />
             </ButtonBase>
@@ -109,8 +162,22 @@ export function SubjectItem(props: ISubjectItemProps) {
               >
                 Create picture
               </MenuItem>
-              <MenuItem>Import file</MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleClose();
+                  handleButtonClick();
+                }}
+              >
+                Import file
+              </MenuItem>
             </Menu>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              ref={inputFileRef}
+              style={{ display: "none" }}
+            />
           </Grid>
           <Grid item xs={12} sm container sx={{ textAlign: "left" }}>
             <Grid item container direction={"column"}>
@@ -152,39 +219,50 @@ export function SubjectItem(props: ISubjectItemProps) {
               spacing={2}
             >
               <Grid item>
-                <img
+                <Image
                   src={createdPic.url || ""}
                   alt="english-vocab2"
                   style={{
                     objectFit: "cover",
                     border: "1px solid #fbc02d",
-                    maxWidth: "90px",
-                    minHeight: "90px",
                   }}
+                  width={90}
+                  height={90}
+                  layout="intrinsic"
                 />
               </Grid>
               <Grid item sm container justifyContent={"center"}>
                 <TextField
                   id="outlined-multiline-static"
-                  label="Thêm mô tả để tạo ảnh"
+                  label="input explains to generate the picture"
+                  placeholder="Placeholder"
                   multiline
-                  rows={3}
-                  maxRows={10}
-                  sx={{ width: "100%", pb: "1rem" }}
-                  size="small"
-                  InputProps={{ inputComponent: TextareaAutosize }}
                   value={description}
+                  sx={{ width: "100%", mb: "1rem" }}
+                  size="medium"
                   onChange={(e) => {
                     setDescription(e.target.value);
                   }}
                 />
-                <Button
+                <LoadingButton
                   variant="outlined"
-                  onClick={() => createPicture(description)}
+                  onClick={() => createPicture(description || "")}
+                  loading={loadingCreatePic}
                 >
                   Create Picure
-                </Button>
+                </LoadingButton>
               </Grid>
+            </Grid>
+            <Grid item textAlign={"center"}>
+              <LoadingButton
+                variant="outlined"
+                onClick={() => {
+                  handleSubmitPicCreated(createdPic.url || "");
+                }}
+                loading={loadingSavePic}
+              >
+                Save
+              </LoadingButton>
             </Grid>
           </Grid>
         </Box>

@@ -5,7 +5,9 @@ import * as React from "react";
 import englishVocab from "@public/sectionPicture/english-vocab2.png";
 import sectionGrammar from "@public/sectionPicture/sectionGrammar.jpeg";
 import sectionToeicIelts from "@public/sectionPicture/sectionToeicIelts.jpeg";
+import { useRouter } from "next/router";
 export function HeroSectionMobile() {
+  const router = useRouter();
   return (
     <Box
       display={{ xs: "block", md: "none" }}
@@ -41,7 +43,14 @@ export function HeroSectionMobile() {
             <Typography sx={{ mb: "1rem" }}>
               6000 từ vựng chia theo từng chủ để
             </Typography>
-            <Button variant="contained">HỌC THỬ NGAY</Button>
+            <Button
+              variant="contained"
+              onClick={() => {
+                router.push("/learning/vocabulary/review");
+              }}
+            >
+              HỌC THỬ NGAY
+            </Button>
           </Box>
           <Box sx={{ mt: "1rem" }} width={"100%"}>
             <Image

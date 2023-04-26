@@ -3,9 +3,19 @@ import { LayoutProps } from "@interfaces";
 import { Grid, Stack } from "@mui/material";
 import DashboardHeader from "./DashboardHeader";
 import DashboardSpaceLeft from "./DashboardSpaceLeft";
+import { useAuth } from "@hooks";
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 
 export function DashboardLayout(props: LayoutProps) {
   const { children } = props;
+  const { profile } = useAuth();
+  const router = useRouter();
+  React.useEffect(() => {
+    if (!Cookies.get("access_token")) {
+      router.push("/login");
+    }
+  }, [profile]);
   return (
     <Grid minHeight={"100vh"} container direction={"row"}>
       <Grid item width={"300px"} padding={"1rem"} height={"100vh"}>

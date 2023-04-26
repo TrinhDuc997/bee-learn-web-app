@@ -3,8 +3,11 @@ import { Box } from "@mui/system";
 import * as React from "react";
 import { theme } from "@utils";
 
-export function BannerTitle(props: { title: string }) {
-  const { title } = props;
+export function BannerTitle(props: {
+  title: string;
+  fontWeight?: string | number;
+}) {
+  const { title, fontWeight = "bold" } = props;
   return (
     <Box width={"100%"}>
       <Box width={"90%"} display={"flex"} margin={"auto"} marginBottom={"2px"}>
@@ -51,7 +54,9 @@ export function BannerTitle(props: { title: string }) {
             alignItems: "center",
           }}
         >
-          <Typography variant="h5">{title}</Typography>
+          <Typography variant="h5" fontWeight={fontWeight}>
+            {title}
+          </Typography>
         </Box>
         <Box
           width={"20%"}

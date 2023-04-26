@@ -7,13 +7,23 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
-import { yellow } from "@mui/material/colors";
+import Cookies from "js-cookie";
+import { useRouter } from "next/router";
+import { useAuth } from "@hooks";
+import _ from "../common";
+import { Button } from "@mui/material";
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const { logout, profile = {} } = useAuth();
+  const { name = "" } = profile;
+  const router = useRouter();
+  const HandleLogout = () => {
+    logout();
+    Cookies.set("access_token", "");
+  };
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -23,23 +33,75 @@ export default function AccountMenu() {
   };
   return (
     <React.Fragment>
-      <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
-        <Tooltip title="Account settings">
-          <IconButton
-            onClick={handleClick}
-            size="small"
-            sx={{ ml: 2 }}
-            aria-controls={open ? "account-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-          >
-            <Avatar
-              sx={{ width: 46, height: 46, border: `2px solid ${yellow[800]}` }}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          textAlign: "center",
+          height: "100%",
+        }}
+      >
+        {!!profile.id ? (
+          <Tooltip title="Account settings">
+            <IconButton
+              onClick={handleClick}
+              size="small"
+              sx={{ ml: 2 }}
+              aria-controls={open ? "account-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
             >
-              D
-            </Avatar>
-          </IconButton>
-        </Tooltip>
+              <Avatar
+                sx={{
+                  width: 45,
+                  height: 45,
+                  bgcolor: _.stringToColor(name),
+                  color: _.invertColor(_.stringToColor(name)),
+                }}
+              >
+                {_.stringAvatar(name)}
+              </Avatar>
+            </IconButton>
+          </Tooltip>
+        ) : (
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Button
+              variant="outlined"
+              sx={{
+                backgroundColor: "background.default",
+                color: "secondary.main",
+                borderColor: "secondary.main",
+                fontWeight: "bold",
+                "&:hover": {
+                  borderColor: "secondary.main",
+                },
+                ml: "1rem",
+                mr: "1rem",
+              }}
+              onClick={() => {
+                router.push("/login");
+              }}
+            >
+              Đăng Nhập
+            </Button>
+            <Button
+              variant="outlined"
+              sx={{
+                backgroundColor: "background.default",
+                color: "secondary.main",
+                borderColor: "secondary.main",
+                fontWeight: "bold",
+                "&:hover": {
+                  borderColor: "secondary.main",
+                },
+                ml: "1rem",
+                mr: "1rem",
+              }}
+            >
+              Đăng Ký
+            </Button>
+          </Box>
+        )}
       </Box>
       <Menu
         anchorEl={anchorEl}
@@ -77,25 +139,24 @@ export default function AccountMenu() {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <MenuItem>
-          <Avatar /> Profile
-        </MenuItem>
-        <MenuItem>
-          <Avatar /> My account
+          <Avatar /> {name}
         </MenuItem>
         <Divider />
-        <MenuItem>
-          <ListItemIcon>
-            <PersonAdd fontSize="small" />
-          </ListItemIcon>
-          Add another account
-        </MenuItem>
-        <MenuItem>
+        <MenuItem
+          onClick={() => {
+            router.push("/dashboard");
+          }}
+        >
           <ListItemIcon>
             <Settings fontSize="small" />
           </ListItemIcon>
-          Settings
+          Dashboard
         </MenuItem>
-        <MenuItem>
+        <MenuItem
+          onClick={() => {
+            HandleLogout();
+          }}
+        >
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import * as React from "react";
 import { theme /*themeExtend*/ } from "@utils";
 import AccountMenu from "../AccountSetting";
+import Image from "next/image";
 
 export default function HeaderPageLearningVocab() {
   const router = useRouter();
@@ -28,7 +29,12 @@ export default function HeaderPageLearningVocab() {
             }}
             style={{ cursor: "pointer" }}
           >
-            <img style={{ width: "140", height: "60px" }} src="/LogoBee.png" />
+            <Image
+              src="/LogoBee.png"
+              width={140}
+              height={60}
+              layout="intrinsic"
+            />
           </a>
         </Box>
       </Grid>

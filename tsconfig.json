@@ -18,6 +18,7 @@
     "paths": {
       "@components/*": ["components/*"],
       "@interfaces": ["interfaces/index.ts"],
+      "@hooks": ["hooks/index.ts"],
       "@interfaces/*": ["interfaces/*"],
       "@api-client": ["api-client/index.ts"],
       "@utils": ["utils/index.ts"],

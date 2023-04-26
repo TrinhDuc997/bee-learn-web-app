@@ -1,8 +1,15 @@
 import { Avatar, Box, Grid, Typography } from "@mui/material";
 import React from "react";
 import _ from "../common";
+import { useAuth } from "@hooks";
+import AccountMenu from "@components/common/AccountSetting";
 function DashboardHeader() {
-  const fullName = "Trịnh Đức";
+  const { profile = {} } = useAuth();
+  console.log(
+    "🚀 ~ file: DashboardHeader.tsx:7 ~ DashboardHeader ~ profile:",
+    profile
+  );
+  const { name = "" } = profile;
   return (
     <Grid
       container
@@ -12,22 +19,14 @@ function DashboardHeader() {
     >
       <Grid item>
         <Typography variant="h5" fontWeight={"800"}>
-          Xin chào {fullName}
+          Xin chào {name}
         </Typography>
         <Typography variant="body2">Chúc bạn một ngày tốt lành!</Typography>
       </Grid>
       <Grid item>
-        <Avatar
-          sx={{
-            width: 45,
-            height: 45,
-            bgcolor: _.stringToColor(fullName),
-            color: _.invertColor(_.stringToColor(fullName)),
-            mr: "3rem",
-          }}
-        >
-          {_.stringAvatar(fullName)}
-        </Avatar>
+        <Box sx={{ mr: "3rem" }}>
+          <AccountMenu />
+        </Box>
       </Grid>
     </Grid>
   );

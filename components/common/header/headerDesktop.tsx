@@ -2,6 +2,8 @@ import { Box } from "@mui/material";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { theme } from "@utils";
+import Image from "next/image";
+import AccountMenu from "../AccountSetting";
 
 export interface HeaderDesktopProps {}
 
@@ -14,7 +16,7 @@ export function HeaderDesktop(props: HeaderDesktopProps) {
         background: theme.palette.primary.gradient,
       }}
       className="header"
-      display={{ xs: "none", md: "block" }}
+      display={{ xs: "none", md: "flex" }}
     >
       <Box
         sx={{
@@ -30,7 +32,7 @@ export function HeaderDesktop(props: HeaderDesktopProps) {
           }}
           style={{ cursor: "pointer" }}
         >
-          <img style={{ width: "160px", height: "50px" }} src="/Logo.png" />
+          <Image width={160} height={50} layout="intrinsic" src="/Logo.png" />
         </a>
       </Box>
       <Box
@@ -44,9 +46,15 @@ export function HeaderDesktop(props: HeaderDesktopProps) {
         sx={{
           float: "left",
           width: "33.33%",
+          display: "flex",
+          justifyContent: "flex-end",
         }}
         className="headerRight"
-      ></Box>
+      >
+        <Box sx={{ textAlign: "right", mr: "3rem" }}>
+          <AccountMenu />
+        </Box>
+      </Box>
     </Box>
   );
 }

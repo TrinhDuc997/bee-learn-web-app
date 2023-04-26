@@ -1,4 +1,5 @@
 import {
+  ButtonBase,
   Collapse,
   Divider,
   Grid,
@@ -19,6 +20,7 @@ import QuizIcon from "@mui/icons-material/Quiz";
 import AbcIcon from "@mui/icons-material/Abc";
 import { useRouter } from "next/router";
 import { styled } from "@mui/material/styles";
+import Image from "next/image";
 
 const CustomizedListItemIcon = styled(ListItemIcon)`
   min-width: 40px;
@@ -49,17 +51,18 @@ function DashboardSpaceLeft() {
           width: "100%",
         }}
       >
-        <img style={{ width: "160px", height: "50px" }} src="/Logo.png" />
+        <ButtonBase
+          onClick={() => {
+            router.push("/");
+          }}
+        >
+          <Image width={160} height={50} layout="intrinsic" src="/Logo.png" />
+        </ButtonBase>
       </Grid>
       <Divider sx={{ width: "80%", margin: "auto" }} />
       <Grid item height={"calc(100% - 110px)"}>
         <List sx={{ ml: "1rem", mr: "1rem", borderRadius: "10px" }}>
-          <ListItemButton
-            sx={{
-              color: pathnameSelected === "learning" ? "secondary.main" : "",
-            }}
-            onClick={handleClick}
-          >
+          <ListItemButton onClick={handleClick}>
             <CustomizedListItemIcon>
               <LocalLibraryIcon />
             </CustomizedListItemIcon>
@@ -70,8 +73,6 @@ function DashboardSpaceLeft() {
               <ListItemButton
                 sx={{
                   pl: 4,
-                  color:
-                    pathnameSelected === "vocabulary" ? "secondary.main" : "",
                 }}
               >
                 <CustomizedListItemIcon>
@@ -82,8 +83,6 @@ function DashboardSpaceLeft() {
               <ListItemButton
                 sx={{
                   pl: 4,
-                  color:
-                    pathnameSelected === "subjects" ? "secondary.main" : "",
                 }}
                 onClick={() => {
                   router.push({
@@ -101,7 +100,6 @@ function DashboardSpaceLeft() {
               <ListItemButton
                 sx={{
                   pl: 4,
-                  color: pathnameSelected === "examing" ? "secondary.main" : "",
                 }}
               >
                 <CustomizedListItemIcon>
@@ -111,22 +109,13 @@ function DashboardSpaceLeft() {
               </ListItemButton>
             </List>
           </Collapse>
-          <ListItemButton
-            sx={{
-              color: pathnameSelected === "posts" ? "secondary.main" : "",
-            }}
-          >
+          <ListItemButton>
             <CustomizedListItemIcon>
               <ArticleIcon />
             </CustomizedListItemIcon>
             <ListItemText primary="Posts" />
           </ListItemButton>
-          <ListItemButton
-            sx={{
-              color:
-                pathnameSelected === "account-manager" ? "secondary.main" : "",
-            }}
-          >
+          <ListItemButton>
             <CustomizedListItemIcon>
               <ManageAccountsIcon />
             </CustomizedListItemIcon>

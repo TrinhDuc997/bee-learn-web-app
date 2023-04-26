@@ -8,7 +8,7 @@ import { green } from "@mui/material/colors";
 import { useRouter } from "next/router";
 
 enum HrefTab {
-  "/learning/vocabulary",
+  "/learning/vocabulary/review",
   "/learning/vocabulary/subjects",
   "/learning/vocabulary/note-book",
 }

@@ -40,14 +40,7 @@ export default function SubjectVocabulary(props: ISubjectVocabularyProps) {
     const fetchDataVocabSubject = async () => {
       const dataVocabularySubjects: IVocabularySubjects[] =
         await wordsAPI.getListVocabularySubjects({ course: defaultSubject });
-      setDataSubject([
-        ...dataVocabularySubjects,
-        // {
-        //   title: "ALL",
-        //   subTitle: "TẤT CẢ TỪ",
-        //   hrefImg: "ALLWords",
-        // },
-      ]);
+      setDataSubject([...dataVocabularySubjects]);
       setLoading(false);
     };
     fetchDataVocabSubject().catch(console.error);
@@ -63,9 +56,9 @@ export default function SubjectVocabulary(props: ISubjectVocabularyProps) {
   };
   // if (isLoading) return <CustomizedProgressBars />;
   return (
-    <Grid container>
-      <Grid item xs={3}></Grid>
-      <Grid item xs={6}>
+    <Grid container height={"100%"}>
+      <Grid item xs={3} height={"100%"}></Grid>
+      <Grid item xs={6} height={"100%"}>
         <Box
           sx={{
             boxShadow: "0px 30px 20px 20px #f0f0f0",
@@ -73,9 +66,9 @@ export default function SubjectVocabulary(props: ISubjectVocabularyProps) {
             pr: "0px",
             overflow: "auto",
           }}
-          height={"100vh"}
-          paddingTop={"100px"}
-          paddingBottom={"100px"}
+          height={"100%"}
+          paddingTop={"1rem"}
+          paddingBottom={"1rem"}
         >
           <Grid
             container
@@ -206,12 +199,11 @@ export default function SubjectVocabulary(props: ISubjectVocabularyProps) {
           </Grid>
         </Box>
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={3} height={"100%"}>
         <Box
           height={"100%"}
           width={"100%"}
-          paddingTop={"100px"}
-          paddingBottom={"100px"}
+          paddingTop={"2rem"}
           paddingLeft={"3rem"}
           paddingRight={"7rem"}
         >
@@ -249,7 +241,10 @@ export default function SubjectVocabulary(props: ISubjectVocabularyProps) {
                 selected={courseSelected === "BASIC"}
                 onClick={() => handleChangeCourse("BASIC")}
               >
-                <ListItemText primary="Từ Vựng Cơ Bản" />
+                <ListItemText
+                  primary="Từ Vựng Cơ Bản"
+                  sx={{ fontWeight: "bold" }}
+                />
               </ListItemButton>
               <ListItemButton
                 sx={{

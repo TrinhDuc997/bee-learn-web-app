@@ -5,9 +5,9 @@ export interface ILearningVocabularyProps {}
 
 export default function Review(props: ILearningVocabularyProps) {
   return (
-    <Grid container>
-      <Grid item xs={3}></Grid>
-      <Grid item xs={6}>
+    <Grid container height={"100%"}>
+      <Grid item xs={3} height={"100%"}></Grid>
+      <Grid item xs={6} height={"100%"}>
         <Box
           sx={{
             boxShadow: "0px 30px 20px 20px #f0f0f0",
@@ -15,12 +15,12 @@ export default function Review(props: ILearningVocabularyProps) {
             pr: "0px",
             overflow: "auto",
           }}
-          height={"100vh"}
+          height={"100%"}
           paddingTop={"100px"}
           paddingBottom={"100px"}
         ></Box>
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={3} height={"100%"}>
         <Box height={"100%"} width={"100%"}></Box>
       </Grid>
     </Grid>

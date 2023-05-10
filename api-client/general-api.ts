@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-  baseURL: typeof window !== "undefined" ? "/api" : process.env.TARGET_API,
+  baseURL: typeof window !== "undefined" ? "/api" : process.env.TARGET_API, // if the API is called from server then get the URL API from the file env
   headers: {
     "Content-type": "application/json; charset=utf-8",
   },

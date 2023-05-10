@@ -91,9 +91,9 @@ export default function ListWords(props: IListWordsProps) {
   const sizePagination = Math.floor(size / 20);
   if (isLoading) return <CustomizedProgressBars />;
   return (
-    <Grid container>
-      <Grid item xs={3}></Grid>
-      <Grid item xs={6}>
+    <Grid container height={"100%"}>
+      <Grid item xs={3} height={"100%"}></Grid>
+      <Grid item xs={6} height={"100%"}>
         <Box
           sx={{
             boxShadow: "0px 30px 20px 20px #f0f0f0",
@@ -101,9 +101,9 @@ export default function ListWords(props: IListWordsProps) {
             pr: "0px",
             overflow: "auto",
           }}
-          height={"100vh"}
-          paddingTop={"100px"}
-          paddingBottom={"100px"}
+          height={"100%"}
+          paddingTop={"1rem"}
+          paddingBottom={"1rem"}
         >
           <Grid
             sx={{ flexGrow: 1 }}
@@ -131,10 +131,33 @@ export default function ListWords(props: IListWordsProps) {
                 />
               </Grid>
             )}
+            <Grid
+              item
+              position={"sticky"}
+              bottom={0}
+              width={"100%"}
+              textAlign={"end"}
+            >
+              <Button
+                sx={{ width: "50px", mr: "2rem", borderRadius: "50%" }}
+                variant="contained"
+                onClick={() => {
+                  router.push({
+                    pathname: router.pathname.replace(
+                      "/list-words",
+                      "/learn-new-word"
+                    ),
+                    query,
+                  });
+                }}
+              >
+                Học ngay
+              </Button>
+            </Grid>
           </Grid>
         </Box>
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={3} height={"100%"}>
         <Box height={"100%"} width={"100%"}></Box>
       </Grid>
     </Grid>

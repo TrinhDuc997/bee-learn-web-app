@@ -1,9 +1,9 @@
 import { Container, Grid } from "@mui/material";
 import { Box } from "@mui/system";
-import { HeroSectionMobile } from "../components/home/HeroSectionMobile";
-import { ListPostsSection } from "../components/home/ListPostsSection";
-import { MainLayout } from "../components/layouts";
-import { NextPageWithLayout } from "../interfaces";
+import { HeroSectionMobile } from "@components/home/HeroSectionMobile";
+import { ListPostsSection } from "@components/home/ListPostsSection";
+import { MainLayout } from "@components/layouts";
+import { NextPageWithLayout } from "@interfaces";
 import { HeroSection } from "@components/home";
 // const soundPH = new Audio("/soundIPA/∫.mp3");
 

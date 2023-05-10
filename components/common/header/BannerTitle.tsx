@@ -42,7 +42,8 @@ export function BannerTitle(props: {
             width: 0,
             height: 0,
             borderTop: "25px solid transparent",
-            borderLeft: "50px solid #fff",
+            borderLeft: "50px solid",
+            borderLeftColor: "background.default",
             borderBottom: "25px solid transparent",
           }}
         ></Box>
@@ -54,7 +55,12 @@ export function BannerTitle(props: {
             alignItems: "center",
           }}
         >
-          <Typography variant="h5" fontWeight={fontWeight}>
+          <Typography
+            variant="h5"
+            fontWeight={fontWeight}
+            ml={"1rem"}
+            mr={"1rem"}
+          >
             {title}
           </Typography>
         </Box>
@@ -65,7 +71,8 @@ export function BannerTitle(props: {
             width: 0,
             height: 0,
             borderTop: "25px solid transparent",
-            borderRight: "50px solid #fff",
+            borderRight: "50px solid",
+            borderRightColor: "background.default",
             borderBottom: "25px solid transparent",
           }}
         ></Box>

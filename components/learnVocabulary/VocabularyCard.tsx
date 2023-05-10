@@ -6,17 +6,26 @@ import _ from "../common";
 export interface IVocabularyCardProps {
   detailWord: IWord;
 }
+type PartOfSpeech = "Danh từ" | "Động từ" | "Tính từ" | "Trạng từ";
+const partOfSpeechMap: { [key: string]: PartOfSpeech } = {
+  n: "Danh từ",
+  v: "Động từ",
+  adj: "Tính từ",
+  adv: "Trạng từ",
+};
 
 export function VocabularyCard(props: IVocabularyCardProps) {
   const { detailWord } = props;
   const {
     word = "",
     pronounce = "",
-    definitions = [],
-    description,
+    // definitions = [],
+    description = "",
+    definition,
+    pos = "",
   } = detailWord;
   const type = description.split(":")[0];
-  const meaning = description.split(":")[1];
+  // const meaning = description.split(":")[1];
   return (
     <div>
       <Paper
@@ -52,10 +61,12 @@ export function VocabularyCard(props: IVocabularyCardProps) {
             );
           })} */}
           <Grid item>
-            <Typography variant="body1">{type}</Typography>
+            <Typography variant="body1">
+              {partOfSpeechMap[pos] || type}
+            </Typography>
           </Grid>
           <Grid item textAlign={"center"}>
-            <Typography variant="body1">{meaning}</Typography>
+            <Typography variant="body1">{definition}</Typography>
           </Grid>
         </Grid>
       </Paper>

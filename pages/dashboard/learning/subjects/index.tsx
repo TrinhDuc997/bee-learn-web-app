@@ -1,12 +1,4 @@
-import {
-  Box,
-  ButtonBase,
-  Grid,
-  Menu,
-  MenuItem,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { Grid } from "@mui/material";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { wordsAPI } from "@api-client";

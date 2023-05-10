@@ -9,7 +9,7 @@ import {
 import CssBaseline from "@mui/material/CssBaseline";
 import { CacheProvider } from "@emotion/react";
 import { theme, createEmotionCache } from "../utils/index";
-import { EmptyLayout } from "../components/layouts";
+import { EmptyLayout } from "@components/layouts";
 import { AppPropsWithLayout } from "../interfaces";
 import { AppProps } from "next/app";
 import { SWRConfig } from "swr";

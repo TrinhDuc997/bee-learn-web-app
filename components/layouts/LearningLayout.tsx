@@ -29,19 +29,28 @@ export const LearningLayout = (props: LayoutProps) => {
     <Stack minHeight="100vh">
       <Box
         component="header"
-        sx={{ position: "fixed", width: "100%", top: 0, zIndex: 999 }}
+        sx={{
+          // position: "fixed",
+          width: "100%",
+          top: 0,
+          zIndex: 999,
+          height: "70px",
+        }}
       >
         <HeaderPageLearningVocab />
       </Box>
-      <Box component="main">{children}</Box>
+      <Box component="main" height={"calc(100vh - 70px - 50px)"}>
+        {children}
+      </Box>
       <Box
         component="footer"
         sx={{
-          position: "fixed",
+          // position: "fixed",
           width: "100%",
           bottom: 0,
           zIndex: 999,
           backgroundColor: "white",
+          height: 50,
         }}
       >
         <Grid container>

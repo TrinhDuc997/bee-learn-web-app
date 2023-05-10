@@ -12,8 +12,8 @@ interface IDefinition {
   examples?: IExample[];
 }
 export interface IWord {
-  _id: string;
-  word: string;
+  _id?: string;
+  word?: string;
   pronounce?: string;
   image?: string;
   example?: string;
@@ -23,7 +23,7 @@ export interface IWord {
   pos?: string;
   translations?: ITranslation[];
   definitions?: IDefinition[];
-  description: string;
-  topics: string[];
+  description?: string;
+  topics?: string[];
 }
 export interface IWords extends Array<IWord> {}

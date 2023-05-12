@@ -59,7 +59,7 @@ export default function handler(
     req.url = req.url?.replace("/api/", "");
 
     proxy.web(req, res, {
-      target: "http://localhost:8000/v1/user/",
+      target: `${process.env.TARGET_API}v1/user/`,
       changeOrigin: true,
       selfHandleResponse: true,
     });

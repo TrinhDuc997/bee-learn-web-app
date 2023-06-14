@@ -1,5 +1,5 @@
 import { IPhoneticIPA, IVocabularySubjects, word } from "../interfaces";
-import { IWord, IWords } from "../interfaces/word.interface";
+import { IWord, IWordLeaned, IWords } from "../interfaces/word.interface";
 import axiosClient from "./general-api";
 
 export const wordsAPI = {
@@ -27,5 +27,23 @@ export const wordsAPI = {
   },
   getDetailWord: function (req?: any, version = "v1"): Promise<IWords> {
     return axiosClient.get(`/${version}/words/getDetailWord`, { params: req });
+  },
+  updateVocabularySubjects: function (
+    req?: any,
+    version = "v1"
+  ): Promise<IVocabularySubjects[]> {
+    return axiosClient.put(`/${version}/words/updateVocabularySubjects`, req);
+  },
+  updateWordsUserLearned: function (
+    req?: any,
+    version = "v1"
+  ): Promise<IWordLeaned[]> {
+    return axiosClient.put(`/${version}/words/updateWordsUserLearned`, req);
+  },
+
+  getListWordsToReview: function (req?: any, version = "v1"): Promise<IWords> {
+    return axiosClient.get(`/${version}/words/getListWordsToReview`, {
+      params: req,
+    });
   },
 };

@@ -12,6 +12,7 @@ export default function HeaderPageLearningVocab() {
       sx={{
         background: theme.palette.primary.gradient,
         height: 70,
+        alignItems: "center",
       }}
       container
       spacing={1}
@@ -51,7 +52,7 @@ export default function HeaderPageLearningVocab() {
               height: "100%",
               alignItems: "center",
               justifyContent: "right",
-              pr: "50px",
+              pr: { xs: "0px", sm: "40px" },
             }}
           >
             <AccountMenu />

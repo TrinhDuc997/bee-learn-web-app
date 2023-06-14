@@ -1,9 +1,8 @@
-import { Box, Button, CircularProgress, Grid } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { wordsAPI } from "@api-client";
 import CustomizedProgressBars from "@components/common/loadingComponent/CircularLoading";
-import BasicPagination from "@components/common/navigate/Pagination";
 import { LearningLayout } from "@components/layouts";
 import { VocabularyCard } from "@components/learnVocabulary";
 import _ from "@components/common";
@@ -15,8 +14,6 @@ export default function ListWords(props: IListWordsProps) {
   const router = useRouter();
   const { query } = router;
   const [dataWords, setDataWords] = React.useState<IWords>([]);
-  const [size, setSize] = React.useState(0);
-  const [page, setPage] = React.useState(1);
   // const [dataVocabs, setDataVocabs] = React.useState({});
   const [isLoading, setLoading] = React.useState(false);
   const dataFetchedRef = React.useRef(false);
@@ -61,12 +58,6 @@ export default function ListWords(props: IListWordsProps) {
         subject: query.subject || "",
         page: query.numberPack, // với trường hợp khóa học là từ vựng cơ bản thì sẽ giới hạn mỗi pack sẽ là 20 từ và gửi số pack lên để lấy dữ liệu
       });
-      if (query.subject !== "BASIC") {
-        const sizeCollection: number = await wordsAPI.getSizeCollection({
-          subject: query.subject || "",
-        });
-        setSize(sizeCollection);
-      }
 
       setDataWords(listWords);
       setLoading(false);
@@ -76,24 +67,12 @@ export default function ListWords(props: IListWordsProps) {
   //ComponentDidMount run first times --- end
 
   // func handle change page to get data --- start
-  async function handleChangePage(page: number) {
-    setLoading(true);
-    const listWords: IWords = await wordsAPI.getListVocabulary({
-      limit: 20,
-      page: page - 1,
-      subject: query.subject || "",
-    });
-    setDataWords(listWords);
-    setPage(page);
-    setLoading(false);
-  }
 
-  const sizePagination = Math.floor(size / 20);
   if (isLoading) return <CustomizedProgressBars />;
   return (
     <Grid container height={"100%"}>
-      <Grid item xs={3} height={"100%"}></Grid>
-      <Grid item xs={6} height={"100%"}>
+      <Grid item lg={3} md={1} sm={1} xs={0} height={"100%"}></Grid>
+      <Grid item lg={6} md={10} sm={10} xs={12} height={"100%"}>
         <Box
           sx={{
             boxShadow: "0px 30px 20px 20px #f0f0f0",
@@ -122,15 +101,6 @@ export default function ListWords(props: IListWordsProps) {
                 })}
               </Grid>
             </Grid>
-            {sizePagination > 1 && (
-              <Grid item xs={12}>
-                <BasicPagination
-                  handleChangePage={handleChangePage}
-                  count={sizePagination}
-                  page={page}
-                />
-              </Grid>
-            )}
             <Grid
               item
               position={"sticky"}
@@ -157,7 +127,7 @@ export default function ListWords(props: IListWordsProps) {
           </Grid>
         </Box>
       </Grid>
-      <Grid item xs={3} height={"100%"}>
+      <Grid item lg={3} md={1} sm={1} xs={0} height={"100%"}>
         <Box height={"100%"} width={"100%"}></Box>
       </Grid>
     </Grid>

@@ -54,11 +54,11 @@ export const LearningLayout = (props: LayoutProps) => {
         }}
       >
         <Grid container>
-          <Grid item xs={3}></Grid>
-          <Grid item xs={6}>
+          <Grid item lg={3} sm={1} md={1} xs={0}></Grid>
+          <Grid item lg={6} sm={10} md={10} xs={12}>
             <NavTabs />
           </Grid>
-          <Grid item xs={3}></Grid>
+          <Grid item lg={3} sm={1} md={1} xs={0}></Grid>
         </Grid>
       </Box>
     </Stack>

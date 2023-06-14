@@ -9,7 +9,7 @@ export function useAuth(options?: Partial<PublicConfiguration>) {
     data: profile,
     error,
     mutate,
-  } = useSWR("/v1/user/profile", {
+  } = useSWR("profile", {
     dedupingInterval: 60 * 60 * 1000,
     revalidateOnFocus: false,
     // shouldRetryOnError: true,
@@ -27,11 +27,20 @@ export function useAuth(options?: Partial<PublicConfiguration>) {
     await authAPI.logOut();
     mutate({}, false);
   }
+  function updateProfile(newFields: any) {
+    // Update specific fields in the profile object
+    if (profile) {
+      const updatedProfile = { ...profile, ...newFields };
+      mutate(updatedProfile, false); // Update profile with new fields
+    }
+  }
+
   return {
     profile,
     error,
     login,
     logout,
+    updateProfile,
     firstLoading,
   };
 }

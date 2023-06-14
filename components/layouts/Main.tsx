@@ -8,8 +8,9 @@ import { NextBreadcrumbs } from "../common/NextBreadcrumbs";
 
 export const MainLayout = (props: LayoutProps) => {
   const { children } = props;
+
   return (
-    <Stack minHeight="100vh">
+    <Stack height="100vh" sx={{ overflow: "auto" }}>
       <Header></Header>
       <Box
         sx={{

@@ -47,6 +47,10 @@ export default function NavTabs() {
   const [tabHighlight, setTabhighlightTab] = React.useState(
     getDefaultTabHighlight(router.pathname)
   );
+  useEffect(() => {
+    setTabhighlightTab(getDefaultTabHighlight(router.pathname));
+  }, [router.pathname]);
+
   const handleChange = (event: React.SyntheticEvent, tabHighlight: number) => {
     setTabhighlightTab(tabHighlight);
     router.push(HrefTab[tabHighlight]);

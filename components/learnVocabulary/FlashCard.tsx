@@ -68,13 +68,13 @@ interface word {
 export interface IRefFlascard {
   doSomething: () => boolean;
   handleClick: Function;
+  setDefaultFlashcard: Function;
 }
 function Flascard(props: word, ref: Ref<IRefFlascard>) {
   const { pageWord, direction, dataWords, handleNextStep } = props;
   const {
     word = "",
     definition = "",
-    pronounce,
     pos = "",
     description = "",
     definitions = [],
@@ -82,6 +82,7 @@ function Flascard(props: word, ref: Ref<IRefFlascard>) {
   const [isFlipped, setIsFlipped] = useState(false);
 
   const type = description.split(":")[0];
+  const pronunciation = _.getIpaPronunciation(word);
 
   const handleClick = () => {
     setIsFlipped(!isFlipped);
@@ -108,6 +109,7 @@ function Flascard(props: word, ref: Ref<IRefFlascard>) {
       return isFlipped;
     },
     handleClick,
+    setDefaultFlashcard: () => setIsFlipped(false),
   }));
 
   return (
@@ -196,9 +198,13 @@ function Flascard(props: word, ref: Ref<IRefFlascard>) {
                       {_.capitalizeWord(word)}
                     </Typography>
                   </Grid>
-                  <Grid item>
-                    <Typography variant="body1">/{pronounce}/</Typography>
-                  </Grid>
+                  {!!pronunciation && (
+                    <Grid item>
+                      <Typography variant="body1">
+                        / {pronunciation} /
+                      </Typography>
+                    </Grid>
+                  )}
                   <Grid item>
                     <Typography variant="body1">
                       {partOfSpeechMap[pos] || type}

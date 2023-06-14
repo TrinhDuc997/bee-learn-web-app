@@ -1,13 +1,16 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import * as React from "react";
+import { Theme } from "@mui/system";
 import { theme } from "@utils";
+import { SxProps } from "@mui/material";
 
 export function BannerTitle(props: {
   title: string;
   fontWeight?: string | number;
+  sxTypography?: SxProps<Theme>;
 }) {
-  const { title, fontWeight = "bold" } = props;
+  const { title, fontWeight = "bold", sxTypography } = props;
   return (
     <Box width={"100%"}>
       <Box width={"90%"} display={"flex"} margin={"auto"} marginBottom={"2px"}>
@@ -60,6 +63,7 @@ export function BannerTitle(props: {
             fontWeight={fontWeight}
             ml={"1rem"}
             mr={"1rem"}
+            sx={sxTypography}
           >
             {title}
           </Typography>

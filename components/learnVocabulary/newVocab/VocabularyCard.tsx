@@ -1,7 +1,7 @@
 import { Grid, Paper, Typography } from "@mui/material";
 import * as React from "react";
 import { IWord } from "@interfaces";
-import _ from "../common";
+import _ from "../../common";
 
 export interface IVocabularyCardProps {
   detailWord: IWord;
@@ -18,12 +18,12 @@ export function VocabularyCard(props: IVocabularyCardProps) {
   const { detailWord } = props;
   const {
     word = "",
-    pronounce = "",
     // definitions = [],
     description = "",
     definition,
     pos = "",
   } = detailWord;
+  const pronunciation = _.getIpaPronunciation(word);
   const type = description.split(":")[0];
   // const meaning = description.split(":")[1];
   return (
@@ -44,9 +44,11 @@ export function VocabularyCard(props: IVocabularyCardProps) {
           <Grid item>
             <Typography variant="h5">{_.capitalizeWord(word)}</Typography>
           </Grid>
-          <Grid item>
-            <Typography variant="body1">/{pronounce}/</Typography>
-          </Grid>
+          {!!pronunciation && (
+            <Grid item>
+              <Typography variant="body1">/ {pronunciation} /</Typography>
+            </Grid>
+          )}
           {/* {definitions?.map((i, index) => {
             const { type, meaning } = i;
             return (

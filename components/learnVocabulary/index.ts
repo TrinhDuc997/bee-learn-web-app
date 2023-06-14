@@ -1,1 +1,1 @@
-export * from "./VocabularyCard";
+export * from "./newVocab/VocabularyCard";

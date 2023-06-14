@@ -5,6 +5,7 @@ import { ListPostsSection } from "@components/home/ListPostsSection";
 import { MainLayout } from "@components/layouts";
 import { NextPageWithLayout } from "@interfaces";
 import { HeroSection } from "@components/home";
+import { useEffect } from "react";
 // const soundPH = new Audio("/soundIPA/∫.mp3");
 
 export interface IHomePageProps {

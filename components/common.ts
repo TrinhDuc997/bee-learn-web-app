@@ -1,4 +1,6 @@
 import readXlsxFile from "read-excel-file";
+import { dictionary } from "cmu-pronouncing-dictionary";
+import { toEnglishPhoneticAlphabet } from "arpabet-and-ipa-convertor-ts";
 
 namespace actionCommon {
   export function capitalizeFirstLetter(str = "") {
@@ -68,5 +70,18 @@ namespace actionCommon {
     return invertedHexColor;
   }
   // Handle name user - END
+
+  // Handle Phonetic - START
+  export function getIpaPronunciation(word: string) {
+    const arrayWords = word.split(" ");
+    let pronunciations: string[] = [];
+    arrayWords.forEach((i) => {
+      const pronunciation = dictionary[i];
+      pronunciations.push(toEnglishPhoneticAlphabet(pronunciation) || "");
+    });
+
+    return pronunciations.length > 0 ? pronunciations.join(" ") : "";
+  }
+  //Handle Phonetic - END
 }
 export default actionCommon;

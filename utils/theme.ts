@@ -32,7 +32,12 @@ export const theme = createTheme({
       paper: grey[300],
     },
     error: {
-      main: red.A400,
+      main: red.A200,
+      light: red[600],
+    },
+    success: {
+      main: green.A200,
+      light: green[600],
     },
   },
   components: {

@@ -26,4 +26,18 @@ export interface IWord {
   description?: string;
   topics?: string[];
 }
+export type PartOfSpeech = "Danh từ" | "Động từ" | "Tính từ" | "Trạng từ";
+export const partOfSpeechMap: { [key: string]: PartOfSpeech } = {
+  n: "Danh từ",
+  v: "Động từ",
+  adj: "Tính từ",
+  adv: "Trạng từ",
+};
 export interface IWords extends Array<IWord> {}
+
+export interface IWordLeaned {
+  word: string;
+  numberOfReview: number;
+  numberOfReviewCorrect: number;
+  lastTimeReview?: number;
+}

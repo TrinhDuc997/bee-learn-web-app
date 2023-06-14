@@ -19,7 +19,10 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap"
             rel="stylesheet"
           ></link>
-          <script src="https://code.responsivevoice.org/responsivevoice.js?key=nQ3cU9Tg"></script>
+          <script
+            src="https://code.responsivevoice.org/responsivevoice.js?key=nQ3cU9Tg"
+            async
+          ></script>
           {/* <script src="/sourceResVoice.js" /> */}
           {/* <link
             href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap"

@@ -1,11 +1,28 @@
-import React, { forwardRef, Ref, useImperativeHandle, useState } from "react";
-import { Box, Card, CardContent, Grid, Typography } from "@mui/material";
+import React, {
+  forwardRef,
+  Ref,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from "react";
+import {
+  Box,
+  ButtonBase,
+  Card,
+  CardContent,
+  Grid,
+  Typography,
+} from "@mui/material";
 import { styled } from "@mui/system";
 import { AnimatePresence, motion } from "framer-motion";
 import { IWords } from "@interfaces";
 import _ from "../common";
 import TouchAppOutlinedIcon from "@mui/icons-material/TouchAppOutlined";
 import DurationCircle from "@components/common/DurationCircle";
+import Image from "next/image";
+import responsiveVoice from "utils/responsiveVoice";
+import VolumeUpIcon from "@mui/icons-material/VolumeUp";
+
 const StyledCard = styled(Card)`
   width: 300px;
   height: 200px;
@@ -111,7 +128,19 @@ function Flascard(props: word, ref: Ref<IRefFlascard>) {
     handleClick,
     setDefaultFlashcard: () => setIsFlipped(false),
   }));
-
+  function readWord(e: any, word: string, rate?: number) {
+    e.preventDefault();
+    if (!!rate) {
+      responsiveVoice(word, rate);
+    } else {
+      responsiveVoice(word);
+    }
+  }
+  useEffect(() => {
+    setTimeout(() => {
+      responsiveVoice(word);
+    }, 500);
+  }, []);
   return (
     <AnimatePresence initial={true} custom={direction}>
       <motion.div
@@ -147,8 +176,48 @@ function Flascard(props: word, ref: Ref<IRefFlascard>) {
             justifyContent: "center",
             borderRadius: "15px",
             position: "relative",
+            flexDirection: "column",
           }}
         >
+          <Box display={"flex"} justifyContent={"center"} mb={"10px"}>
+            <ButtonBase
+              sx={{
+                padding: "10px",
+                border: "2px solid",
+                borderColor: "primary.main",
+                borderRadius: "50%",
+                width: "55px",
+                height: "55px",
+                mr: "20px",
+              }}
+              onClick={(e) => readWord(e, word)}
+            >
+              <VolumeUpIcon fontSize="large" sx={{ color: "#009500" }} />
+            </ButtonBase>
+            <ButtonBase
+              sx={{
+                padding: "10px",
+                border: "2px solid",
+                borderColor: "primary.main",
+                borderRadius: "50%",
+                width: "55px",
+                height: "55px",
+                ml: "20px",
+              }}
+            >
+              <Image
+                src={"/snail-icon.svg"}
+                width={45}
+                height={45}
+                color="red"
+                style={{
+                  filter:
+                    "brightness(0) saturate(100%) invert(20%) sepia(100%) saturate(5037%) hue-rotate(98deg) brightness(119%) contrast(103%)",
+                }}
+                onClick={(e) => readWord(e, word, 0.5)}
+              />
+            </ButtonBase>
+          </Box>
           <StyledCard
             onClick={handleClick}
             sx={{

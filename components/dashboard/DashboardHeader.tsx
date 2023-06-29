@@ -8,6 +8,7 @@ function DashboardHeader() {
   const { name = "" } = profile;
   return (
     <Grid
+      item
       container
       height={"70px"}
       justifyContent={"space-between"}

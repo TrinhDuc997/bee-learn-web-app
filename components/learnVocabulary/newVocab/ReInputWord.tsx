@@ -14,7 +14,7 @@ import { IWord, partOfSpeechMap } from "@interfaces";
 import InformFlashCard from "../InformFlashCard";
 import _ from "@components/common";
 import DurationCircle from "@components/common/DurationCircle";
-// import responsiveVoice from "utils/responsiveVoice";
+import responsiveVoice from "utils/responsiveVoice";
 
 interface InputWordProps {
   dataWord: IWord;
@@ -25,8 +25,6 @@ export interface RefReInputWord {
   getWordReInput: Function;
   handleInputIncorrectReInput: Function;
   setInput: Function;
-  openNotice: boolean;
-  setOpenNotice: Function;
 }
 
 function ReInputWord(props: InputWordProps, ref?: Ref<RefReInputWord>) {
@@ -52,6 +50,9 @@ function ReInputWord(props: InputWordProps, ref?: Ref<RefReInputWord>) {
   }, [word]);
 
   const handleInputIncorrectReInput = (isInCorrect: boolean) => {
+    if (isInCorrect) {
+      responsiveVoice(dataWord.word || "");
+    }
     setOpen(isInCorrect);
   };
   const getWordReInput = () => {
@@ -61,10 +62,6 @@ function ReInputWord(props: InputWordProps, ref?: Ref<RefReInputWord>) {
     getWordReInput,
     handleInputIncorrectReInput,
     setInput,
-    openNotice: open,
-    setOpenNotice: (isOpen: boolean) => {
-      setOpen(isOpen);
-    },
   }));
 
   return (

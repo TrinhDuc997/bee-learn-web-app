@@ -13,11 +13,12 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useAuth } from "@hooks";
 import _ from "../common";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
+import LoadingDots from "./loadingComponent/LoadingDot";
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const { logout, profile = {} } = useAuth();
+  const { logout, profile = {}, isLoading } = useAuth();
   const { name = "" } = profile;
   const router = useRouter();
   const HandleLogout = () => {
@@ -41,29 +42,7 @@ export default function AccountMenu() {
           height: "100%",
         }}
       >
-        {!!profile.id ? (
-          <Tooltip title="Account settings">
-            <IconButton
-              onClick={handleClick}
-              size="small"
-              sx={{ ml: 2 }}
-              aria-controls={open ? "account-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-            >
-              <Avatar
-                sx={{
-                  width: 45,
-                  height: 45,
-                  bgcolor: _.stringToColor(name),
-                  color: _.invertColor(_.stringToColor(name)),
-                }}
-              >
-                {_.stringAvatar(name)}
-              </Avatar>
-            </IconButton>
-          </Tooltip>
-        ) : (
+        {!profile.id && !isLoading ? (
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Button
               variant="outlined"
@@ -101,6 +80,34 @@ export default function AccountMenu() {
               Đăng Ký
             </Button>
           </Box>
+        ) : (
+          <Tooltip title="Account settings">
+            <IconButton
+              onClick={handleClick}
+              size="small"
+              sx={{ ml: 2 }}
+              aria-controls={open ? "account-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+            >
+              <Avatar
+                sx={{
+                  width: 45,
+                  height: 45,
+                  bgcolor: isLoading
+                    ? "secondary.light"
+                    : _.stringToColor(name),
+                  color: _.invertColor(_.stringToColor(name)),
+                }}
+              >
+                {isLoading ? (
+                  <Avatar sx={{ bgcolor: "primary.main" }} />
+                ) : (
+                  _.stringAvatar(name)
+                )}
+              </Avatar>
+            </IconButton>
+          </Tooltip>
         )}
       </Box>
       <Menu
@@ -138,20 +145,29 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem>
-          <Avatar /> {name}
-        </MenuItem>
+        {isLoading ? (
+          <MenuItem sx={{ alignItems: "flex-end" }}>
+            <Typography variant="body1">Đang lấy dữ liệu</Typography>
+            <LoadingDots sx={{ paddingBottom: "7px" }} />
+          </MenuItem>
+        ) : (
+          <MenuItem>
+            <Avatar /> {name}
+          </MenuItem>
+        )}
         <Divider />
-        <MenuItem
-          onClick={() => {
-            router.push("/dashboard");
-          }}
-        >
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          Dashboard
-        </MenuItem>
+        {profile.id && (
+          <MenuItem
+            onClick={() => {
+              router.push("/dashboard");
+            }}
+          >
+            <ListItemIcon>
+              <Settings fontSize="small" />
+            </ListItemIcon>
+            Dashboard
+          </MenuItem>
+        )}
         <MenuItem
           onClick={() => {
             HandleLogout();

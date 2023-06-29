@@ -29,7 +29,8 @@ export interface IRefSpellWordReview {
 }
 function SpellWordReview(props: InputWordProps, ref: Ref<IRefSpellWordReview>) {
   const { dataWord = {} } = props;
-  const { word = "" } = dataWord;
+  const { word = "", examples = [] } = dataWord;
+  const { example = "", translateExample = "" } = examples[0] || {};
   const [inputs, setInputs] = useState<string[]>(Array(word.length).fill(""));
   const pronunciation = _.getIpaPronunciation(word || "");
 
@@ -181,6 +182,14 @@ function SpellWordReview(props: InputWordProps, ref: Ref<IRefSpellWordReview>) {
                 </Grid>
                 <Grid item textAlign={"center"}>
                   <Typography variant="body1">{dataWord.definition}</Typography>
+                </Grid>
+                <Grid item textAlign={"center"}>
+                  <Typography variant="body1">
+                    {example ? `Ex: ${example}` : ""}
+                  </Typography>
+                </Grid>
+                <Grid item textAlign={"center"}>
+                  <Typography variant="body1">{translateExample}</Typography>
                 </Grid>
               </Grid>
             </Paper>

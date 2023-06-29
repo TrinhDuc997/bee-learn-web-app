@@ -17,16 +17,23 @@ export function DashboardLayout(props: LayoutProps) {
     }
   }, [profile]);
   return (
-    <Grid minHeight={"100vh"} container direction={"row"}>
+    <Grid minHeight={"100vh"} container direction={"row"} flexWrap={"nowrap"}>
       <Grid item width={"300px"} padding={"1rem"} height={"100vh"}>
         <DashboardSpaceLeft />
       </Grid>
-      <Grid item sm padding={"1rem"} height={"100vh"}>
+      <Grid
+        item
+        container
+        sm
+        padding={"1rem"}
+        height={"100vh"}
+        overflow={"auto"}
+      >
         <DashboardHeader />
         <Grid
           sx={{
             backgroundColor: "background.default",
-            padding: "1rem",
+            padding: "0.5rem",
             borderRadius: "10px",
             border: "1px solid",
             borderColor: "divider",

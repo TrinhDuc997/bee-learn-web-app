@@ -2,7 +2,7 @@ import axios from "axios";
 import axiosClient from "./general-api";
 import { Configuration, OpenAIApi } from "openai";
 
-const OPENAI_API_KEY = "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";
+const OPENAI_API_KEY = "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";
 
 const configuration = new Configuration({
   apiKey: OPENAI_API_KEY,
@@ -15,6 +15,13 @@ export const generateText = async (prompt: string) => {
     size: "256x256",
   });
   return response;
+};
+export const generateDataWordFromAI = async (prompt: string) => {
+  const completion = await openai.createChatCompletion({
+    model: "gpt-3.5-turbo",
+    messages: [{ role: "user", content: prompt }],
+  });
+  return completion.data;
 };
 
 export const wordsAPI = {

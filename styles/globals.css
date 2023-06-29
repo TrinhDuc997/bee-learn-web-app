@@ -69,3 +69,42 @@ a {
   75% { left: 10px; }
   100% { left: 0; }
 }
+
+.loading-dots {
+  display: flex;
+  align-items: center;
+}
+
+/* css component LoadingDot.tsx --- start */
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #000;
+  margin: 0 4px;
+  animation: scaleAnimation 1.2s infinite;
+}
+
+.dot-1 {
+  animation-delay: 0s;
+}
+
+.dot-2 {
+  animation-delay: 0.4s;
+}
+
+.dot-3 {
+  animation-delay: 0.8s;
+}
+
+@keyframes scaleAnimation {
+  0%,
+  80%,
+  100% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.5);
+  }
+}
+/* css component LoadingDot.tsx --- end */

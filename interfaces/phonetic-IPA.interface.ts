@@ -23,5 +23,6 @@ export interface IVocabularySubjects {
   title?: string;
   subTitle?: string;
   hrefImg?: string;
+  tag?: string[];
   numberWord?: number;
 }

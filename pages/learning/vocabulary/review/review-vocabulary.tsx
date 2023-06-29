@@ -278,7 +278,6 @@ export default function ReviewVocabulary(props: IListWordsReviewProps) {
                   )}
                   {game === 3 && (
                     <ExampleForReview
-                      question="he is fast in the field and on the bases"
                       options={dataGame4.map((i) => i.word || "")}
                       dataWord={dataWord}
                       ref={exampleForReviewRef}

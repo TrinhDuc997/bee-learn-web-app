@@ -13,7 +13,6 @@ import _ from "@components/common";
 import responsiveVoice from "utils/responsiveVoice";
 
 type VocabularyReviewProps = {
-  question: string;
   options: string[];
   // onSubmit?: Function;
   dataWord: IWord;
@@ -28,11 +27,15 @@ const ExampleForReview = (
   props: VocabularyReviewProps,
   ref?: Ref<RefExampleForReview>
 ) => {
-  const { question, options, dataWord = {} } = props;
+  const { options, dataWord = {} } = props;
+  const { examples = [] } = dataWord;
+  const { example = "", translateExample = "" } = examples[0] || {};
   const correctAnswer = dataWord.word || "";
-  const formatQuestion = question.replace(
-    correctAnswer,
-    Array(correctAnswer.length).fill("_").join("")
+  const similarWord =
+    example.split(" ").find((i) => i.includes(correctAnswer)) || "";
+  const formatQuestion = example.replace(
+    similarWord,
+    Array(similarWord.length).fill("_").join("")
   );
   const [isCorrect, setIsCorrect] = useState(false);
   const [open, setOpen] = useState(false);
@@ -40,10 +43,6 @@ const ExampleForReview = (
   const pronunciation = _.getIpaPronunciation(dataWord.word || "");
   const handleSubmit = (selectedOption: string) => {
     responsiveVoice(dataWord.word || "");
-    console.log(
-      "🚀 ~ file: ExampleForReview.tsx:48 ~ handleSubmit ~ correctAnswer:",
-      dataWord.word || ""
-    );
 
     const isCorrect = selectedOption === correctAnswer;
     setIsCorrect(isCorrect);
@@ -120,6 +119,14 @@ const ExampleForReview = (
             </Grid>
             <Grid item textAlign={"center"}>
               <Typography variant="body1">{dataWord.definition}</Typography>
+            </Grid>
+            <Grid item textAlign={"center"}>
+              <Typography variant="body1">
+                {example ? `Ex: ${example}` : ""}
+              </Typography>
+            </Grid>
+            <Grid item textAlign={"center"}>
+              <Typography variant="body1">{translateExample}</Typography>
             </Grid>
           </Grid>
         </Paper>

@@ -1,7 +1,6 @@
 import { IVocabularySubjects } from "@interfaces";
 import {
   Box,
-  Button,
   ButtonBase,
   Grid,
   Menu,
@@ -9,7 +8,6 @@ import {
   Modal,
   Paper,
   TextField,
-  TextareaAutosize,
   Typography,
 } from "@mui/material";
 import { generateText } from "api-client/common-api";
@@ -107,7 +105,7 @@ export function SubjectItem(props: ISubjectItemProps) {
   }
   // Handle Save Picture --- END
   return (
-    <Grid key={item.title} item xs={4} marginBottom={"2rem"}>
+    <Grid key={item.title} item xs={6} lg={4} padding={"1rem"}>
       <Paper
         sx={{
           background: "#f3f3f3",

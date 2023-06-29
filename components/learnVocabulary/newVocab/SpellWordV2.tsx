@@ -14,7 +14,7 @@ import { useRef } from "react";
 import _ from "@components/common";
 import InformFlashCard from "../InformFlashCard";
 import DurationCircle from "@components/common/DurationCircle";
-// import responsiveVoice from "utils/responsiveVoice";
+import responsiveVoice from "utils/responsiveVoice";
 
 interface InputWordProps {
   dataWord: IWord;
@@ -25,8 +25,6 @@ export interface IRefSpellWordV2 {
   getInputSpellWordV2: Function;
   handleInputIncorrect: Function;
   setInputs: Function;
-  openNotice: boolean;
-  setOpenNotice: Function;
 }
 function SpellWordV2(props: InputWordProps, ref: Ref<IRefSpellWordV2>) {
   const { dataWord = {}, showDuration = true } = props;
@@ -86,6 +84,9 @@ function SpellWordV2(props: InputWordProps, ref: Ref<IRefSpellWordV2>) {
   };
 
   const handleInputIncorrect = (isInCorrect: boolean) => {
+    if (isInCorrect) {
+      responsiveVoice(dataWord.word || "");
+    }
     setOpen(isInCorrect);
   };
 
@@ -95,10 +96,6 @@ function SpellWordV2(props: InputWordProps, ref: Ref<IRefSpellWordV2>) {
     },
     handleInputIncorrect,
     setInputs,
-    openNotice: open,
-    setOpenNotice: (isOpen: boolean) => {
-      setOpen(isOpen);
-    },
   }));
   return (
     <Grid container direction={"column"}>

@@ -16,7 +16,6 @@ export default function ListWords(props: IListWordsProps) {
   const [dataWords, setDataWords] = React.useState<IWords>([]);
   // const [dataVocabs, setDataVocabs] = React.useState({});
   const [isLoading, setLoading] = React.useState(false);
-  const dataFetchedRef = React.useRef(false);
   // const [topics, setTopics] = React.useState<any[]>([]);
   // Read file PDF --- START
   // async function handleFileChange(file: File) {
@@ -49,8 +48,6 @@ export default function ListWords(props: IListWordsProps) {
   // Read file PDF --- END
   //ComponentDidMount run first times --- start
   React.useEffect(() => {
-    if (dataFetchedRef.current) return;
-    dataFetchedRef.current = true;
     setLoading(true);
     const fetchDataVocabSubject = async () => {
       const listWords: IWords = await wordsAPI.getListVocabulary({

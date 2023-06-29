@@ -43,9 +43,7 @@ export default function Login(props: ILoginProps) {
     event.preventDefault();
   };
   const router = useRouter();
-  const { login } = useAuth({
-    revalidateOnMount: false,
-  });
+  const { login } = useAuth();
   const handleSubmit = async (username: string, password: string) => {
     try {
       setLoading(true);
@@ -106,7 +104,7 @@ export default function Login(props: ILoginProps) {
                 height={90}
                 layout="intrinsic"
                 alt="logo"
-                src="/logo.png"
+                src="/Logo.png"
               />
             </Grid>
           </Grid>

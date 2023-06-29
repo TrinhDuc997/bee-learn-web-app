@@ -15,7 +15,6 @@ export default function DashboardSubjects(props: IDashboardSubjectsProps) {
     []
   );
   const [isLoading, setLoading] = React.useState(false);
-  const dataFetchedRef = React.useRef(false);
   // const [subjectOpen, setSubjectOpen] = React.useState<IVocabularySubjects>({});
   // const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   // const handleClick = (
@@ -30,8 +29,6 @@ export default function DashboardSubjects(props: IDashboardSubjectsProps) {
   // };
 
   React.useEffect(() => {
-    if (dataFetchedRef.current) return;
-    dataFetchedRef.current = true;
     setLoading(true);
     const fetchDataVocabSubject = async () => {
       const dataVocabularySubjects: IVocabularySubjects[] =
@@ -51,19 +48,13 @@ export default function DashboardSubjects(props: IDashboardSubjectsProps) {
   };
   if (isLoading) return <CustomizedProgressBars />;
   return (
-    <Grid container spacing={4}>
-      <Grid item sm={12}>
+    <Grid item container>
+      <Grid item sm={12} pb={"1rem"}>
         <Button variant="outlined" onClick={updateSubjects}>
           Update List Subject
         </Button>
       </Grid>
-      <Grid
-        item
-        container
-        rowSpacing={4}
-        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-        sx={{ pl: "1rem", pr: "1rem", pt: "1rem" }}
-      >
+      <Grid item container>
         {dataSubjects.map((item) => {
           return <SubjectItem key={item._id} item={item} />;
         })}

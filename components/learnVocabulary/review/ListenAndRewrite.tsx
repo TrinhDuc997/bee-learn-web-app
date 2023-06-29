@@ -35,7 +35,8 @@ function ListenAndRewrite(
   ref?: Ref<RefListenAndRewrite>
 ) {
   const { dataWord = {} } = props;
-  const { word = "" } = dataWord;
+  const { word = "", examples = [] } = dataWord;
+  const { example = "", translateExample = "" } = examples[0] || {};
   const [input, setInput] = useState<string>("");
   const pronunciation = _.getIpaPronunciation(word);
 
@@ -184,6 +185,14 @@ function ListenAndRewrite(
             </Grid>
             <Grid item textAlign={"center"}>
               <Typography variant="body1">{dataWord.definition}</Typography>
+            </Grid>
+            <Grid item textAlign={"center"}>
+              <Typography variant="body1">
+                {example ? `Ex: ${example}` : ""}
+              </Typography>
+            </Grid>
+            <Grid item textAlign={"center"}>
+              <Typography variant="body1">{translateExample}</Typography>
             </Grid>
           </Grid>
         </Paper>

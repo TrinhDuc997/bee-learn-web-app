@@ -10,7 +10,7 @@ import {
   MenuItem,
   MenuList,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 import ArticleIcon from "@mui/icons-material/Article";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
@@ -34,7 +34,9 @@ function DashboardSpaceLeft() {
     setOpen(!open);
   };
   const router = useRouter();
+
   const pathnameSelected = router.pathname.split("/").pop();
+
   return (
     <Grid
       sx={{ backgroundColor: "background.second", borderRadius: "10px" }}
@@ -74,6 +76,13 @@ function DashboardSpaceLeft() {
                 sx={{
                   pl: 4,
                 }}
+                onClick={() => {
+                  router.push({
+                    pathname: "/dashboard/learning/vocabulary",
+                    query: {},
+                  });
+                }}
+                selected={pathnameSelected === "vocabulary"}
               >
                 <CustomizedListItemIcon>
                   <AbcIcon />
@@ -86,7 +95,7 @@ function DashboardSpaceLeft() {
                 }}
                 onClick={() => {
                   router.push({
-                    pathname: router.asPath + "/learning/subjects",
+                    pathname: "/dashboard/learning/subjects",
                     query: {},
                   });
                 }}

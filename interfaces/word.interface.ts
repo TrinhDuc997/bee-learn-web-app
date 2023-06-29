@@ -6,17 +6,27 @@ interface IExample {
   example?: string;
   meaning?: string;
 }
-interface IDefinition {
+export interface IDefinition {
   type?: string;
   meaning?: string;
   examples?: IExample[];
+}
+export interface IExampleOfWord {
+  _id?: string;
+  isNew?: boolean; // isNew is generated when create new item or _id undefine
+  isChanged?: boolean;
+  word?: string;
+  type?: string;
+  translation?: string;
+  example?: string;
+  translateExample?: string;
 }
 export interface IWord {
   _id?: string;
   word?: string;
   pronounce?: string;
   image?: string;
-  example?: string;
+  examples?: IExampleOfWord[];
   definition?: string;
   pronunciation?: string;
   audio?: string;

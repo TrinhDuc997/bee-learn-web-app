@@ -8,7 +8,9 @@ export interface IItemVocabularyProps {
   row: IExpandWord;
 }
 
-const ItemVocabulary = React.memo((props: IItemVocabularyProps) => {
+const ItemVocabulary = React.memo(function ItemVocabulary(
+  props: IItemVocabularyProps
+) {
   const { row } = props;
   console.log(
     "🚀 ~ file: ItemDataVocabulary.tsx:13 ~ ItemVocabulary ~ row:",

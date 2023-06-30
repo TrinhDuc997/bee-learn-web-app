@@ -28,6 +28,7 @@ export interface RefListenAndRewrite {
   handleInputIncorrectReInput: Function;
   setInput: Function;
   openNotice: boolean;
+  isReivewCorrectly: boolean;
   setOpenNotice: Function;
 }
 
@@ -77,6 +78,7 @@ function ListenAndRewrite(
     handleInputIncorrectReInput,
     setInput,
     openNotice: open,
+    isReivewCorrectly: input.toUpperCase() === word?.toUpperCase(),
     setOpenNotice: (isOpen: boolean) => {
       setOpen(isOpen);
     },

@@ -22,6 +22,7 @@ type VocabularyReviewProps = {
 export interface RefExampleForReview {
   isCorrect: boolean;
   openNotice: boolean;
+  isReivewCorrectly: boolean;
   setOpenNotice: Function;
 }
 const ExampleForReview = (
@@ -59,6 +60,7 @@ const ExampleForReview = (
   useImperativeHandle(ref, () => ({
     isCorrect,
     openNotice: open,
+    isReivewCorrectly: isCorrect,
     setOpenNotice: (isOpen: boolean) => {
       setOpen(isOpen);
     },

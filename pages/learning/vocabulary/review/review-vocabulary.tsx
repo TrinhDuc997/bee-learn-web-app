@@ -1,5 +1,5 @@
 import { Box, Button, Grid } from "@mui/material";
-// import { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import * as React from "react";
 import { wordsAPI } from "@api-client";
 import CustomizedProgressBars from "@components/common/loadingComponent/CircularLoading";
@@ -26,26 +26,13 @@ import ListenAndRewrite, {
 import responsiveVoice from "utils/responsiveVoice";
 export interface IListWordsReviewProps {}
 
-/**
- * when reviewing vocabulary will have 3 games to review
- *  game 1: You are reading the meaning of Vietnamese, translating it to English, and spelling that.
- *  game 2: You are reading meaning and translation to English.
- *  game 3: Giving an example sentence with missed words and select an answer to fill up in place of missed
- *  game 4: listening and writing again.
- *
- * how to get data to review words.
- *  Words will have lastTimeReview. nextTimeReview will base on lastTimeReview plus amount of time corresponding to each level:
- *      with words in level1 review once an hour: ex: lastTimeReview: 2023/05/20 08:30 => nextTimeReview: 2023/05/20 09:30
- *      with words in level2 review once a day
- *      with words in level3 once each two day
- *      with words in level4 once every three days.
- *
- * with each vocabulary review will get 100 words to review
- */
-function getRandomGameToReview(): number {
+function getRandomGameToReview(preGame: number): number {
   // Updating will the game reviewing vocabulary flow for each word later.
-  return Math.ceil(Math.random() * 4);
-  // return 4;
+  let newGame: number = preGame;
+  while (newGame === preGame) {
+    newGame = Math.ceil(Math.random() * 4);
+  }
+  return newGame;
 }
 
 function getRandomObject(data: IWords, numberOfWordsIsGet: number = 3): IWords {
@@ -66,17 +53,34 @@ function shuffleData(data: IWords) {
   }
   return data;
 }
+/**
+ * when reviewing vocabulary will have 3 games to review
+ *  game 1: You are reading the meaning of Vietnamese, translating it to English, and spelling that.
+ *  game 2: You are reading meaning and translation to English.
+ *  game 3: Giving an example sentence with missed words and select an answer to fill up in place of missed
+ *  game 4: listening and writing again.
+ *
+ * how to get data to review words.
+ *  Words will have lastTimeReview. nextTimeReview will base on lastTimeReview plus amount of time corresponding to each level:
+ *      with words in level1 review once an hour: ex: lastTimeReview: 2023/05/20 08:30 => nextTimeReview: 2023/05/20 09:30
+ *      with words in level2 review once a day
+ *      with words in level3 once each two day
+ *      with words in level4 once every three days.
+ *
+ * with each vocabulary review will get 100 words to review
+ */
 export default function ReviewVocabulary(props: IListWordsReviewProps) {
-  // const router = useRouter();
+  const router = useRouter();
   // const { query } = router;
   const [dataWords, setDataWords] = React.useState<IWords>([]);
+  const dataWordsRef = React.useRef(dataWords);
+
   const [isLoading, setLoading] = React.useState(false);
   const [loadingFinish, setLoadingFinish] = React.useState(false);
-  const [game, setGame] = React.useState(getRandomGameToReview());
+  const [game, setGame] = React.useState(getRandomGameToReview(1));
   const [[pageWord, direction], setPageWord] = React.useState([0, 0]);
   const { profile = {}, updateProfile } = useAuth();
   const { id } = profile;
-  const dataFetchedRef = React.useRef(false);
   // const flashcardRef = React.useRef<IRefFlascard>(null);
   const SpellWordReviewRef = React.useRef<IRefSpellWordReview>(null);
   const ReInputWordReviewRef = React.useRef<RefReInputWordReview>(null);
@@ -93,14 +97,47 @@ export default function ReviewVocabulary(props: IListWordsReviewProps) {
 
   // func handle --- start
 
-  const paginate = (newDirection: number) => {
+  const paginate = async (newDirection: number) => {
     if (pageWord + newDirection > dataWords.length - 1) {
-      setPageWord([0, 0]);
+      const dataSubmit = {
+        id: profile.id,
+        isLearnNewWord: false,
+        wordsLeaned: dataWordsRef.current,
+      };
+      await wordsAPI.updateWordsUserLearned(dataSubmit);
+      router.push("/learning/vocabulary/review");
     } else if (pageWord + newDirection < 0) {
-      setPageWord([dataWords.length + newDirection, newDirection]);
+      setPageWord(() => {
+        setGame((preGame) => getRandomGameToReview(preGame));
+        return [dataWords.length + newDirection, newDirection];
+      });
     } else {
-      setPageWord([pageWord + newDirection, newDirection]);
+      setPageWord(() => {
+        setGame((preGame) => getRandomGameToReview(preGame));
+        return [pageWord + newDirection, newDirection];
+      });
     }
+  };
+  const updateWordReviewed = (
+    wordReviewed: string,
+    isReviewCorrect: boolean
+  ) => {
+    setDataWords((oldDataWords) => {
+      const newDataWords = oldDataWords.map((item) => {
+        if (item.word === wordReviewed) {
+          return {
+            ...item,
+            numberOfReview: (item.numberOfReview || 0) + 1,
+            numberOfReviewCorrect:
+              (item.numberOfReviewCorrect || 0) + (isReviewCorrect ? 1 : 0),
+          };
+        }
+        return item;
+      });
+      dataWordsRef.current = newDataWords;
+      paginate(1);
+      return newDataWords;
+    });
   };
   const handleNextWord = () => {
     const SpellWordReviewElement = SpellWordReviewRef.current;
@@ -110,50 +147,57 @@ export default function ReviewVocabulary(props: IListWordsReviewProps) {
 
     if (!!SpellWordReviewElement && game === 1) {
       // handle game 1
-      const inputWord = SpellWordReviewElement.getInputSpellWordReview();
+      // const inputWord = SpellWordReviewElement.getInputSpellWordReview();
       const checked = SpellWordReviewElement.openNotice;
+      const isReivewCorrectly = SpellWordReviewElement.isReviewCorrectly;
       if (!checked) {
         responsiveVoice(dataWord.word || "");
         SpellWordReviewElement.setOpenNotice(true);
       } else {
         SpellWordReviewElement.setOpenNotice(false);
-        setGame(getRandomGameToReview());
+        // setGame((preGame) => getRandomGameToReview(preGame));
         SpellWordReviewElement.setInputs([]);
-        paginate(1);
+        updateWordReviewed(dataWord.word || "", isReivewCorrectly);
+        // paginate(1);
       }
     } else if (!!ReInputWordReviewRefElement && game === 2) {
       // handle game 2
-      const ReInputWordReview = ReInputWordReviewRefElement.getWordReInput();
+      // const ReInputWordReview = ReInputWordReviewRefElement.getWordReInput();
       const checked = ReInputWordReviewRefElement.openNotice;
+      const isReivewCorrectly = ReInputWordReviewRefElement.isReivewCorrectly;
       if (!checked) {
         responsiveVoice(dataWord.word || "");
         ReInputWordReviewRefElement?.setOpenNotice(true);
       } else {
         ReInputWordReviewRefElement.setOpenNotice(false);
-        setGame(getRandomGameToReview());
+        // setGame((preGame) => getRandomGameToReview(preGame));
         ReInputWordReviewRefElement.setInput("");
-        paginate(1);
+        updateWordReviewed(dataWord.word || "", isReivewCorrectly);
+        // paginate(1);
       }
     } else if (!!exampleForReviewRefElement && game === 3) {
       // handle game 3
       const checked = exampleForReviewRefElement.openNotice;
+      const isReivewCorrectly = exampleForReviewRefElement.isReivewCorrectly;
+
       if (checked) {
         exampleForReviewRefElement.setOpenNotice(false);
-        setGame(getRandomGameToReview());
-        paginate(1);
+        // setGame((preGame) => getRandomGameToReview(preGame));
+        updateWordReviewed(dataWord.word || "", isReivewCorrectly);
+        // paginate(1);
       }
     } else if (!!listenAndRewriteRefElement && game === 4) {
       // handle game 4
-      const ReInputWordReview = listenAndRewriteRefElement.getWordReInput();
+      // const ReInputWordReview = listenAndRewriteRefElement.getWordReInput();
       const checked = listenAndRewriteRefElement.openNotice;
+      const isReivewCorrectly = listenAndRewriteRefElement.isReivewCorrectly;
       if (!checked) {
         responsiveVoice(dataWord.word || "");
         listenAndRewriteRefElement?.setOpenNotice(true);
       } else {
         listenAndRewriteRefElement.setOpenNotice(false);
-        setGame(getRandomGameToReview());
         listenAndRewriteRefElement.setInput("");
-        paginate(1);
+        updateWordReviewed(dataWord.word || "", isReivewCorrectly);
       }
     }
   };

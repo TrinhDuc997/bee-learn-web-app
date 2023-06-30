@@ -35,6 +35,8 @@ export interface IWord {
   definitions?: IDefinition[];
   description?: string;
   topics?: string[];
+  numberOfReview?: number;
+  numberOfReviewCorrect?: number;
 }
 export type PartOfSpeech = "Danh từ" | "Động từ" | "Tính từ" | "Trạng từ";
 export const partOfSpeechMap: { [key: string]: PartOfSpeech } = {

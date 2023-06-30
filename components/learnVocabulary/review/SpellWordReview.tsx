@@ -26,6 +26,7 @@ export interface IRefSpellWordReview {
   handleInputIncorrect: Function;
   setInputs: Function;
   openNotice: boolean;
+  isReviewCorrectly: boolean;
   setOpenNotice: Function;
 }
 function SpellWordReview(props: InputWordProps, ref: Ref<IRefSpellWordReview>) {
@@ -103,6 +104,7 @@ function SpellWordReview(props: InputWordProps, ref: Ref<IRefSpellWordReview>) {
     handleInputIncorrect,
     setInputs,
     openNotice: open,
+    isReviewCorrectly: inputs.join("").toUpperCase() === word?.toUpperCase(),
     setOpenNotice: (isOpen: boolean) => {
       setOpen(isOpen);
     },

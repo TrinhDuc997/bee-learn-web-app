@@ -22,6 +22,7 @@ import DurationCircle from "@components/common/DurationCircle";
 import Image from "next/image";
 import responsiveVoice from "utils/responsiveVoice";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
+import { dataPOSMap } from "utils/dataCommon";
 
 const StyledCard = styled(Card)`
   width: 300px;
@@ -89,38 +90,21 @@ export interface IRefFlascard {
 }
 function Flascard(props: word, ref: Ref<IRefFlascard>) {
   const { pageWord, direction, dataWords, handleNextStep } = props;
+  const { word = "", examples = [] } = dataWords[pageWord] || {};
   const {
-    word = "",
-    definition = "",
-    pos = "",
-    description = "",
-    definitions = [],
-  } = dataWords[pageWord] || {};
+    translation,
+    type = "",
+    example,
+    translateExample,
+  } = examples[0] || {};
+  const pos = dataPOSMap[type];
   const [isFlipped, setIsFlipped] = useState(false);
 
-  const type = description.split(":")[0];
   const pronunciation = _.getIpaPronunciation(word);
 
   const handleClick = () => {
     setIsFlipped(!isFlipped);
   };
-
-  type PartOfSpeech = "Danh từ" | "Động từ" | "Tính từ" | "Trạng từ";
-
-  const partOfSpeechMap: { [key: string]: PartOfSpeech } = {
-    n: "Danh từ",
-    v: "Động từ",
-    adj: "Tính từ",
-    adv: "Trạng từ",
-  };
-
-  const { examples = [], meaning } = definitions.find(
-    (i) =>
-      i.type?.toUpperCase() === (partOfSpeechMap[pos] || "").toUpperCase() &&
-      (i.examples || []).length > 0
-  ) || { examples: [{ meaning: "", example: "" }] };
-  const { example, meaning: meaningEx } = examples[0];
-
   useImperativeHandle(ref, () => ({
     doSomething() {
       return isFlipped;
@@ -275,15 +259,13 @@ function Flascard(props: word, ref: Ref<IRefFlascard>) {
                     </Grid>
                   )}
                   <Grid item>
-                    <Typography variant="body1">
-                      {partOfSpeechMap[pos] || type}
-                    </Typography>
+                    <Typography variant="body1">{pos}</Typography>
                   </Grid>
-                  {example && (
-                    <Grid item>
-                      <Typography variant="body1">EX: {example}</Typography>
-                    </Grid>
-                  )}
+
+                  <Grid item textAlign={"center"}>
+                    <Typography variant="body1">Ex: {example}</Typography>
+                    <Typography variant="body2">{translateExample}</Typography>
+                  </Grid>
                 </Grid>
               </CardContent>
             </Front>
@@ -326,14 +308,13 @@ function Flascard(props: word, ref: Ref<IRefFlascard>) {
 
                   <Grid item>
                     <Typography variant="h5" component="div">
-                      {meaning || definition}
+                      {translation}
                     </Typography>
                   </Grid>
-                  {meaningEx && (
-                    <Grid item>
-                      <Typography variant="body1">VD: {meaningEx}</Typography>
-                    </Grid>
-                  )}
+                  <Grid item textAlign={"center"}>
+                    <Typography variant="body1">Ex: {example}</Typography>
+                    <Typography variant="body2">{translateExample}</Typography>
+                  </Grid>
                 </Grid>
               </CardContent>
             </Back>

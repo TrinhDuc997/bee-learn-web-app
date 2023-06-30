@@ -2,29 +2,18 @@ import { Grid, Paper, Typography } from "@mui/material";
 import * as React from "react";
 import { IWord } from "@interfaces";
 import _ from "../../common";
+import { dataPOSMap } from "utils/dataCommon";
 
 export interface IVocabularyCardProps {
   detailWord: IWord;
 }
-type PartOfSpeech = "Danh từ" | "Động từ" | "Tính từ" | "Trạng từ";
-const partOfSpeechMap: { [key: string]: PartOfSpeech } = {
-  n: "Danh từ",
-  v: "Động từ",
-  adj: "Tính từ",
-  adv: "Trạng từ",
-};
 
 export function VocabularyCard(props: IVocabularyCardProps) {
   const { detailWord } = props;
-  const {
-    word = "",
-    // definitions = [],
-    description = "",
-    definition,
-    pos = "",
-  } = detailWord;
+  const { word = "", examples = [] } = detailWord;
+  const { translation, type = "" } = examples[0] || {};
+  const pos = dataPOSMap[type];
   const pronunciation = _.getIpaPronunciation(word);
-  const type = description.split(":")[0];
   // const meaning = description.split(":")[1];
   return (
     <div>
@@ -63,12 +52,10 @@ export function VocabularyCard(props: IVocabularyCardProps) {
             );
           })} */}
           <Grid item>
-            <Typography variant="body1">
-              {partOfSpeechMap[pos] || type}
-            </Typography>
+            <Typography variant="body1">{pos}</Typography>
           </Grid>
           <Grid item textAlign={"center"}>
-            <Typography variant="body1">{definition}</Typography>
+            <Typography variant="body1">{translation}</Typography>
           </Grid>
         </Grid>
       </Paper>

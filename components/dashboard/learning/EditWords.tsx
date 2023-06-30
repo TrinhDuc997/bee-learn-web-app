@@ -101,32 +101,29 @@ export const EditWords = (props: IEditWordsProps) => {
 
   const {
     word = "",
-    definition = "",
+    // definition = "",
     description = "",
-    pos,
+    // pos,
     topics,
-    examples = [],
+    // examples = [],
   } = listWords[page] || {};
-  console.log(
-    "🚀 ~ file: EditWords.tsx:90 ~ EditWords ~ listWords[page]:",
-    listWords[page]
-  );
+
   const convertTopics =
     topics?.map((i) => {
       return i.split(" - ")[0];
     }) || [];
-  const convertPOS: POS[] =
-    pos?.split(",").map((item: string) => {
-      const convertData = dataPOS.find((i) => i.pos === item.trim());
-      if (convertData) {
-        return convertData;
-      } else {
-        return {
-          pos: item,
-          title: item,
-        };
-      }
-    }) || [];
+  // const convertPOS: POS[] =
+  //   pos?.split(",").map((item: string) => {
+  //     const convertData = dataPOS.find((i) => i.pos === item.trim());
+  //     if (convertData) {
+  //       return convertData;
+  //     } else {
+  //       return {
+  //         pos: item,
+  //         title: item,
+  //       };
+  //     }
+  //   }) || [];
   const eventListenerKeydown = (event: KeyboardEvent) => {
     const target = event.target as Element;
     if (event.key === "ArrowRight" && target.nodeName !== "TEXTAREA") {
@@ -210,7 +207,7 @@ export const EditWords = (props: IEditWordsProps) => {
               <Grid item>
                 <h2 id="parent-modal-title">{word}</h2>
               </Grid>
-              <Grid item>
+              {/* <Grid item>
                 <TextField
                   id="outlined-multiline-static"
                   label="Vietnamese"
@@ -218,7 +215,7 @@ export const EditWords = (props: IEditWordsProps) => {
                   sx={{ width: "100%", pb: "1rem" }}
                   size="small"
                   // InputProps={{ inputComponent: TextareaAutosize }}
-                  defaultValue={definition}
+                  defaultValue={translation}
                   onBlur={(e) => {
                     if (handleChangeListWords) {
                       handleChangeListWords({
@@ -228,7 +225,7 @@ export const EditWords = (props: IEditWordsProps) => {
                     }
                   }}
                 />
-              </Grid>
+              </Grid> */}
               <Grid item>
                 <TextField
                   id="outlined-multiline-static"
@@ -255,7 +252,7 @@ export const EditWords = (props: IEditWordsProps) => {
                 mb={"10px"}
                 justifyContent={"space-between"}
               >
-                <Grid item xs={6} pr={"5px"}>
+                {/* <Grid item xs={6} pr={"5px"}>
                   <Autocomplete
                     multiple
                     id="tags-outlined"
@@ -286,7 +283,7 @@ export const EditWords = (props: IEditWordsProps) => {
                       <TextField {...params} label="POS" placeholder="POS" />
                     )}
                   />
-                </Grid>
+                </Grid> */}
                 <Grid item xs={6} pl={"5px"}>
                   <Autocomplete
                     multiple

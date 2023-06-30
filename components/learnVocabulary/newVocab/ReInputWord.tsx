@@ -15,6 +15,7 @@ import InformFlashCard from "../InformFlashCard";
 import _ from "@components/common";
 import DurationCircle from "@components/common/DurationCircle";
 import responsiveVoice from "utils/responsiveVoice";
+import { dataPOSMap } from "utils/dataCommon";
 
 interface InputWordProps {
   dataWord: IWord;
@@ -29,7 +30,14 @@ export interface RefReInputWord {
 
 function ReInputWord(props: InputWordProps, ref?: Ref<RefReInputWord>) {
   const { dataWord = {}, showDuration = true } = props;
-  const { word = "" } = dataWord;
+  const { word = "", examples = [] } = dataWord;
+  const {
+    translation,
+    type = "",
+    example,
+    translateExample,
+  } = examples[0] || {};
+  const pos = dataPOSMap[type];
   const [input, setInput] = useState<string>("");
   const pronunciation = _.getIpaPronunciation(word);
 
@@ -68,7 +76,7 @@ function ReInputWord(props: InputWordProps, ref?: Ref<RefReInputWord>) {
     <Grid container direction={"column"}>
       <Grid item>
         <Typography variant="h5" color={"primary.main"} sx={{ margin: "1rem" }}>
-          {dataWord.definition}
+          {translation}
         </Typography>
       </Grid>
 
@@ -143,13 +151,14 @@ function ReInputWord(props: InputWordProps, ref?: Ref<RefReInputWord>) {
               </Grid>
             )}
             <Grid item>
-              <Typography variant="body1">
-                {partOfSpeechMap[dataWord.pos || ""] ||
-                  dataWord.description?.split(":")[0]}
-              </Typography>
+              <Typography variant="body1">{pos}</Typography>
             </Grid>
             <Grid item textAlign={"center"}>
-              <Typography variant="body1">{dataWord.definition}</Typography>
+              <Typography variant="body1">{translation}</Typography>
+            </Grid>
+            <Grid item textAlign={"center"}>
+              <Typography variant="body1">Ex: {example}</Typography>
+              <Typography variant="body2">{translateExample}</Typography>
             </Grid>
           </Grid>
         </Paper>

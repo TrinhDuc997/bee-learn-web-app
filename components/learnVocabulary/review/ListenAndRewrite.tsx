@@ -17,6 +17,7 @@ import DurationCircle from "@components/common/DurationCircle";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import Image from "next/image";
 import responsiveVoice from "utils/responsiveVoice";
+import { dataPOSMap } from "utils/dataCommon";
 
 interface InputWordProps {
   dataWord: IWord;
@@ -36,7 +37,13 @@ function ListenAndRewrite(
 ) {
   const { dataWord = {} } = props;
   const { word = "", examples = [] } = dataWord;
-  const { example = "", translateExample = "" } = examples[0] || {};
+  const {
+    translation,
+    type = "",
+    example,
+    translateExample,
+  } = examples[0] || {};
+  const pos = dataPOSMap[type];
   const [input, setInput] = useState<string>("");
   const pronunciation = _.getIpaPronunciation(word);
 
@@ -178,13 +185,10 @@ function ListenAndRewrite(
               </Grid>
             )}
             <Grid item>
-              <Typography variant="body1">
-                {partOfSpeechMap[dataWord.pos || ""] ||
-                  dataWord.description?.split(":")[0]}
-              </Typography>
+              <Typography variant="body1">{pos}</Typography>
             </Grid>
             <Grid item textAlign={"center"}>
-              <Typography variant="body1">{dataWord.definition}</Typography>
+              <Typography variant="body1">{translation}</Typography>
             </Grid>
             <Grid item textAlign={"center"}>
               <Typography variant="body1">

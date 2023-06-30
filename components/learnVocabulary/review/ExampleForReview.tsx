@@ -11,6 +11,7 @@ import InformFlashCard from "../InformFlashCard";
 import { IWord, partOfSpeechMap } from "@interfaces";
 import _ from "@components/common";
 import responsiveVoice from "utils/responsiveVoice";
+import { dataPOSMap } from "utils/dataCommon";
 
 type VocabularyReviewProps = {
   options: string[];
@@ -29,7 +30,13 @@ const ExampleForReview = (
 ) => {
   const { options, dataWord = {} } = props;
   const { examples = [] } = dataWord;
-  const { example = "", translateExample = "" } = examples[0] || {};
+  const {
+    example = "",
+    translateExample = "",
+    type = "",
+    translation,
+  } = examples[0] || {};
+  const pos = dataPOSMap[type];
   const correctAnswer = dataWord.word || "";
   const similarWord =
     example.split(" ").find((i) => i.includes(correctAnswer)) || "";
@@ -112,13 +119,10 @@ const ExampleForReview = (
               </Grid>
             )}
             <Grid item>
-              <Typography variant="body1">
-                {partOfSpeechMap[dataWord.pos || ""] ||
-                  dataWord.description?.split(":")[0]}
-              </Typography>
+              <Typography variant="body1">{pos}</Typography>
             </Grid>
             <Grid item textAlign={"center"}>
-              <Typography variant="body1">{dataWord.definition}</Typography>
+              <Typography variant="body1">{translation}</Typography>
             </Grid>
             <Grid item textAlign={"center"}>
               <Typography variant="body1">

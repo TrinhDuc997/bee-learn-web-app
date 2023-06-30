@@ -15,6 +15,7 @@ import _ from "@components/common";
 import InformFlashCard from "../InformFlashCard";
 import DurationCircle from "@components/common/DurationCircle";
 import responsiveVoice from "utils/responsiveVoice";
+import { dataPOSMap } from "utils/dataCommon";
 
 interface InputWordProps {
   dataWord: IWord;
@@ -28,7 +29,14 @@ export interface IRefSpellWordV2 {
 }
 function SpellWordV2(props: InputWordProps, ref: Ref<IRefSpellWordV2>) {
   const { dataWord = {}, showDuration = true } = props;
-  const { word = "" } = dataWord;
+  const { word = "", examples = [] } = dataWord;
+  const {
+    translation,
+    type = "",
+    example,
+    translateExample,
+  } = examples[0] || {};
+  const pos = dataPOSMap[type];
   const [inputs, setInputs] = useState<string[]>(Array(word.length).fill(""));
   const pronunciation = _.getIpaPronunciation(word || "");
 
@@ -101,7 +109,7 @@ function SpellWordV2(props: InputWordProps, ref: Ref<IRefSpellWordV2>) {
     <Grid container direction={"column"}>
       <Grid item>
         <Typography variant="h5" color={"primary.main"} sx={{ margin: "1rem" }}>
-          {dataWord.definition}
+          {translation}
         </Typography>
       </Grid>
 
@@ -186,13 +194,14 @@ function SpellWordV2(props: InputWordProps, ref: Ref<IRefSpellWordV2>) {
                   </Grid>
                 )}
                 <Grid item>
-                  <Typography variant="body1">
-                    {partOfSpeechMap[dataWord.pos || ""] ||
-                      dataWord.description?.split(":")[0]}
-                  </Typography>
+                  <Typography variant="body1">{pos}</Typography>
                 </Grid>
                 <Grid item textAlign={"center"}>
-                  <Typography variant="body1">{dataWord.definition}</Typography>
+                  <Typography variant="body1">{translation}</Typography>
+                </Grid>
+                <Grid item textAlign={"center"}>
+                  <Typography variant="body1">Ex: {example}</Typography>
+                  <Typography variant="body2">{translateExample}</Typography>
                 </Grid>
               </Grid>
             </Paper>

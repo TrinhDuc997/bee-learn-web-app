@@ -14,6 +14,7 @@ import { useRef } from "react";
 import _ from "@components/common";
 import InformFlashCard from "../InformFlashCard";
 import DurationCircle from "@components/common/DurationCircle";
+import { dataPOSMap } from "utils/dataCommon";
 // import responsiveVoice from "utils/responsiveVoice";
 
 interface InputWordProps {
@@ -30,7 +31,13 @@ export interface IRefSpellWordReview {
 function SpellWordReview(props: InputWordProps, ref: Ref<IRefSpellWordReview>) {
   const { dataWord = {} } = props;
   const { word = "", examples = [] } = dataWord;
-  const { example = "", translateExample = "" } = examples[0] || {};
+  const {
+    translation,
+    type = "",
+    example,
+    translateExample,
+  } = examples[0] || {};
+  const pos = dataPOSMap[type];
   const [inputs, setInputs] = useState<string[]>(Array(word.length).fill(""));
   const pronunciation = _.getIpaPronunciation(word || "");
 
@@ -104,7 +111,7 @@ function SpellWordReview(props: InputWordProps, ref: Ref<IRefSpellWordReview>) {
     <Grid container direction={"column"}>
       <Grid item>
         <Typography variant="h5" color={"primary.main"} sx={{ margin: "1rem" }}>
-          {dataWord.definition}
+          {translation}
         </Typography>
       </Grid>
 
@@ -175,13 +182,10 @@ function SpellWordReview(props: InputWordProps, ref: Ref<IRefSpellWordReview>) {
                   </Grid>
                 )}
                 <Grid item>
-                  <Typography variant="body1">
-                    {partOfSpeechMap[dataWord.pos || ""] ||
-                      dataWord.description?.split(":")[0]}
-                  </Typography>
+                  <Typography variant="body1">{pos}</Typography>
                 </Grid>
                 <Grid item textAlign={"center"}>
-                  <Typography variant="body1">{dataWord.definition}</Typography>
+                  <Typography variant="body1">{translation}</Typography>
                 </Grid>
                 <Grid item textAlign={"center"}>
                   <Typography variant="body1">

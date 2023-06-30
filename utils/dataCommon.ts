@@ -21,3 +21,30 @@ export const dataPOS: POS[] = [
   { pos: "art", title: "Article" },
   { pos: "int", title: "Interrogative Word" },
 ];
+export const dataPOSMap: { [key: string]: string } = {
+  n: "Noun",
+  v: "Verb",
+  adj: "Adjective",
+  adv: "Adverb",
+  pron: "Pronoun",
+  interj: "Interjection",
+  det: "Determiner",
+  num: "Numeral",
+  part: "Particle",
+  inf: "Infinitive",
+  ger: "Gerund",
+  phr: "Phrase",
+  pro: "Proper Noun",
+  prep: "Preposition",
+  conj: "Conjunction",
+  art: "Article",
+  int: "Interrogative Word",
+};
+type PartOfSpeech = "Danh từ" | "Động từ" | "Tính từ" | "Trạng từ";
+
+const partOfSpeechMap: { [key: string]: PartOfSpeech } = {
+  n: "Danh từ",
+  v: "Động từ",
+  adj: "Tính từ",
+  adv: "Trạng từ",
+};

@@ -12,15 +12,11 @@ const ItemVocabulary = React.memo(function ItemVocabulary(
   props: IItemVocabularyProps
 ) {
   const { row } = props;
-  console.log(
-    "🚀 ~ file: ItemDataVocabulary.tsx:13 ~ ItemVocabulary ~ row:",
-    row
-  );
-
   const { handleChangeListWords, handleOpenModel } = React.useContext(
     DashBoardVocabulryContext
   );
-  const { examples, topics, word, pos, definition, checked = false } = row;
+  const { examples = [], topics, word, checked = false } = row;
+  const { translation, type } = examples[0] || {};
   return (
     <TableRow hover role="checkbox" tabIndex={-1}>
       <TableCell>
@@ -33,8 +29,8 @@ const ItemVocabulary = React.memo(function ItemVocabulary(
         />
       </TableCell>
       <TableCell sx={{}}>{word}</TableCell>
-      <TableCell sx={{}}>{pos}</TableCell>
-      <TableCell sx={{}}>{definition}</TableCell>
+      <TableCell sx={{}}>{type}</TableCell>
+      <TableCell sx={{}}>{translation}</TableCell>
       <TableCell sx={{ textAlign: "right" }}>{topics?.length}</TableCell>
       <TableCell sx={{ textAlign: "right" }}>{examples?.length}</TableCell>
       <TableCell sx={{}}>

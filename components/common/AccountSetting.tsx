@@ -156,7 +156,7 @@ export default function AccountMenu() {
           </MenuItem>
         )}
         <Divider />
-        {profile.id && (
+        {profile.role && (
           <MenuItem
             onClick={() => {
               router.push("/dashboard");

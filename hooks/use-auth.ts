@@ -17,7 +17,10 @@ import useSWR from "swr";
 // };
 const fetcher = (url: string) => axiosClient.get(url);
 export function useAuth() {
-  const { data, error, isLoading, mutate } = useSWR("profile", fetcher);
+  const { data, error, isLoading, mutate } = useSWR("profile", fetcher, {
+    shouldRetryOnError: false,
+    dedupingInterval: 5000,
+  });
   async function login(username: string, password: string) {
     const authData = await authAPI.login({
       username,

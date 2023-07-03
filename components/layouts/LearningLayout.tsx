@@ -13,7 +13,7 @@ import Cookies from "js-cookie";
 export const LearningLayout = (props: LayoutProps) => {
   const { children } = props;
   // const [value, setValue] = React.useState("1");
-  const { profile = {} } = useAuth();
+  const { profile = {}, updateProfile } = useAuth();
   // const cookies = new Cookies(req, res);
 
   const router = useRouter();
@@ -21,6 +21,7 @@ export const LearningLayout = (props: LayoutProps) => {
     if (!Cookies.get("access_token")) {
       router.push("/login");
     }
+    updateProfile(profile);
   }, [router, profile]);
   if (!profile) {
     return <Loading />;

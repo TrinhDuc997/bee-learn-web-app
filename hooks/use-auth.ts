@@ -13,8 +13,7 @@ export function useAuth() {
   } = useSWR("profile", {
     dedupingInterval: 60 * 60 * 1000,
     // revalidateOnFocus: false,
-    refreshInterval: 2000,
-
+    // refreshInterval: 2000,
     shouldRetryOnError: true,
   });
   const firstLoading = profile === undefined && error === undefined;
@@ -27,7 +26,7 @@ export function useAuth() {
     // const getProfile = await axiosClient.get("/profile"),{
 
     // };
-    mutate(authData);
+    // mutate(authData);
     return authData;
   }
   async function logout() {
@@ -38,7 +37,7 @@ export function useAuth() {
     // Update specific fields in the profile object
     if (profile) {
       const updatedProfile = { ...profile, ...newFields };
-      mutate(updatedProfile, false); // Update profile with new fields
+      mutate(updatedProfile, true); // Update profile with new fields
     }
   }
 

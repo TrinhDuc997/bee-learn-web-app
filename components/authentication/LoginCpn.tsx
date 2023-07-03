@@ -14,8 +14,8 @@ import React from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { IUser } from "@interfaces";
 import { useRouter } from "next/router";
-import { useAuth } from "@hooks";
 import Cookies from "js-cookie";
+import { authAPI } from "@api-client";
 
 interface ILogin {
   notify: string;
@@ -41,11 +41,10 @@ function LoginCpn(props: ILogin) {
   };
 
   const router = useRouter();
-  const { login } = useAuth();
   const handleSubmit = async (username: string, password: string) => {
     try {
       setLoading(true);
-      const resData = await login(username, password);
+      const resData = await authAPI.login({ username, password });
       // convert to token to cookies
       const { token } = resData;
       Cookies.set("access_token", token, { expires: 7 });

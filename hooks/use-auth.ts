@@ -13,6 +13,8 @@ export function useAuth() {
   } = useSWR("profile", {
     dedupingInterval: 60 * 60 * 1000,
     // revalidateOnFocus: false,
+    refreshInterval: 2000,
+
     shouldRetryOnError: true,
   });
   const firstLoading = profile === undefined && error === undefined;
@@ -30,7 +32,7 @@ export function useAuth() {
   }
   async function logout() {
     await authAPI.logOut();
-    mutate({}, false);
+    mutate({}, true);
   }
   function updateProfile(newFields: any) {
     // Update specific fields in the profile object

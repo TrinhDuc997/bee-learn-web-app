@@ -33,6 +33,7 @@ export default function MyApp(props: AppPropsWithLayout<MyAppProps>) {
         fetcher: (url, init) => {
           return axiosClient.get(url);
         },
+        errorRetryInterval: 1000,
       }}
     >
       <CacheProvider value={emotionCache}>

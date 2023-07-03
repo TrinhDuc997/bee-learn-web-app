@@ -14,7 +14,7 @@ export function useAuth() {
     dedupingInterval: 60 * 60 * 1000,
     // revalidateOnFocus: false,
     // refreshInterval: 2000,
-    shouldRetryOnError: true,
+    shouldRetryOnError: false,
   });
   const firstLoading = profile === undefined && error === undefined;
   async function login(username: string, password: string) {
@@ -26,12 +26,12 @@ export function useAuth() {
     // const getProfile = await axiosClient.get("/profile"),{
 
     // };
-    // mutate(authData);
+    mutate(authData, true);
     return authData;
   }
   async function logout() {
     await authAPI.logOut();
-    mutate({}, true);
+    mutate({}, false);
   }
   function updateProfile(newFields: any) {
     // Update specific fields in the profile object

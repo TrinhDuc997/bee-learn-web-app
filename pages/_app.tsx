@@ -31,9 +31,11 @@ export default function MyApp(props: AppPropsWithLayout<MyAppProps>) {
     <SWRConfig
       value={{
         fetcher: (url, init) => {
+          console.log("🚀 ~ file: _app.tsx:34 ~ MyApp ~ url:", url);
           return axiosClient.get(url);
         },
-        refreshInterval: 2000,
+        shouldRetryOnError: true,
+        errorRetryCount: 2000,
       }}
     >
       <CacheProvider value={emotionCache}>

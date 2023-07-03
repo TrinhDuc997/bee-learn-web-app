@@ -16,6 +16,7 @@ import { IUser } from "@interfaces";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import { authAPI } from "@api-client";
+import { useAuth } from "@hooks";
 
 interface ILogin {
   notify: string;
@@ -26,6 +27,7 @@ function LoginCpn(props: ILogin) {
   const [showPassword, setShowPassword] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [checkLogin, setCheckLogin] = React.useState(false);
+  const { updateProfile } = useAuth();
 
   const [user, setUser] = React.useState<IUser>({});
   const { username = "", password = "" } = user;
@@ -45,6 +47,7 @@ function LoginCpn(props: ILogin) {
     try {
       setLoading(true);
       const resData = await authAPI.login({ username, password });
+      updateProfile(resData);
       // convert to token to cookies
       const { token } = resData;
       Cookies.set("access_token", token, { expires: 7 });

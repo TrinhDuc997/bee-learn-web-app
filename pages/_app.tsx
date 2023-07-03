@@ -30,10 +30,6 @@ export default function MyApp(props: AppPropsWithLayout<MyAppProps>) {
     // <SessionProvider session={session}>
     <SWRConfig
       value={{
-        fetcher: (url, init) => {
-          console.log("🚀 ~ file: _app.tsx:34 ~ MyApp ~ url:", url);
-          return axiosClient.get(url);
-        },
         shouldRetryOnError: true,
         errorRetryCount: 2000,
       }}

@@ -18,10 +18,6 @@ const DataImporter: React.FC<DataImporterProps> = ({ onImport }) => {
     try {
       // const convertContent: IExampleOfWord[] = await JSON.parse(jsonData);
       const parsedData: IExampleOfWord[] = JSON.parse(data);
-      console.log(
-        "🚀 ~ file: DataImportComponent.tsx:27 ~ handleImportClick ~ parsedData:",
-        parsedData.length
-      );
       onImport(parsedData);
     } catch (error) {
       console.error("Error parsing data:", error);

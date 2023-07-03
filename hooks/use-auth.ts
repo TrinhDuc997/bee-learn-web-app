@@ -1,4 +1,5 @@
 import { authAPI } from "@api-client";
+import axiosClient from "api-client/general-api";
 // import axiosClient from "api-client/general-api";
 import useSWR from "swr";
 
@@ -12,7 +13,7 @@ export function useAuth() {
   } = useSWR("profile", {
     dedupingInterval: 60 * 60 * 1000,
     // revalidateOnFocus: false,
-    // shouldRetryOnError: true,
+    shouldRetryOnError: true,
   });
   const firstLoading = profile === undefined && error === undefined;
   async function login(username: string, password: string) {
@@ -20,7 +21,11 @@ export function useAuth() {
       username,
       password,
     });
-    mutate();
+    // const { token } = authData;
+    // const getProfile = await axiosClient.get("/profile"),{
+
+    // };
+    mutate(authData);
     return authData;
   }
   async function logout() {

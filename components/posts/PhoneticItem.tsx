@@ -22,7 +22,6 @@ export const PhoneticItem = (props: PhoneticItemProps) => {
   );
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log("check btn");
     setAnchorEl(event.currentTarget);
   };
 

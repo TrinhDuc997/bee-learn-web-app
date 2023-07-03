@@ -48,7 +48,7 @@ export default function LearnNewWord(props: IListWordsProps) {
   const [isLoading, setLoading] = React.useState(false);
   const [loadingFinish, setLoadingFinish] = React.useState(false);
   const [step, setStep] = React.useState(1);
-  const [[pageWord, direction], setPageWord] = React.useState([0, 0]);
+  const [[pageWord, direction], setPageWord] = React.useState([18, 18]);
   const { profile = {}, updateProfile } = useAuth();
 
   const dataFetchedRef = React.useRef(false);
@@ -114,11 +114,11 @@ export default function LearnNewWord(props: IListWordsProps) {
     const wordsLeaned: IWordLeaned[] = dataWords.map((item) => {
       return {
         word: item.word || "",
-        numberOfReview: 1,
+        numberOfReview: 4,
         numberOfReviewCorrect: 0,
       };
     });
-    const course = localStorage.getItem("subject");
+    const course = localStorage.getItem("subject") || "TOEIC";
     const dataSubmit = {
       id: profile.id,
       isLearnNewWord: true,

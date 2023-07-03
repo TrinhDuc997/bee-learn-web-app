@@ -2,7 +2,7 @@ import {
   createTheme,
   experimental_extendTheme as extendTheme,
 } from "@mui/material/styles";
-import { green, grey, red, yellow } from "@mui/material/colors";
+import { green, grey, orange, red, yellow } from "@mui/material/colors";
 
 // Create a theme instance.
 export const theme = createTheme({
@@ -38,6 +38,11 @@ export const theme = createTheme({
     success: {
       main: green.A200,
       light: green[600],
+    },
+    warning: {
+      light: orange[200],
+      main: orange[400],
+      dark: orange[700],
     },
   },
   components: {

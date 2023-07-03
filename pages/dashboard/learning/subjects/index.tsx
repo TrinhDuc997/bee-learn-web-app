@@ -41,10 +41,6 @@ export default function DashboardSubjects(props: IDashboardSubjectsProps) {
   const updateSubjects = async () => {
     const dataVocabularySubjects: IVocabularySubjects[] =
       await wordsAPI.updateVocabularySubjects(dataSubjects);
-    console.log(
-      "🚀 ~ file: index.tsx:46 ~ updateSubjects ~ dataVocabularySubjects:",
-      dataVocabularySubjects
-    );
   };
   if (isLoading) return <CustomizedProgressBars />;
   return (

@@ -48,3 +48,17 @@ const partOfSpeechMap: { [key: string]: PartOfSpeech } = {
   adj: "Tính từ",
   adv: "Trạng từ",
 };
+
+export const dataLevelOfWord: { [key: string | number]: string } = {
+  "1": "Cấp 1",
+  "2": "Cấp 2",
+  "3": "Cấp 3",
+  "4": "Cấp 4",
+};
+
+export const arrayLevelOfWord = [
+  { level: 1, title: "Cấp 1" },
+  { level: 2, title: "Cấp 2" },
+  { level: 3, title: "Cấp 3" },
+  { level: 4, title: "Cấp 4" },
+];

@@ -7,4 +7,7 @@ export const authAPI = {
   logOut() {
     return axiosClient.post("/logout");
   },
+  userRegistration(req?: any, version = "v1") {
+    return axiosClient.post(`/${version}/user/addUser`, req);
+  },
 };

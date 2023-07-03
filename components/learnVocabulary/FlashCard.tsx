@@ -240,7 +240,6 @@ function Flascard(props: word, ref: Ref<IRefFlascard>) {
                         sx={{ zIndex: 98 }}
                         duration={30}
                         actionTimeout={() => {
-                          console.log("check actiontimeout");
                           handleClick();
                         }}
                       />

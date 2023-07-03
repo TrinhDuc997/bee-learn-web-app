@@ -83,7 +83,6 @@ export const EditWords = (props: IEditWordsProps) => {
   const [[page, direction], setPage] = useState([indexWord, indexWord]);
   const [openAutocomplete, setOpenComplete] = useState(false);
 
-  console.log("🚀 ~ file: EditWords.tsx:68 ~ EditWords ~ page:", page);
   const { handleChangeListWords, generateDataWords, handleUpdateListWords } =
     React.useContext(DashBoardVocabulryContext);
 

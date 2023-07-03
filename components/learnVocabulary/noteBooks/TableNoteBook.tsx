@@ -9,7 +9,6 @@ import TableRow from "@mui/material/TableRow";
 import { Box, Checkbox } from "@mui/material";
 import ItemNoteBook from "./ItemNoteBook";
 import { IExpandWord } from "pages/learning/vocabulary/note-book";
-// import { DashBoardVocabulryContext } from "contexts";
 
 interface propsStickyHeadTable {
   listWords?: IExpandWord[];
@@ -18,10 +17,9 @@ const TableNoteBook = React.memo(function StickyHeadTable(
   props: propsStickyHeadTable
 ) {
   const { listWords = [] } = props;
-  // const { handleChangeListWords } = React.useContext(DashBoardVocabulryContext);
-  const [isCheckedAll, setCheckedAll] = React.useState(false);
+  // const [isCheckedAll, setCheckedAll] = React.useState(false);
   const [page, setPage] = React.useState(0);
-  const rowsPerPage = 50;
+  const rowsPerPage = 20;
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
@@ -79,7 +77,7 @@ const TableNoteBook = React.memo(function StickyHeadTable(
                   fontWeight: "bold",
                 }}
               >
-                Topics
+                Description
               </TableCell>
               <TableCell
                 align={"right"}
@@ -88,22 +86,20 @@ const TableNoteBook = React.memo(function StickyHeadTable(
                   backgroundColor: "background.second",
                   fontWeight: "bold",
                 }}
-              >
-                examples
-              </TableCell>
+              ></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {listWords
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
-                return <ItemNoteBook key={row._id} row={row} />;
+                return <ItemNoteBook key={row.idOfWord} row={row} />;
               })}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[50]}
+        rowsPerPageOptions={[20]}
         component="div"
         count={listWords.length}
         rowsPerPage={rowsPerPage}

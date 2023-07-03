@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Alert, Box, Button, Typography } from "@mui/material";
 import { Container, Stack } from "@mui/system";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -6,8 +6,19 @@ import * as React from "react";
 import englishVocab from "@public/sectionPicture/english-vocab2.png";
 import sectionGrammar from "@public/sectionPicture/sectionGrammar.jpeg";
 import sectionToeicIelts from "@public/sectionPicture/sectionToeicIelts.jpeg";
+import Snackbar from "@mui/material/Snackbar";
+
 export function HeroSection() {
   const router = useRouter();
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <Box
       display={{ xs: "none", md: "block" }}
@@ -41,7 +52,7 @@ export function HeroSection() {
               vựng
             </Typography>
             <Typography sx={{ mb: "1rem" }}>
-              6000 từ vựng chia theo từng chủ để
+              3000 từ vựng chia theo từng chủ để
             </Typography>
             <Button
               sx={{ ml: "1rem" }}
@@ -100,7 +111,13 @@ export function HeroSection() {
               các câu đố, trò chơi giải trí.
             </Typography>
             <Typography sx={{ mb: "1rem" }}></Typography>
-            <Button sx={{ ml: "1rem" }} variant="contained">
+            <Button
+              sx={{ ml: "1rem" }}
+              variant="contained"
+              onClick={() => {
+                setOpen(true);
+              }}
+            >
               BẮT ĐẦU NGAY
             </Button>
           </Box>
@@ -135,6 +152,15 @@ export function HeroSection() {
               report điểm tự động, đánh giá chi tiết bài thi
             </Typography>
             <Typography sx={{ mb: "1rem" }}></Typography>
+            <Button
+              sx={{ ml: "1rem" }}
+              variant="contained"
+              onClick={() => {
+                setOpen(true);
+              }}
+            >
+              BẮT ĐẦU NGAY
+            </Button>
           </Box>
           <Box width={"40%"} pt={"30px"}>
             <Image
@@ -145,6 +171,17 @@ export function HeroSection() {
             />
           </Box>
         </Stack>
+        <Snackbar
+          anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+          open={open}
+          autoHideDuration={5000}
+          onClose={handleClose}
+          key={"AlertInfo"}
+        >
+          <Alert severity="info" sx={{ width: "100%", bgcolor: "#8addff" }}>
+            Chức năng đang trong quá trình phát triển!
+          </Alert>
+        </Snackbar>
       </Container>
     </Box>
   );

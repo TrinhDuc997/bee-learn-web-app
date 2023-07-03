@@ -54,7 +54,7 @@ function shuffleData(data: IWords) {
   return data;
 }
 /**
- * when reviewing vocabulary will have 3 games to review
+ * when reviewing vocabulary will have 4 games to review
  *  game 1: You are reading the meaning of Vietnamese, translating it to English, and spelling that.
  *  game 2: You are reading meaning and translation to English.
  *  game 3: Giving an example sentence with missed words and select an answer to fill up in place of missed

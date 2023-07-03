@@ -36,9 +36,10 @@ export default function handler(
     };
 
     proxy.once("proxyRes", handleResponse);
-
     if (req.cookies["access_token"]) {
       req.headers.authorization = "Bearer " + req.cookies["access_token"];
+    } else {
+      res.status(402).json({ message: "access_token undifined" });
     }
     req.url = req.url?.replace("/api/", "");
     proxy.web(req, res, {

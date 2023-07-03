@@ -14,6 +14,8 @@ import { AppPropsWithLayout } from "../interfaces";
 import { AppProps } from "next/app";
 import { SWRConfig } from "swr";
 import axiosClient from "api-client/general-api";
+import Cookies from "js-cookie";
+
 // import { SessionProvider } from "next-auth/react";
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -21,14 +23,9 @@ const clientSideEmotionCache = createEmotionCache();
 interface MyAppProps extends AppProps {}
 
 export default function MyApp(props: AppPropsWithLayout<MyAppProps>) {
-  const {
-    Component,
-    emotionCache = clientSideEmotionCache,
-    pageProps,
-    session,
-  } = props;
+  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   const Layout = Component.Layout ?? EmptyLayout;
-
+  React.useEffect(() => {});
   return (
     // <SessionProvider session={session}>
     <SWRConfig
@@ -36,7 +33,6 @@ export default function MyApp(props: AppPropsWithLayout<MyAppProps>) {
         fetcher: (url, init) => {
           return axiosClient.get(url);
         },
-        shouldRetryOnError: false,
       }}
     >
       <CacheProvider value={emotionCache}>

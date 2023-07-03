@@ -42,7 +42,7 @@ export default function AccountMenu() {
           height: "100%",
         }}
       >
-        {!profile.id && !isLoading ? (
+        {!profile.id ? (
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Button
               variant="outlined"

@@ -96,8 +96,10 @@ export default function DashboardVocabulary(props: IDashboardVocabularyProps) {
       const prompt = `tạo duy nhất chỉ một ví dụ của từng từ trong mãng JSON sau: "${newListWords.map(
         (i) => i.word
       )}".mỗi từ gồm các field từ loại(ký hiệu ex: n/adj/adv...),nghĩa tiếng việt của từ, nghĩa tiếng việt của ví dụ. hãy để dưới dạng Array Json. ex: [{word:"", type:"", translation:"", example:"", translateExample:""},...]`;
-
-      console.log(prompt);
+      console.log(
+        "🚀 ~ file: index.tsx:99 ~ handleSelect50Item ~ prompt:",
+        prompt
+      );
     } else {
       setDataWords((oldListWords) => {
         const newListWords = [...oldListWords];

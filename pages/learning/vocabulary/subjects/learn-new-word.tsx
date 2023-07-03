@@ -48,7 +48,7 @@ export default function LearnNewWord(props: IListWordsProps) {
   const [isLoading, setLoading] = React.useState(false);
   const [loadingFinish, setLoadingFinish] = React.useState(false);
   const [step, setStep] = React.useState(1);
-  const [[pageWord, direction], setPageWord] = React.useState([18, 18]);
+  const [[pageWord, direction], setPageWord] = React.useState([0, 0]);
   const { profile = {}, updateProfile } = useAuth();
 
   const dataFetchedRef = React.useRef(false);

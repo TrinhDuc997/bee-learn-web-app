@@ -22,10 +22,7 @@ export const LearningLayout = (props: LayoutProps) => {
       router.push("/login");
     }
     updateProfile(profile);
-  }, [router, profile]);
-  if (!profile) {
-    return <Loading />;
-  }
+  }, [router]);
   return (
     <Stack minHeight="100vh">
       <Box

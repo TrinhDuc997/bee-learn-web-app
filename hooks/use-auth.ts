@@ -19,7 +19,7 @@ const fetcher = (url: string) => axiosClient.get(url);
 export function useAuth() {
   const { data, error, isLoading, mutate } = useSWR("profile", fetcher, {
     shouldRetryOnError: false,
-    dedupingInterval: 5000,
+    dedupingInterval: 60 * 60 * 1000,
   });
   async function login(username: string, password: string) {
     const authData = await authAPI.login({

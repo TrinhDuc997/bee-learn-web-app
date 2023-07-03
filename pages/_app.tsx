@@ -31,7 +31,7 @@ export default function MyApp(props: AppPropsWithLayout<MyAppProps>) {
     <SWRConfig
       value={{
         shouldRetryOnError: true,
-        errorRetryCount: 2000,
+        errorRetryInterval: 10000,
       }}
     >
       <CacheProvider value={emotionCache}>

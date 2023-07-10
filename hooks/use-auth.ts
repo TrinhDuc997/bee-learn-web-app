@@ -18,7 +18,7 @@ import useSWR from "swr";
 const fetcher = (url: string) => axiosClient.get(url);
 export function useAuth() {
   const { data, error, isLoading, mutate } = useSWR("profile", fetcher, {
-    shouldRetryOnError: false,
+    shouldRetryOnError: true,
     dedupingInterval: 60 * 60 * 1000,
   });
   async function login(username: string, password: string) {
@@ -26,7 +26,9 @@ export function useAuth() {
       username,
       password,
     });
-    mutate(authData, true);
+    const { token } = authData;
+    Cookies.set("access_token", token, { expires: 7 });
+    mutate(authData, false);
     return authData;
   }
   async function logout() {
@@ -37,7 +39,7 @@ export function useAuth() {
     // Update specific fields in the profile object
     if (newFields) {
       const updatedProfile = { ...data, ...newFields };
-      mutate(updatedProfile, true); // Update profile with new fields
+      mutate(updatedProfile, false); // Update profile with new fields
       // useSWR("profile", fetcher);
     }
   }

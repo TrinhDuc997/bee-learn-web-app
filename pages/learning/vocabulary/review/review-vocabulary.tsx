@@ -79,7 +79,7 @@ export default function ReviewVocabulary(props: IListWordsReviewProps) {
   const [loadingFinish, setLoadingFinish] = React.useState(false);
   const [game, setGame] = React.useState(getRandomGameToReview(1));
   const [[pageWord, direction], setPageWord] = React.useState([0, 0]);
-  const { profile = {}, updateProfile } = useAuth();
+  const { profile = {} } = useAuth();
   const { id } = profile;
   // const flashcardRef = React.useRef<IRefFlascard>(null);
   const SpellWordReviewRef = React.useRef<IRefSpellWordReview>(null);

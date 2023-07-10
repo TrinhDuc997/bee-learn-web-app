@@ -1,19 +1,16 @@
 import { Grid } from "@mui/material";
-import { Box, Container, Stack } from "@mui/system";
+import { Box, Stack } from "@mui/system";
 import * as React from "react";
 import { LayoutProps } from "@interfaces";
 import HeaderPageLearningVocab from "../common/header/HeaderPageLearningVocab";
 import NavTabs from "../common/navigate/NavTabs";
 // import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import Loading from "@components/common/loadingPage";
-import { useAuth } from "@hooks";
 import Cookies from "js-cookie";
 // import Cookies from 'cookies';
 export const LearningLayout = (props: LayoutProps) => {
   const { children } = props;
   // const [value, setValue] = React.useState("1");
-  const { profile = {}, updateProfile } = useAuth();
   // const cookies = new Cookies(req, res);
 
   const router = useRouter();
@@ -21,7 +18,6 @@ export const LearningLayout = (props: LayoutProps) => {
     if (!Cookies.get("access_token")) {
       router.push("/login");
     }
-    updateProfile(profile);
   }, [router]);
   return (
     <Stack minHeight="100vh">

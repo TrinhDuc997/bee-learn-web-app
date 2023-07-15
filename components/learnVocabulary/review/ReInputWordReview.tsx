@@ -81,9 +81,12 @@ function ReInputWordReview(
 
   return (
     <Grid container direction={"column"}>
-      <Grid item>
-        <Typography variant="h5" color={"primary.main"} sx={{ margin: "1rem" }}>
+      <Grid item mb={"1rem"}>
+        <Typography variant="h5" color={"primary.main"}>
           {translation}
+        </Typography>
+        <Typography variant="body1" color={"primary.main"}>
+          ({pos})
         </Typography>
       </Grid>
 

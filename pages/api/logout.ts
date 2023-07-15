@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createProxyServer, ProxyResCallback } from "http-proxy";
-// import cookies from "js-cookie";
+import cookie from "cookie";
 // type Data = {
 //   name: string
 // }
@@ -26,5 +26,14 @@ export default function handler(
     });
   }
   // cookies.set("access_token", "");
+  res.setHeader(
+    "Set-Cookie",
+    cookie.serialize("token", "", {
+      httpOnly: true,
+      expires: new Date(0),
+      path: "/",
+    })
+  );
+
   res.status(200).json({ message: "Logout Successfully..." });
 }

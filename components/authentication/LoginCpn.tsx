@@ -14,7 +14,6 @@ import React from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { IUser } from "@interfaces";
 import { useRouter } from "next/router";
-import Cookies from "js-cookie";
 import { useAuth } from "@hooks";
 
 interface ILogin {
@@ -45,7 +44,7 @@ function LoginCpn(props: ILogin) {
   const handleSubmit = async (username: string, password: string) => {
     try {
       setLoading(true);
-      login(username, password);
+      await login(username, password);
       // convert to token to cookies
       setLoading(false);
       setCheckLogin(false);

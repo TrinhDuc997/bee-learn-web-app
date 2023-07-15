@@ -4,18 +4,23 @@ import { Grid, Stack } from "@mui/material";
 import DashboardHeader from "./DashboardHeader";
 import DashboardSpaceLeft from "./DashboardSpaceLeft";
 import { useAuth } from "@hooks";
-import Cookies from "js-cookie";
 import { useRouter } from "next/router";
+import Loading from "@components/common/loadingPage";
 
 export function DashboardLayout(props: LayoutProps) {
   const { children } = props;
-  const { profile } = useAuth();
+  const { isLoading, profile } = useAuth();
+
   const router = useRouter();
   React.useEffect(() => {
-    if (!Cookies.get("access_token")) {
+    if (!isLoading && !profile) {
       router.push("/login");
     }
-  }, [profile]);
+  }, [isLoading]);
+
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <Grid minHeight={"100vh"} container direction={"row"} flexWrap={"nowrap"}>
       <Grid item width={"300px"} padding={"1rem"} height={"100vh"}>

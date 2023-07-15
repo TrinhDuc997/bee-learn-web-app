@@ -13,8 +13,6 @@ import { EmptyLayout } from "@components/layouts";
 import { AppPropsWithLayout } from "../interfaces";
 import { AppProps } from "next/app";
 import { SWRConfig } from "swr";
-import axiosClient from "api-client/general-api";
-import Cookies from "js-cookie";
 
 // import { SessionProvider } from "next-auth/react";
 // Client-side cache, shared for the whole session of the user in the browser.
@@ -30,8 +28,7 @@ export default function MyApp(props: AppPropsWithLayout<MyAppProps>) {
     // <SessionProvider session={session}>
     <SWRConfig
       value={{
-        shouldRetryOnError: true,
-        errorRetryInterval: 10000,
+        shouldRetryOnError: false,
       }}
     >
       <CacheProvider value={emotionCache}>

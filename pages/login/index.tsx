@@ -3,8 +3,6 @@ import RegisterCpn from "@components/authentication/RegisterCpn";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Box, Container, Grid, Paper, Stack, Tab } from "@mui/material";
 import { authAPI } from "api-client";
-import Cookies from "js-cookie";
-// import Cookies from "js-cookie";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import * as React from "react";

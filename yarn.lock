@@ -542,17 +542,17 @@
   dependencies:
     axios "*"
 
+"@types/cookie@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@types/cookie/-/cookie-0.5.1.tgz#b29aa1f91a59f35e29ff8f7cb24faf1a3a750554"
+  integrity sha512-COUnqfB2+ckwXXSFInsFdOAWQzCCx+a5hq2ruyj+Vjund94RJQd4LG2u9hnvJrTgunKAaax7ancBYlDrNYxA0g==
+
 "@types/http-proxy@^1.17.9":
   version "1.17.9"
   resolved "https://registry.npmjs.org/@types/http-proxy/-/http-proxy-1.17.9.tgz"
   integrity sha512-QsbSjA/fSk7xB+UXlCT3wHBy5ai9wOcNDWwZAtud+jXhwOM3l+EYZh8Lng4+/6n8uar0J7xILzqftJdJ/Wdfkw==
   dependencies:
     "@types/node" "*"
-
-"@types/js-cookie@^3.0.3":
-  version "3.0.3"
-  resolved "https://registry.npmjs.org/@types/js-cookie/-/js-cookie-3.0.3.tgz"
-  integrity sha512-Xe7IImK09HP1sv2M/aI+48a20VX+TdRJucfq4vfRVy6nWN8PYPOEnlMRSgxJAgYQIXJVL8dZ4/ilAM7dWNaOww==
 
 "@types/json5@^0.0.29":
   version "0.0.29"
@@ -1012,7 +1012,7 @@ convert-source-map@^1.5.0:
 
 cookie@^0.5.0:
   version "0.5.0"
-  resolved "https://registry.npmjs.org/cookie/-/cookie-0.5.0.tgz"
+  resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.5.0.tgz#d1f5d71adec6558c58f389987c366aa47e994f8b"
   integrity sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==
 
 core-js-pure@^3.25.1:
@@ -1920,11 +1920,6 @@ jose@^4.10.0, jose@^4.11.4:
   version "4.14.1"
   resolved "https://registry.npmjs.org/jose/-/jose-4.14.1.tgz"
   integrity sha512-SgjXLpP7jhQkUNKL6RpowoR/IF4QKE+WjLDMpNnh2vmhiFs67NftrNpvFtgbwpvRdtueFliahYYWz9E+XZZQlg==
-
-js-cookie@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.npmjs.org/js-cookie/-/js-cookie-3.0.4.tgz"
-  integrity sha512-tlu5VGqPFMP5eBefnmszCFZkPXG2n527NRN9XdNtN6FZ5n/0e98TdDm8BOz290OIIsxtXb9XTJjfqE6gVhOHQw==
 
 js-sdsl@^4.1.4:
   version "4.1.4"

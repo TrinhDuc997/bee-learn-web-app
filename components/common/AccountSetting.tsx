@@ -9,7 +9,6 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
-import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import { useAuth } from "@hooks";
 import _ from "../common";
@@ -23,7 +22,6 @@ export default function AccountMenu() {
   const router = useRouter();
   const HandleLogout = () => {
     logout();
-    Cookies.set("access_token", "");
   };
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -32,6 +30,7 @@ export default function AccountMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   return (
     <React.Fragment>
       <Box
@@ -42,7 +41,7 @@ export default function AccountMenu() {
           height: "100%",
         }}
       >
-        {!profile.id ? (
+        {!profile.id && !isLoading ? (
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Button
               variant="outlined"

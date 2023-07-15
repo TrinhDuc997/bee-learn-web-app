@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createProxyServer, ProxyResCallback } from "http-proxy";
-// import Cookies from "js-cookie";
+import cookie from "cookie";
 // type Data = {
 //   name: string
 // }
@@ -26,8 +26,6 @@ export default function handler(
     });
   }
   return new Promise((resolve) => {
-    req.headers.cookie = "";
-
     const handleLoginResponse: ProxyResCallback = (proxyRes, req, res) => {
       let body = "";
       proxyRes.on("data", (chunk) => {
@@ -40,6 +38,15 @@ export default function handler(
           if (!token) {
             (res as NextApiResponse).status(404).json(JSON.parse(body));
           } else {
+            res.setHeader(
+              "Set-Cookie",
+              cookie.serialize("token", token, {
+                httpOnly: true,
+                // maxAge: 60 * 60 * 24 * 7,
+                path: "/",
+                sameSite: "strict",
+              })
+            );
             (res as NextApiResponse).status(200).json({
               ...(JSON.parse(body) || {}),
               message: "login succcessfully",
@@ -58,7 +65,7 @@ export default function handler(
     req.url = req.url?.replace("/api/", "");
 
     proxy.web(req, res, {
-      target: `${process.env.TARGET_API}v1/user/`,
+      target: `${process.env.TARGET_API}/v1/user/`,
       changeOrigin: true,
       selfHandleResponse: true,
     });

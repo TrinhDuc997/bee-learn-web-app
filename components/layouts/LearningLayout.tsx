@@ -6,19 +6,23 @@ import HeaderPageLearningVocab from "../common/header/HeaderPageLearningVocab";
 import NavTabs from "../common/navigate/NavTabs";
 // import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import Cookies from "js-cookie";
+import { useAuth } from "@hooks";
+import Loading from "@components/common/loadingPage";
 // import Cookies from 'cookies';
 export const LearningLayout = (props: LayoutProps) => {
   const { children } = props;
-  // const [value, setValue] = React.useState("1");
-  // const cookies = new Cookies(req, res);
+  const { isLoading, profile } = useAuth();
 
   const router = useRouter();
   React.useEffect(() => {
-    if (!Cookies.get("access_token")) {
+    if (!isLoading && !profile) {
       router.push("/login");
     }
-  }, [router]);
+  }, [isLoading]);
+
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <Stack minHeight="100vh">
       <Box

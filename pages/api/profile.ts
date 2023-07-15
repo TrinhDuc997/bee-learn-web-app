@@ -1,10 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { createProxyServer, ProxyResCallback } from "http-proxy";
-// import cookies from "js-cookie";
-// type Data = {
-//   name: string
-// }
 
 export const config = {
   api: {
@@ -23,27 +19,19 @@ export default function handler(
       proxyRes.on("data", (chunk) => {
         body += chunk;
       });
+      const proxyStatus = proxyRes.statusCode || 500;
       proxyRes.on("end", () => {
-        try {
-          (res as NextApiResponse).status(200).json(JSON.parse(body) || {});
-        } catch (error) {
-          (res as NextApiResponse)
-            .status(500)
-            .json({ message: "Something went wrong" });
-        }
+        (res as NextApiResponse)
+          .status(proxyStatus)
+          .json(JSON.parse(body) || {});
         resolve(true);
       });
     };
 
     proxy.once("proxyRes", handleResponse);
-    if (req.cookies["access_token"]) {
-      req.headers.authorization = "Bearer " + req.cookies["access_token"];
-    } else {
-      res.status(402).json({ message: "access_token undifined" });
-    }
-    req.url = req.url?.replace("/api/", "");
+    req.url = req.url?.replace(/^\/api/, "");
     proxy.web(req, res, {
-      target: `${process.env.TARGET_API}v1/user/`,
+      target: `${process.env.TARGET_API}/v1/user/`,
       changeOrigin: true,
       selfHandleResponse: true,
     });

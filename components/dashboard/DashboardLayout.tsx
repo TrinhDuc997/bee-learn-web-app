@@ -16,7 +16,7 @@ export function DashboardLayout(props: LayoutProps) {
     if (!isLoading && !profile) {
       router.push("/login");
     }
-  }, [isLoading]);
+  }, [isLoading, profile]);
 
   if (isLoading) {
     return <Loading />;

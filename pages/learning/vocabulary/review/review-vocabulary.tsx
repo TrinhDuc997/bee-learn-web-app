@@ -93,7 +93,7 @@ export default function ReviewVocabulary(props: IListWordsReviewProps) {
   const listenAndRewriteRef = React.useRef<RefListenAndRewrite>(null);
 
   const dataWord = dataWords[pageWord];
-  const { examples = [] } = dataWord;
+  const { examples = [] } = dataWord || {};
   const { translation } = examples[0] || {};
 
   let dataGame4: IWords = [];

@@ -3,9 +3,10 @@ import { LearningLayout } from "@components/layouts";
 import { Box, Grid } from "@mui/material";
 import NoteBookTab from "@components/learnVocabulary/noteBooks/NoteBookTab";
 import { wordsAPI } from "@api-client";
-import { useAuth } from "@hooks";
+// import { useAuth } from "@hooks";
 import { IWord } from "@interfaces";
 import { NoteBookContext } from "contexts";
+import { useSession } from "next-auth/react";
 
 export interface INoteBooksContext {
   handleChangeListWords?: Function;
@@ -38,8 +39,9 @@ const genDataFollowLevel = (level: number) => {
   };
 };
 export default function NoteBook(props: INoteBookProps) {
-  const { profile = {}, updateProfile } = useAuth();
-  const { id } = profile;
+  const { data: session, update } = useSession();
+  const { user } = session || {};
+  const { id = "" } = user || {};
   const [dataWords, setDataWords] = React.useState<IExpandWord[]>([]);
   const [filterDataWords, setFilterDataWords] = React.useState<IExpandWord[]>(
     []
@@ -69,12 +71,9 @@ export default function NoteBook(props: INoteBookProps) {
       return newArray;
     });
   }, []);
+
   const handleSubmit = async () => {
     const listItemChanged = dataWords.filter((i) => i.isChanged);
-    console.log(
-      "🚀 ~ file: index.tsx:57 ~ handleSubmit ~ listItemChanged:",
-      listItemChanged
-    );
     const dataSubmit = {
       id,
       isLearnNewWord: false,
@@ -86,7 +85,14 @@ export default function NoteBook(props: INoteBookProps) {
       }),
     };
     const newdata = await wordsAPI.updateWordsUserLearned(dataSubmit);
-    updateProfile(newdata);
+    const newSession = {
+      ...session,
+      user: {
+        ...session?.user,
+        ...newdata,
+      },
+    };
+    await update(newSession);
     setDataWords((oldListWords: IExpandWord[]) => {
       const newArray = [
         ...oldListWords.map((item) => {

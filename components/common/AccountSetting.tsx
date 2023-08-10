@@ -10,18 +10,25 @@ import Tooltip from "@mui/material/Tooltip";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { useRouter } from "next/router";
-import { useAuth } from "@hooks";
+// import { useAuth } from "@hooks";
 import _ from "../common";
 import { Button, Typography } from "@mui/material";
 import LoadingDots from "./loadingComponent/LoadingDot";
+import { signOut, useSession } from "next-auth/react";
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const { logout, profile = {}, isLoading } = useAuth();
-  const { name = "" } = profile;
+  const { data: session } = useSession();
+  console.log(
+    "🚀 ~ file: AccountSetting.tsx:22 ~ AccountMenu ~ session:",
+    session
+  );
+  const { user } = session || {};
+  const { name = "", role } = user || {};
   const router = useRouter();
   const HandleLogout = () => {
-    logout();
+    // logout();
+    signOut({ callbackUrl: "/login" });
   };
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -41,7 +48,7 @@ export default function AccountMenu() {
           height: "100%",
         }}
       >
-        {!profile.id && !isLoading ? (
+        {!session ? (
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <Button
               variant="outlined"
@@ -93,17 +100,11 @@ export default function AccountMenu() {
                 sx={{
                   width: 45,
                   height: 45,
-                  bgcolor: isLoading
-                    ? "secondary.light"
-                    : _.stringToColor(name),
-                  color: _.invertColor(_.stringToColor(name)),
+                  bgcolor: _.stringToColor(name || ""),
+                  color: _.invertColor(_.stringToColor(name || "")),
                 }}
               >
-                {isLoading ? (
-                  <Avatar sx={{ bgcolor: "primary.main" }} />
-                ) : (
-                  _.stringAvatar(name)
-                )}
+                {_.stringAvatar(name || "")}
               </Avatar>
             </IconButton>
           </Tooltip>
@@ -144,18 +145,11 @@ export default function AccountMenu() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        {isLoading ? (
-          <MenuItem sx={{ alignItems: "flex-end" }}>
-            <Typography variant="body1">Đang lấy dữ liệu</Typography>
-            <LoadingDots sx={{ paddingBottom: "7px" }} />
-          </MenuItem>
-        ) : (
-          <MenuItem>
-            <Avatar /> {name}
-          </MenuItem>
-        )}
+        <MenuItem>
+          <Avatar /> {name}
+        </MenuItem>
         <Divider />
-        {profile.role && (
+        {role === "admin" && (
           <MenuItem
             onClick={() => {
               router.push("/dashboard");

@@ -15,17 +15,23 @@ export default function handler(
 ) {
   return new Promise((resolve) => {
     const handleResponse: ProxyResCallback = (proxyRes, req, res) => {
-      let body = "";
-      proxyRes.on("data", (chunk) => {
-        body += chunk;
-      });
-      const proxyStatus = proxyRes.statusCode || 500;
-      proxyRes.on("end", () => {
+      try {
+        let body = "";
+        proxyRes.on("data", (chunk) => {
+          body += chunk;
+        });
+        const proxyStatus = proxyRes.statusCode || 500;
+        proxyRes.on("end", () => {
+          (res as NextApiResponse)
+            .status(proxyStatus)
+            .json(JSON.parse(body) || {});
+          resolve(true);
+        });
+      } catch (error) {
         (res as NextApiResponse)
-          .status(proxyStatus)
-          .json(JSON.parse(body) || {});
-        resolve(true);
-      });
+          .status(500)
+          .json({ message: "have wrong with nextjs server" });
+      }
     };
 
     proxy.once("proxyRes", handleResponse);
@@ -36,6 +42,5 @@ export default function handler(
       selfHandleResponse: true,
     });
   });
-
   //   res.status(200).json({ name: 'Path - Math all API...' })
 }

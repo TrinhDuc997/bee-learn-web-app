@@ -3,22 +3,22 @@ import { LayoutProps } from "@interfaces";
 import { Grid, Stack } from "@mui/material";
 import DashboardHeader from "./DashboardHeader";
 import DashboardSpaceLeft from "./DashboardSpaceLeft";
-import { useAuth } from "@hooks";
+// import { useAuth } from "@hooks";
 import { useRouter } from "next/router";
 import Loading from "@components/common/loadingPage";
+import { useSession } from "next-auth/react";
 
 export function DashboardLayout(props: LayoutProps) {
   const { children } = props;
-  const { isLoading, profile } = useAuth();
-
+  const { status } = useSession();
   const router = useRouter();
   React.useEffect(() => {
-    if (!isLoading && !profile) {
+    if (status === "unauthenticated") {
       router.push("/login");
     }
-  }, [isLoading, profile]);
+  }, [status]);
 
-  if (isLoading) {
+  if (status === "unauthenticated") {
     return <Loading />;
   }
   return (

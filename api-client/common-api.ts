@@ -1,7 +1,7 @@
 import axios from "axios";
 import axiosClient from "./general-api";
 import { Configuration, OpenAIApi } from "openai";
-
+//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 | EJOY
 const OPENAI_API_KEY = "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";
 
 const configuration = new Configuration({

@@ -21,7 +21,8 @@ import { IVocabularySubjects } from "@interfaces";
 import Image from "next/image";
 import { theme } from "@utils";
 import BasicPagination from "@components/common/navigate/Pagination";
-import { useAuth } from "@hooks";
+// import { useAuth } from "@hooks";
+import { useSession } from "next-auth/react";
 
 export interface ISubjectVocabularyProps {}
 
@@ -34,8 +35,9 @@ export default function SubjectVocabulary(props: ISubjectVocabularyProps) {
   const dataFetchedRef = React.useRef(false);
   const [courseSelected, setCourSelected] = React.useState("");
   const [openDrawer, setOpenDrawer] = React.useState(false);
-  const { profile = {} } = useAuth();
-  const { courseLearned = [] } = profile;
+  const { data: session } = useSession();
+  const { user } = session || {};
+  const { courseLearned = [] } = user || {};
   React.useEffect(() => {
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;

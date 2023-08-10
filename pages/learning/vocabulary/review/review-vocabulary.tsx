@@ -8,7 +8,7 @@ import _ from "@components/common";
 // import axios from "axios";
 import { IWord, IWords } from "@interfaces";
 import SliderBee from "@components/common/SliderBee";
-import { useAuth } from "@hooks";
+// import { useAuth } from "@hooks";
 import Loading from "@components/common/loadingPage";
 
 import SpellWordReview, {
@@ -24,6 +24,8 @@ import ListenAndRewrite, {
   RefListenAndRewrite,
 } from "@components/learnVocabulary/review/ListenAndRewrite";
 import responsiveVoice from "utils/responsiveVoice";
+import ImageSearch from "@components/common/ImageSearch";
+import { useSession } from "next-auth/react";
 export interface IListWordsReviewProps {}
 
 function getRandomGameToReview(preGame: number): number {
@@ -79,8 +81,11 @@ export default function ReviewVocabulary(props: IListWordsReviewProps) {
   const [loadingFinish, setLoadingFinish] = React.useState(false);
   const [game, setGame] = React.useState(getRandomGameToReview(1));
   const [[pageWord, direction], setPageWord] = React.useState([0, 0]);
-  const { profile = {} } = useAuth();
-  const { id } = profile;
+
+  const { data: session } = useSession();
+  const { user } = session || {};
+  const { id = "" } = user || {};
+
   // const flashcardRef = React.useRef<IRefFlascard>(null);
   const SpellWordReviewRef = React.useRef<IRefSpellWordReview>(null);
   const ReInputWordReviewRef = React.useRef<RefReInputWordReview>(null);
@@ -88,6 +93,8 @@ export default function ReviewVocabulary(props: IListWordsReviewProps) {
   const listenAndRewriteRef = React.useRef<RefListenAndRewrite>(null);
 
   const dataWord = dataWords[pageWord];
+  const { examples = [] } = dataWord;
+  const { translation } = examples[0] || {};
 
   let dataGame4: IWords = [];
   if (game === 3 && !!dataWord) {
@@ -100,7 +107,7 @@ export default function ReviewVocabulary(props: IListWordsReviewProps) {
   const paginate = async (newDirection: number) => {
     if (pageWord + newDirection > dataWords.length - 1) {
       const dataSubmit = {
-        id: profile.id,
+        id: id,
         isLearnNewWord: false,
         wordsLeaned: dataWordsRef.current,
       };

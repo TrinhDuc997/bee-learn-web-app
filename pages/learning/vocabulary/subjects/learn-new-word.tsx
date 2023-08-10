@@ -17,8 +17,9 @@ import ReInputWord, {
   RefReInputWord,
 } from "@components/learnVocabulary/newVocab/ReInputWord";
 import SliderBee from "@components/common/SliderBee";
-import { useAuth } from "@hooks";
+// import { useAuth } from "@hooks";
 import axios from "axios";
+import { useSession } from "next-auth/react";
 export interface IListWordsProps {}
 // const variants = {
 //   enter: (direction: number) => {
@@ -49,7 +50,9 @@ export default function LearnNewWord(props: IListWordsProps) {
   const [loadingFinish, setLoadingFinish] = React.useState(false);
   const [step, setStep] = React.useState(1);
   const [[pageWord, direction], setPageWord] = React.useState([0, 0]);
-  const { profile = {}, updateProfile } = useAuth();
+  const { data: session, update } = useSession();
+  const { user } = session || {};
+  const { id = "" } = user || {};
 
   const dataFetchedRef = React.useRef(false);
   const flashcardRef = React.useRef<IRefFlascard>(null);
@@ -120,7 +123,7 @@ export default function LearnNewWord(props: IListWordsProps) {
     });
     const course = localStorage.getItem("subject") || "TOEIC";
     const dataSubmit = {
-      id: profile.id,
+      id: id,
       isLearnNewWord: true,
       wordsLeaned,
       courseLearned: {
@@ -131,7 +134,7 @@ export default function LearnNewWord(props: IListWordsProps) {
     };
     setLoadingFinish(true);
     const newdata = await wordsAPI.updateWordsUserLearned(dataSubmit);
-    updateProfile(newdata);
+    update((data: any) => ({ ...data, ...newdata }));
     router.push("/learning/vocabulary/subjects/");
     // setLoadingFinish(false);
   }
@@ -204,12 +207,7 @@ export default function LearnNewWord(props: IListWordsProps) {
               <SliderBee max={dataWords.length} value={pageWord} />
             </Grid>
             <Grid item xs={12}>
-              <Grid container justifyContent="center" spacing={4} pt={"2rem"}>
-                {/* <Grid item sx={{ display: "flex", alignItems: "center" }}>
-                  <Box className="prev" onClick={() => paginate(-1)}>
-                    {"‣"}
-                  </Box>
-                </Grid> */}
+              <Grid container justifyContent="center" spacing={4}>
                 <Grid item textAlign={"center"}>
                   {step === 1 && (
                     <Flashcard
@@ -228,11 +226,6 @@ export default function LearnNewWord(props: IListWordsProps) {
                     <ReInputWord dataWord={dataWord} ref={reInputWordRef} />
                   )}
                 </Grid>
-                {/* <Grid item sx={{ display: "flex", alignItems: "center" }}>
-                  <Box className="next" onClick={() => paginate(1)}>
-                    {"‣"}
-                  </Box>
-                </Grid> */}
               </Grid>
             </Grid>
             <Grid item>
@@ -252,6 +245,18 @@ export default function LearnNewWord(props: IListWordsProps) {
                 id="btn-continue-learn-new-word"
               >
                 Tiếp tục
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                variant="text"
+                onClick={() => {
+                  paginate(1);
+                  setStep(1);
+                }}
+                id="btn-continue-learn-new-word"
+              >
+                Đã học
               </Button>
             </Grid>
           </Grid>

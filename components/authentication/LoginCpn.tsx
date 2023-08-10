@@ -13,8 +13,9 @@ import {
 import React from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { IUser } from "@interfaces";
-import { useRouter } from "next/router";
-import { useAuth } from "@hooks";
+import GoogleIcon from "@mui/icons-material/Google";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import { signIn } from "next-auth/react";
 
 interface ILogin {
   notify: string;
@@ -25,7 +26,6 @@ function LoginCpn(props: ILogin) {
   const [showPassword, setShowPassword] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [checkLogin, setCheckLogin] = React.useState(false);
-  const { login } = useAuth();
 
   const [user, setUser] = React.useState<IUser>({});
   const { username = "", password = "" } = user;
@@ -40,28 +40,17 @@ function LoginCpn(props: ILogin) {
     event.preventDefault();
   };
 
-  const router = useRouter();
   const handleSubmit = async (username: string, password: string) => {
-    try {
-      setLoading(true);
-      await login(username, password);
-      // convert to token to cookies
-      setLoading(false);
-      setCheckLogin(false);
-      // router.back();
-
-      if (
-        typeof window !== "undefined" &&
-        (window.history.state === null || window.history.state.as === "/login")
-      ) {
-        router.push("/");
-      } else {
-        router.back();
-      }
-    } catch (error) {
+    setLoading(true);
+    const res = await signIn(
+      "credentials",
+      { redirect: false },
+      { username, password }
+    );
+    if (res?.status === 401) {
       setCheckLogin(true);
-      setLoading(false);
     }
+    setLoading(false);
   };
   const handleClick = (event: KeyboardEvent) => {
     if (event.key === "Enter") {
@@ -71,12 +60,34 @@ function LoginCpn(props: ILogin) {
       }
     }
   };
+
+  const openPopup = (provider: string) => {
+    const width = 500;
+    const height = 600;
+    const left = window.innerWidth / 2 - width / 2;
+    const top = window.innerHeight / 2 - height / 2;
+
+    window.open(
+      `/${provider}`,
+      "_blank",
+      `width=${width}, height=${height}, left=${left}, top=${top}`
+    );
+  };
+
   React.useEffect(() => {
     addEventListener("keydown", handleClick);
     return () => {
       removeEventListener("keydown", handleClick);
     };
   }, []);
+  // React.useEffect(() => {
+  //   if (!!profile) {
+  //     console.log(
+  //       "🚀 ~ file: LoginCpn.tsx:87 ~ React.useEffect ~ profile:",
+  //       profile
+  //     );
+  //   }
+  // }, [profile]);
   return (
     <Grid container direction={"column"} spacing={2} justifyContent={"center"}>
       <Grid item>
@@ -147,6 +158,22 @@ function LoginCpn(props: ILogin) {
           Đăng Nhập
         </LoadingButton>
       </Grid>
+      <Grid item>
+        <IconButton
+          color="primary"
+          aria-label="add to shopping cart"
+          onClick={() => openPopup("google-login")}
+        >
+          <GoogleIcon fontSize="large" />
+        </IconButton>
+        <IconButton
+          color="primary"
+          aria-label="add to shopping cart"
+          onClick={() => openPopup("facebook-login")}
+        >
+          <FacebookIcon fontSize="large" />
+        </IconButton>
+      </Grid>
       {checkLogin && (
         <Grid item>
           <Typography variant="subtitle2" color={"error.main"}>
@@ -155,9 +182,7 @@ function LoginCpn(props: ILogin) {
         </Grid>
       )}
       <Grid item>
-        <Button sx={{ mt: "1rem" }} variant="text">
-          Quên Mật Khẩu
-        </Button>
+        <Button variant="text">Quên Mật Khẩu</Button>
       </Grid>
     </Grid>
   );

@@ -3,14 +3,25 @@ import RegisterCpn from "@components/authentication/RegisterCpn";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Box, Container, Grid, Paper, Stack, Tab } from "@mui/material";
 import { authAPI } from "api-client";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import * as React from "react";
 export interface ILoginProps {}
+import { useSession } from "next-auth/react";
 
 export default function Login(props: ILoginProps) {
   const [value, setValue] = React.useState("1");
   const [notify, setNotify] = React.useState("");
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  console.log(
+    "🚀 ~ file: index.tsx:17 ~ Login ~ session, status:",
+    session,
+    status
+  );
+
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setNotify("");
     setValue(newValue);
@@ -19,6 +30,12 @@ export default function Login(props: ILoginProps) {
     setValue("1");
     setNotify("Đăng ký thành công \n Chào mừng bạn đến với BeeLearning!");
   };
+  React.useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/");
+    }
+  }, [status]);
+
   return (
     <Box textAlign={"center"}>
       <Stack

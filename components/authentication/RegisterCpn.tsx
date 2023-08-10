@@ -82,7 +82,6 @@ function RegisterCpn(props: IRegister) {
       const newUser: any = await authAPI.userRegistration({
         name: user.fullName,
         username: user.username,
-        email: user.email || undefined, // if value is empty set undefined to not sent
         password: user.password,
       });
       setLoading(false);
@@ -118,7 +117,6 @@ function RegisterCpn(props: IRegister) {
       <Grid item>
         <TextField
           sx={{ width: "35ch" }}
-          id="outlined-basic"
           label="Tên Đăng Nhập"
           size="small"
           variant="outlined"
@@ -137,21 +135,6 @@ function RegisterCpn(props: IRegister) {
       <Grid item>
         <TextField
           sx={{ width: "35ch" }}
-          id="outlined-basic"
-          label="Email"
-          variant="outlined"
-          size="small"
-          type="email"
-          value={user.email}
-          onChange={(e) => {
-            handleChangeUser({ email: e.target.value });
-          }}
-        />
-      </Grid>
-      <Grid item>
-        <TextField
-          sx={{ width: "35ch" }}
-          id="outlined-basic"
           label="Họ và Tên"
           size="small"
           error={mandaroty.isShowMandatory && mandaroty.isFullNameEmpty}

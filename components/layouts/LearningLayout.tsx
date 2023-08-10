@@ -6,23 +6,29 @@ import HeaderPageLearningVocab from "../common/header/HeaderPageLearningVocab";
 import NavTabs from "../common/navigate/NavTabs";
 // import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useAuth } from "@hooks";
 import Loading from "@components/common/loadingPage";
+import { useSession } from "next-auth/react";
 // import Cookies from 'cookies';
 export const LearningLayout = (props: LayoutProps) => {
   const { children } = props;
-  const { isLoading, profile } = useAuth();
-
+  const { status, data: session } = useSession();
+  console.log(
+    "🚀 ~ file: LearningLayout.tsx:15 ~ LearningLayout ~ status:",
+    status,
+    session
+  );
   const router = useRouter();
+
   React.useEffect(() => {
-    if (!isLoading && !profile) {
+    if (status === "unauthenticated") {
       router.push("/login");
     }
-  }, [isLoading, profile]);
+  }, [status]);
 
-  if (isLoading) {
+  if (status === "unauthenticated") {
     return <Loading />;
   }
+
   return (
     <Stack minHeight="100vh">
       <Box

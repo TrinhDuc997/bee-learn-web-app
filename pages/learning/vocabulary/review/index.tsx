@@ -3,13 +3,15 @@ import * as React from "react";
 import { LearningLayout } from "@components/layouts";
 import Image from "next/image";
 import ChartReview from "@components/learnVocabulary/review/ChartReview";
-import { useAuth } from "@hooks";
+// import { useAuth } from "@hooks";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 export interface ILearningVocabularyProps {}
 
 export default function Review(props: ILearningVocabularyProps) {
-  const { profile = {} } = useAuth();
-  const { hierarchicalArrayOfWords = [0, 0, 0, 0] } = profile;
+  const { data: session } = useSession();
+  const { user } = session || {};
+  const { hierarchicalArrayOfWords = [0, 0, 0, 0] } = user || {};
   const router = useRouter();
 
   return (

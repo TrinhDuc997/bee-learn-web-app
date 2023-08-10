@@ -11,18 +11,22 @@ import {
   Card,
   CardContent,
   Grid,
+  Skeleton,
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/system";
 import { AnimatePresence, motion } from "framer-motion";
-import { IWords } from "@interfaces";
+import { ImageData, IWords } from "@interfaces";
 import _ from "../common";
 import TouchAppOutlinedIcon from "@mui/icons-material/TouchAppOutlined";
-import DurationCircle from "@components/common/DurationCircle";
+// import DurationCircle from "@components/common/DurationCircle";
 import Image from "next/image";
 import responsiveVoice from "utils/responsiveVoice";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import { dataPOSMap } from "utils/dataCommon";
+import { searchImages } from "utils/searchGoogle";
+import { getCommercialImages } from "utils/openverseAPI";
+import { getPexelsImages } from "utils/pexelsAPI";
 
 const StyledCard = styled(Card)`
   width: 300px;
@@ -89,10 +93,10 @@ export interface IRefFlascard {
   setDefaultFlashcard: Function;
 }
 function Flascard(props: word, ref: Ref<IRefFlascard>) {
-  const { pageWord, direction, dataWords, handleNextStep } = props;
-  const { word = "", examples = [] } = dataWords[pageWord] || {};
+  const { pageWord, direction, dataWords } = props;
+  const { word = "", examples = [], topics = [] } = dataWords[pageWord] || {};
   const {
-    translation,
+    translation = "",
     type = "",
     example,
     translateExample,
@@ -120,11 +124,29 @@ function Flascard(props: word, ref: Ref<IRefFlascard>) {
       responsiveVoice(word);
     }
   }
+
+  const [images, setImages] = useState<ImageData[]>([]);
+  const [loadingPicture, setLoadingPicture] = useState(false);
   useEffect(() => {
-    setTimeout(() => {
-      responsiveVoice(word);
-    }, 500);
-  }, []);
+    if (!!word) {
+      const fetchData = async () => {
+        setLoadingPicture(true);
+        const dataImage = (await getPexelsImages(`${word}`)) || [];
+        console.log(
+          "🚀 ~ file: FlashCard.tsx:135 ~ fetchData ~ dataImage:",
+          dataImage
+        );
+        setLoadingPicture(false);
+        setImages(dataImage);
+      };
+      setTimeout(() => {
+        responsiveVoice(word);
+      }, 500);
+      fetchData();
+    }
+  }, [word]);
+  const [img] = images;
+
   return (
     <AnimatePresence initial={true} custom={direction}>
       <motion.div
@@ -207,7 +229,7 @@ function Flascard(props: word, ref: Ref<IRefFlascard>) {
             sx={{
               backgroundColor: "unset",
               boxShadow: "none",
-              width: "450px",
+              width: "600px",
               height: "300px",
               borderRadius: "10px",
             }}
@@ -231,39 +253,70 @@ function Flascard(props: word, ref: Ref<IRefFlascard>) {
                 <Grid
                   container
                   direction={"column"}
-                  spacing={2}
-                  sx={{ alignItems: "center" }}
+                  sx={{ alignItems: "center", height: "100%" }}
                 >
-                  <Grid item width={"100%"}>
+                  {/* <Grid item width={"100%"}>
                     {!isFlipped && (
                       <DurationCircle
                         sx={{ zIndex: 98 }}
                         duration={30}
                         actionTimeout={() => {
-                          handleClick();
+                          // handleClick();
                         }}
                       />
                     )}
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="h5" color={"primary.dark"}>
-                      {_.capitalizeWord(word)}
-                    </Typography>
-                  </Grid>
-                  {!!pronunciation && (
-                    <Grid item>
-                      <Typography variant="body1">
-                        / {pronunciation} /
-                      </Typography>
-                    </Grid>
-                  )}
-                  <Grid item>
-                    <Typography variant="body1">{pos}</Typography>
-                  </Grid>
+                  </Grid> */}
+                  <Grid
+                    item
+                    container
+                    sx={{ alignItems: "center", height: "100%" }}
+                  >
+                    {!!img && (
+                      <Grid xs={4} item>
+                        {!loadingPicture ? (
+                          <Image
+                            layout="responsive"
+                            height={"100%"}
+                            width={"100%"}
+                            priority={true}
+                            src={img?.src?.original || ""}
+                          />
+                        ) : (
+                          <Skeleton
+                            sx={{ bgcolor: "grey.900" }}
+                            variant="rectangular"
+                            height={"100%"}
+                          />
+                        )}
+                      </Grid>
+                    )}
+                    <Grid
+                      xs={!!img ? 8 : 12}
+                      item
+                      container
+                      direction={"column"}
+                      spacing={2}
+                    >
+                      <Grid item>
+                        <Typography variant="h5" color={"primary.dark"}>
+                          {_.capitalizeWord(word)}
+                        </Typography>
+                      </Grid>
+                      {!!pronunciation && (
+                        <Grid item>
+                          <Typography variant="body1">
+                            / {pronunciation} /
+                          </Typography>
+                        </Grid>
+                      )}
+                      <Grid item>
+                        <Typography variant="body1">{pos}</Typography>
+                      </Grid>
 
-                  <Grid item textAlign={"center"}>
-                    <Typography variant="body1">Ex: {example}</Typography>
-                    <Typography variant="body2">{translateExample}</Typography>
+                      <Grid item textAlign={"center"}>
+                        <Typography variant="body1">Ex: {example}</Typography>
+                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
               </CardContent>
@@ -284,13 +337,8 @@ function Flascard(props: word, ref: Ref<IRefFlascard>) {
               // }}
             >
               <CardContent sx={{ width: "100%", height: "100%" }}>
-                <Grid
-                  container
-                  direction={"column"}
-                  spacing={2}
-                  sx={{ alignItems: "center" }}
-                >
-                  <Grid item width={"100%"}>
+                <Grid container sx={{ alignItems: "center", height: "100%" }}>
+                  {/* <Grid item width={"100%"}>
                     {isFlipped && (
                       <DurationCircle
                         sx={{ zIndex: 98 }}
@@ -303,16 +351,56 @@ function Flascard(props: word, ref: Ref<IRefFlascard>) {
                         }}
                       />
                     )}
-                  </Grid>
+                  </Grid> */}
 
-                  <Grid item>
-                    <Typography variant="h5" component="div">
-                      {translation}
-                    </Typography>
-                  </Grid>
-                  <Grid item textAlign={"center"}>
-                    <Typography variant="body1">Ex: {example}</Typography>
-                    <Typography variant="body2">{translateExample}</Typography>
+                  {!!img && (
+                    <Grid xs={4} item>
+                      {!loadingPicture ? (
+                        <Image
+                          layout="responsive"
+                          height={"100%"}
+                          width={"100%"}
+                          priority={true}
+                          src={img?.src?.original || ""}
+                        />
+                      ) : (
+                        <Skeleton
+                          sx={{ bgcolor: "grey.600", animation: "none" }}
+                          variant="rectangular"
+                          width={210}
+                          height={118}
+                        />
+                      )}
+                    </Grid>
+                  )}
+                  <Grid
+                    xs={!!img ? 8 : 12}
+                    item
+                    container
+                    direction={"column"}
+                    spacing={2}
+                  >
+                    <Grid item>
+                      <Typography variant="h5" color={"primary.dark"}>
+                        {_.capitalizeWord(translation)}
+                      </Typography>
+                    </Grid>
+                    {!!pronunciation && (
+                      <Grid item>
+                        <Typography variant="body1">
+                          / {pronunciation} /
+                        </Typography>
+                      </Grid>
+                    )}
+                    <Grid item>
+                      <Typography variant="body1">{pos}</Typography>
+                    </Grid>
+
+                    <Grid item textAlign={"center"}>
+                      <Typography variant="body1">
+                        VD: {translateExample}
+                      </Typography>
+                    </Grid>
                   </Grid>
                 </Grid>
               </CardContent>

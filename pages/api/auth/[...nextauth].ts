@@ -79,9 +79,6 @@ export const authOptions: AuthOptions = {
         return { ...token, ...user };
       }
     },
-    async redirect(param) {
-      return param.url;
-    },
     async session(params) {
       const { session, token: tokenJWT } = params;
       return { ...session, user: { ...tokenJWT, token: undefined } };

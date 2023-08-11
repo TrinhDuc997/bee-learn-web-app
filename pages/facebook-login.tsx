@@ -7,7 +7,7 @@ const PopupFacebookLoginPage: React.FC = () => {
 
   useEffect(() => {
     if (status === "unauthenticated" || status === "loading") {
-      signIn("facebook");
+      signIn("facebook", { callbackUrl: "/facebook-login" });
     } else {
       window.close();
     }

@@ -1,5 +1,8 @@
 import { Box, Checkbox, IconButton, TableCell, TableRow } from "@mui/material";
-import { IExpandWord } from "pages/dashboard/learning/vocabulary";
+import {
+  IDashBoardVocabularyContext,
+  IExpandWord,
+} from "pages/dashboard/learning/vocabulary";
 import * as React from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import { DashBoardVocabulryContext } from "contexts";
@@ -14,7 +17,7 @@ const ItemVocabulary = React.memo(function ItemVocabulary(
   const { row } = props;
   const { handleChangeListWords, handleOpenModel } = React.useContext(
     DashBoardVocabulryContext
-  );
+  ) as IDashBoardVocabularyContext;
   const { examples = [], topics, word, checked = false } = row;
   const { translation, type } = examples[0] || {};
   return (

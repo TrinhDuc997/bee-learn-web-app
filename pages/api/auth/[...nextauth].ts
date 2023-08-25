@@ -60,6 +60,10 @@ export const authOptions: AuthOptions = {
           `${process.env.TARGET_API}/v1/user/login`,
           { username, password }
         );
+        console.log(
+          "🚀 ~ file: [...nextauth].ts:66 ~ authorize: ~ response.data:",
+          response.data
+        );
 
         if (response.status === 200) {
           return response.data;

@@ -60,7 +60,6 @@ export function HeroSectionMobile() {
             />
           </Box>
         </Stack>
-
         <Stack
           direction={"column"}
           justifyContent="flex-start"
@@ -100,7 +99,6 @@ export function HeroSectionMobile() {
             />
           </Box>
         </Stack>
-
         <Stack
           direction={"column"}
           justifyContent="flex-start"
@@ -136,6 +134,45 @@ export function HeroSectionMobile() {
               src={sectionToeicIelts}
               layout="responsive"
               alt="english-vocab2"
+            />
+          </Box>
+        </Stack>
+        <Stack
+          direction={"column"}
+          justifyContent="flex-start"
+          sx={{
+            pb: "3rem",
+            pt: "2rem",
+          }}
+        >
+          <Box width={"100%"}>
+            <Typography
+              sx={{ mb: "2rem" }}
+              color={"primary.dark"}
+              component="h1"
+              variant="h4"
+              fontWeight={"bold"}
+            >
+              Dễ dàng duy trì thói quen học tiếng Anh
+            </Typography>
+            <Typography sx={{ mb: "1rem" }}>
+              Ứng dụng nhắc bạn học vào thời điểm vàng giúp bạn dễ dàng duy trì
+              thói quen.
+            </Typography>
+            <Typography sx={{ mb: "1rem" }}>
+              cung cấp khá đầy đủ các kiến thức ngữ pháp quan trọng. Nếu bạn
+              đang bắt đầu “cày” IELTS thì đây là một website vô cùng cần thiết
+              cho các bạn ôn tập ngữ pháp. Các bài học được tích hợp đan xen với
+              các câu đố, trò chơi giải trí.
+            </Typography>
+            <Typography sx={{ mb: "1rem" }}></Typography>
+            <Button variant="contained">BẮT ĐẦU NGAY</Button>
+          </Box>
+          <Box width={"100%"} sx={{ mt: "1rem" }}>
+            <Image
+              src={sectionGrammar}
+              layout="responsive"
+              alt="english-grammar"
             />
           </Box>
         </Stack>

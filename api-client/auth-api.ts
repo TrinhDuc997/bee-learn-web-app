@@ -10,4 +10,7 @@ export const authAPI = {
   userRegistration(req?: any, version = "v1") {
     return axiosClient.post(`/${version}/user/addUser`, req);
   },
+  updateUser(req?: any, version = "v1") {
+    return axiosClient.put(`/${version}/user/updateUser`, req);
+  },
 };

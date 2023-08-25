@@ -6,7 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { Box, Checkbox } from "@mui/material";
+import { Box } from "@mui/material";
 import ItemNoteBook from "./ItemNoteBook";
 import { IExpandWord } from "pages/learning/vocabulary/note-book";
 
@@ -32,7 +32,7 @@ const TableNoteBook = React.memo(function StickyHeadTable(
         overflow: "hidden",
         borderRadius: "15px",
         border: "1px solid",
-        borderColor: "background.second",
+        borderColor: "#ccc",
       }}
     >
       <TableContainer sx={{ height: "calc(100% - 60px)" }}>
@@ -41,9 +41,8 @@ const TableNoteBook = React.memo(function StickyHeadTable(
             <TableRow>
               <TableCell
                 align={"left"}
-                style={{ minWidth: 150 }}
+                style={{ minWidth: 140 }}
                 sx={{
-                  backgroundColor: "background.second",
                   fontWeight: "bold",
                 }}
               >
@@ -51,9 +50,8 @@ const TableNoteBook = React.memo(function StickyHeadTable(
               </TableCell>
               <TableCell
                 align={"left"}
-                style={{ minWidth: 150 }}
+                style={{ minWidth: 140 }}
                 sx={{
-                  backgroundColor: "background.second",
                   fontWeight: "bold",
                 }}
               >
@@ -61,29 +59,34 @@ const TableNoteBook = React.memo(function StickyHeadTable(
               </TableCell>
               <TableCell
                 align={"left"}
-                style={{ minWidth: 180 }}
+                style={{ minWidth: 150 }}
                 sx={{
-                  backgroundColor: "background.second",
                   fontWeight: "bold",
                 }}
               >
                 Definition
               </TableCell>
               <TableCell
-                align={"right"}
                 style={{ minWidth: 90 }}
                 sx={{
-                  backgroundColor: "background.second",
                   fontWeight: "bold",
                 }}
               >
-                Description
+                Tag
               </TableCell>
               <TableCell
-                align={"right"}
-                style={{ minWidth: 90 }}
+                align={"center"}
+                style={{ minWidth: 170 }}
                 sx={{
-                  backgroundColor: "background.second",
+                  fontWeight: "bold",
+                }}
+              >
+                Level
+              </TableCell>
+              <TableCell
+                align={"center"}
+                style={{ maxWidth: 60 }}
+                sx={{
                   fontWeight: "bold",
                 }}
               ></TableCell>
@@ -107,7 +110,7 @@ const TableNoteBook = React.memo(function StickyHeadTable(
         onPageChange={handleChangePage}
         sx={{
           borderTop: "1px solid",
-          borderColor: "background.second",
+          borderColor: "#ccc",
         }}
       />
     </Box>

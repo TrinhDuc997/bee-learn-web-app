@@ -29,10 +29,10 @@ export interface IExpandWord extends IWord {
 }
 
 export interface IDashBoardVocabularyContext {
-  handleOpenModel?: Function;
-  handleChangeListWords?: Function;
-  generateDataWords?: Function;
-  handleUpdateListWords?: Function;
+  handleOpenModel: Function;
+  handleChangeListWords: Function;
+  generateDataWords: Function;
+  handleUpdateListWords: Function;
 }
 
 export interface IDashboardVocabularyProps {}
@@ -178,29 +178,29 @@ export default function DashboardVocabulary(props: IDashboardVocabularyProps) {
     });
   }, []);
 
-  async function generateDataWord(word: string) {
-    const wordInListWords = listWordsRef.current.find((i) => i.word === word);
-    const { examples = [] } = wordInListWords || {};
+  // async function generateDataWord(word: string) {
+  //   const wordInListWords = listWordsRef.current.find((i) => i.word === word);
+  //   const { examples = [] } = wordInListWords || {};
 
-    const prompt = `tạo duy nhất chỉ một ví dụ của từ "${word}".gồm các field từ loại(ký hiệu ex: n/adj/adv...),nghĩa tiếng việt của từ, nghĩa tiếng việt của ví dụ. hãy để dưới dạng Array Json. ex: [{word:"", type:"", translation:"", example:"", translateExample:""}]`;
-    setLoadingGenEx(true);
-    const dataWord = await generateDataWordFromAI(prompt);
-    const { choices } = dataWord;
-    const { message } = choices[0];
-    const { content = "" } = message || {};
-    const convertContent = await JSON.parse(content);
-    setLoadingGenEx(false);
+  //   const prompt = `tạo duy nhất chỉ một ví dụ của từ "${word}".gồm các field từ loại(ký hiệu ex: n/adj/adv...),nghĩa tiếng việt của từ, nghĩa tiếng việt của ví dụ. hãy để dưới dạng Array Json. ex: [{word:"", type:"", translation:"", example:"", translateExample:""}]`;
+  //   setLoadingGenEx(true);
+  //   const dataWord = await generateDataWordFromAI(prompt);
+  //   const { choices } = dataWord;
+  //   const { message } = choices[0];
+  //   const { content = "" } = message || {};
+  //   const convertContent = await JSON.parse(content);
+  //   setLoadingGenEx(false);
 
-    const example = {
-      ...convertContent[0],
-      _id: (wordInListWords?._id || "") + examples.length + 1,
-    };
+  //   const example = {
+  //     ...convertContent[0],
+  //     _id: (wordInListWords?._id || "") + examples.length + 1,
+  //   };
 
-    handleChangeListWords({
-      ...wordInListWords,
-      examples: [...examples, example],
-    });
-  }
+  //   handleChangeListWords({
+  //     ...wordInListWords,
+  //     examples: [...examples, example],
+  //   });
+  // }
   async function generateDataWords() {
     const wordInListWords = listWordsRef.current.filter((i) => i.checked);
     const arrayWordNeedGenEx = wordInListWords?.map((i) => {
@@ -326,7 +326,8 @@ export default function DashboardVocabulary(props: IDashboardVocabularyProps) {
     return {
       handleOpenModel,
       handleChangeListWords,
-      generateDataWord,
+      // generateDataWord,
+      generateDataWords,
       handleUpdateListWords,
     };
   }, []);

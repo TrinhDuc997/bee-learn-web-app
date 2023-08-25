@@ -12,7 +12,10 @@ import {
   TextareaAutosizeProps,
   Typography,
 } from "@mui/material";
-import { IExpandWord } from "pages/dashboard/learning/vocabulary";
+import {
+  IDashBoardVocabularyContext,
+  IExpandWord,
+} from "pages/dashboard/learning/vocabulary";
 import { DashBoardVocabulryContext } from "contexts";
 import { POS, dataPOS } from "utils/dataCommon";
 import { IVocabularySubjects } from "@interfaces";
@@ -84,7 +87,7 @@ export const EditWords = (props: IEditWordsProps) => {
   const [openAutocomplete, setOpenComplete] = useState(false);
 
   const { handleChangeListWords, generateDataWords, handleUpdateListWords } =
-    React.useContext(DashBoardVocabulryContext);
+    React.useContext(DashBoardVocabulryContext) as IDashBoardVocabularyContext;
 
   const paginate = (newDirection: number) => {
     if (page === 0 && newDirection === -1) {

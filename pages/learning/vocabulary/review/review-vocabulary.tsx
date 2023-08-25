@@ -1,16 +1,13 @@
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Button, Grid, IconButton } from "@mui/material";
 import { useRouter } from "next/router";
 import * as React from "react";
 import { wordsAPI } from "@api-client";
 import CustomizedProgressBars from "@components/common/loadingComponent/CircularLoading";
 import { LearningLayout } from "@components/layouts";
 import _ from "@components/common";
-// import axios from "axios";
 import { IWord, IWords } from "@interfaces";
 import SliderBee from "@components/common/SliderBee";
-// import { useAuth } from "@hooks";
 import Loading from "@components/common/loadingPage";
-
 import SpellWordReview, {
   IRefSpellWordReview,
 } from "@components/learnVocabulary/review/SpellWordReview";
@@ -24,8 +21,9 @@ import ListenAndRewrite, {
   RefListenAndRewrite,
 } from "@components/learnVocabulary/review/ListenAndRewrite";
 import responsiveVoice from "utils/responsiveVoice";
-import ImageSearch from "@components/common/ImageSearch";
 import { useSession } from "next-auth/react";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
 export interface IListWordsReviewProps {}
 
 function getRandomGameToReview(preGame: number): number {
@@ -109,7 +107,8 @@ export default function ReviewVocabulary(props: IListWordsReviewProps) {
       const dataSubmit = {
         id: id,
         isLearnNewWord: false,
-        wordsLeaned: dataWordsRef.current,
+        isReviewWords: true,
+        wordsLearned: dataWordsRef.current,
       };
       await wordsAPI.updateWordsUserLearned(dataSubmit);
       router.push("/learning/vocabulary/review");
@@ -269,48 +268,20 @@ export default function ReviewVocabulary(props: IListWordsReviewProps) {
             flexWrap={"nowrap"}
             spacing={2}
           >
-            {/* <Grid
-              item
-              xs={12}
-              maxHeight={"112px"}
-              container
-              justifyContent={"center"}
-              alignItems={"center"}
-            >
-              <Box
-                sx={{
-                  background: "linear-gradient(90deg, #fafafa 30%, #fbc02d)",
-                }}
-              >
-                <Image
-                  src="/beeReview.png"
-                  width={90}
-                  height={90}
-                  layout="intrinsic"
-                />
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  height: "100%",
-                  backgroundColor: "secondary.main",
-                  borderTopRightRadius: "20px",
-                  borderBottomRightRadius: "20px",
-                }}
-              >
-                <Typography
-                  variant="h5"
-                  fontWeight={"bold"}
-                  fontSize={{ xs: "18px", sm: "24px", md: "28px" }}
-                  mr={3}
-                >
-                  Review Vocabulary
-                </Typography>
-              </Box>
-            </Grid> */}
-            <Grid item width={"80%"}>
-              <SliderBee max={dataWords.length} value={pageWord} />
+            <Grid item container width={"100%"} alignItems={"flex-end"}>
+              <Grid item width={"10%"} textAlign="center">
+                <IconButton>
+                  <ArrowBackIcon
+                    sx={{
+                      fontSize: "40px",
+                      color: "secondary.main",
+                    }}
+                  />
+                </IconButton>
+              </Grid>
+              <Grid item width={"80%"}>
+                <SliderBee max={dataWords.length} value={pageWord} />
+              </Grid>
             </Grid>
             <Grid item xs={12}>
               <Grid container justifyContent="center" spacing={4} pt={"2rem"}>

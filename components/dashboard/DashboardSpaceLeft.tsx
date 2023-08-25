@@ -39,7 +39,11 @@ function DashboardSpaceLeft() {
 
   return (
     <Grid
-      sx={{ backgroundColor: "background.second", borderRadius: "10px" }}
+      sx={{
+        borderRadius: "10px",
+        border: "1px solid",
+        borderColor: "divider",
+      }}
       height={"100%"}
       container
       direction={"column"}

@@ -1,8 +1,21 @@
-import { IPhoneticIPA, IVocabularySubjects, word } from "../interfaces";
+import { IPhoneticIPA, IUser, IVocabularySubjects, word } from "../interfaces";
 import { IWord, IWordLeaned, IWords } from "../interfaces/word.interface";
 import axiosClient from "./general-api";
 
+interface IResImportWordsUserLearned {
+  wordsLearned: IWordLeaned[];
+  hierarchicalArrayOfWords: number[];
+}
+
 export const wordsAPI = {
+  mockUpAPI: (req: any) => {
+    console.log("🚀 ~ file: words-api.ts:68 ~ export  wordsAPI.req:", req);
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({});
+      }, 2000);
+    });
+  },
   addListWordFromExcel: function (req?: any, version = "v1"): Promise<word[]> {
     return axiosClient.post(`/${version}/words/addListWordFromExcel`, req);
   },
@@ -34,11 +47,14 @@ export const wordsAPI = {
   ): Promise<IVocabularySubjects[]> {
     return axiosClient.put(`/${version}/words/updateVocabularySubjects`, req);
   },
-  updateWordsUserLearned: function (
+  updateWordsUserLearned: function (req?: any, version = "v1"): Promise<IUser> {
+    return axiosClient.put(`/${version}/words/updateWordsUserLearned`, req);
+  },
+  importWordsUserLearned: function (
     req?: any,
     version = "v1"
-  ): Promise<IWordLeaned[]> {
-    return axiosClient.put(`/${version}/words/updateWordsUserLearned`, req);
+  ): Promise<IResImportWordsUserLearned> {
+    return axiosClient.put(`/${version}/words/importWordsUserLearned`, req);
   },
 
   getListWordsToReview: function (req?: any, version = "v1"): Promise<IWords> {

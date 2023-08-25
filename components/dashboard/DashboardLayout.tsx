@@ -37,7 +37,6 @@ export function DashboardLayout(props: LayoutProps) {
         <DashboardHeader />
         <Grid
           sx={{
-            backgroundColor: "background.default",
             padding: "0.5rem",
             borderRadius: "10px",
             border: "1px solid",

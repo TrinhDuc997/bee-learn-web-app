@@ -19,10 +19,6 @@ import { signOut, useSession } from "next-auth/react";
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const { data: session } = useSession();
-  console.log(
-    "🚀 ~ file: AccountSetting.tsx:22 ~ AccountMenu ~ session:",
-    session
-  );
   const { user } = session || {};
   const { name = "", role } = user || {};
   const router = useRouter();
@@ -67,7 +63,7 @@ export default function AccountMenu() {
                 router.push("/login");
               }}
             >
-              Đăng Nhập
+              Đăng nhập
             </Button>
             <Button
               variant="outlined"
@@ -83,7 +79,7 @@ export default function AccountMenu() {
                 mr: "1rem",
               }}
             >
-              Đăng Ký
+              Đăng ký
             </Button>
           </Box>
         ) : (
@@ -140,6 +136,7 @@ export default function AccountMenu() {
               transform: "translateY(-50%) rotate(45deg)",
               zIndex: 0,
             },
+            borderRadius: "15px",
           },
         }}
         transformOrigin={{ horizontal: "right", vertical: "top" }}
@@ -169,7 +166,7 @@ export default function AccountMenu() {
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
-          Logout
+          Đăng xuất
         </MenuItem>
       </Menu>
     </React.Fragment>

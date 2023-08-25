@@ -56,7 +56,7 @@ export function HeroSection() {
             </Typography>
             <Button
               sx={{ ml: "1rem" }}
-              variant="contained"
+              variant="outlined"
               onClick={() => {
                 router.push("/learning/vocabulary/review");
               }}
@@ -113,7 +113,7 @@ export function HeroSection() {
             <Typography sx={{ mb: "1rem" }}></Typography>
             <Button
               sx={{ ml: "1rem" }}
-              variant="contained"
+              variant="outlined"
               onClick={() => {
                 setOpen(true);
               }}
@@ -154,7 +154,7 @@ export function HeroSection() {
             <Typography sx={{ mb: "1rem" }}></Typography>
             <Button
               sx={{ ml: "1rem" }}
-              variant="contained"
+              variant="outlined"
               onClick={() => {
                 setOpen(true);
               }}

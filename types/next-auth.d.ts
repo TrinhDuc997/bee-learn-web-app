@@ -13,6 +13,11 @@ declare module "next-auth" {
       role?: string;
       hierarchicalArrayOfWords: number[];
       courseLearned: any[];
+      tags: Array<{
+        _id?: string;
+        title: string;
+        description?: string;
+      }>;
       // token?: string;
     } & DefaultSession["user"];
   }

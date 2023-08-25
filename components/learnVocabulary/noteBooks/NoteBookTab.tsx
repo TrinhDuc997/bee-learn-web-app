@@ -4,72 +4,55 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import { IExpandWord } from "pages/learning/vocabulary/note-book";
+import {
+  IExpandWord,
+  INoteBooksContext,
+} from "pages/learning/vocabulary/note-book";
 import TableNoteBook from "./TableNoteBook";
-import SearchIcon from "@mui/icons-material/Search";
-import { styled, alpha } from "@mui/material/styles";
-import { Button, Grid, InputBase } from "@mui/material";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  Grid,
+  IconButton,
+  Menu,
+  MenuItem,
+} from "@mui/material";
 import { NoteBookContext } from "contexts";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import SearchComponent from "@components/common/SearchComponent";
+import AddNewVocabulary from "./AddNewVocabulary";
+import TagsManagerCpn from "./TagsManagerCpn";
+import ImportVocabularyFromExcel from "./ImportVocabularyFromExcel";
+import CloseIcon from "@mui/icons-material/Close";
 
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(1),
-    width: "auto",
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "#388e3c",
-  border: "1px solid",
-  borderColor: "#4caf50",
-  borderRadius: "10px",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      width: "12ch",
-
-      "&:focus": {
-        width: "20ch",
-      },
-    },
-  },
-}));
+interface IIndicatorColor {
+  [key: string]: string;
+}
 
 interface INoteBookTab {
-  handleSubmit: Function;
-  quantityItemChanged: number;
+  // handleSubmit: Function;
+  // quantityItemChanged: number;
+  dataWords: IExpandWord[];
   dataWordsLV1: IExpandWord[];
   dataWordsLV2: IExpandWord[];
   dataWordsLV3: IExpandWord[];
   dataWordsLV4: IExpandWord[];
 }
+
+enum DialogTypes {
+  ADDNEWWORD,
+  IMPORTWORDFROMEXCEL,
+  ADDTAGS,
+}
+
 export default function NoteBookTab(props: INoteBookTab) {
   const [value, setValue] = React.useState("1");
   const {
-    handleSubmit,
-    quantityItemChanged = 0,
+    // handleSubmit,
+    // quantityItemChanged = 0,
+    dataWords,
     dataWordsLV1,
     dataWordsLV2,
     dataWordsLV3,
@@ -78,7 +61,9 @@ export default function NoteBookTab(props: INoteBookTab) {
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
-  const { handleFilterListWords } = React.useContext(NoteBookContext);
+  const { handleFilterListWords, handleSubmitImportVocab } = React.useContext(
+    NoteBookContext
+  ) as INoteBooksContext;
   const timeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
   const handleInputChange = (value: string) => {
@@ -104,13 +89,41 @@ export default function NoteBookTab(props: INoteBookTab) {
     };
   }, []);
 
-  const indicatorColor: { [key: string]: string } = {
+  const indicatorColor: IIndicatorColor = {
     "1": "#ff0030",
     "2": "#ffcc00",
     "3": "#0093ff",
     "4": "#00cfd1",
   };
 
+  // popover - start
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
+    null
+  );
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
+  // popover - end
+
+  // Dialog - start
+  const [typeOpenDialog, setTypeOpenDialog] = React.useState("NONE");
+
+  const handleClickOpenDialog = (type: string) => {
+    setTypeOpenDialog(type);
+  };
+
+  const handleCloseDialog = () => {
+    setTypeOpenDialog("NONE");
+  };
+  // Dialog - end
   return (
     <Box
       sx={{ width: "100%", typography: "body1", height: "calc(100% - 50px)" }}
@@ -201,31 +214,72 @@ export default function NoteBookTab(props: INoteBookTab) {
             justifyContent: "space-between",
             pl: "1rem",
             pr: "1rem",
+            flexWrap: "nowrap",
           }}
         >
           <Grid item>
-            <Button
-              variant="outlined"
-              onClick={() => {
-                handleSubmit();
+            <SearchComponent
+              onChange={(e) => {
+                handleInputChange(e.target.value);
+              }}
+            />
+          </Grid>
+          <Grid>
+            <IconButton aria-describedby={id} onClick={handleClick}>
+              <MoreVertIcon fontSize="large" color="primary" />
+            </IconButton>
+            <Menu
+              id={id}
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "right",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              elevation={2}
+              PaperProps={{
+                sx: {
+                  border: "1px solid",
+                  borderColor: "divider",
+                  borderRadius: "15px",
+                },
+              }}
+              MenuListProps={{
+                sx: {
+                  padding: "0px",
+                  "& .MuiMenuItem-root:hover": {
+                    backgroundColor: "primary.light",
+                  },
+                },
               }}
             >
-              Lưu thay đổi {`(${quantityItemChanged})`}
-            </Button>
-          </Grid>
-          <Grid item>
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon color="primary" />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Tìm kiếm..."
-                inputProps={{ "aria-label": "Tìm kiếm..." }}
-                onChange={(e) => {
-                  handleInputChange(e.target.value);
+              <MenuItem
+                onClick={() => {
+                  handleClickOpenDialog("ADDNEWWORD");
                 }}
-              />
-            </Search>
+              >
+                Thêm từ vựng
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleClickOpenDialog("IMPORTWORDFROMEXCEL");
+                }}
+              >
+                Thêm từ vựng bằng file excel
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleClickOpenDialog("ADDTAGS");
+                }}
+              >
+                Thêm tags
+              </MenuItem>
+            </Menu>
           </Grid>
         </Grid>
         <TabPanel
@@ -253,6 +307,48 @@ export default function NoteBookTab(props: INoteBookTab) {
           <TableNoteBook listWords={dataWordsLV4} />
         </TabPanel>
       </TabContext>
+      <Dialog
+        open={typeOpenDialog in DialogTypes}
+        onClose={handleCloseDialog}
+        aria-labelledby="dialog-title"
+        PaperProps={{
+          sx: {
+            borderRadius: "15px",
+            height: "80%",
+            width: "80%",
+            maxWidth: "800px",
+            padding: "1rem",
+          },
+        }}
+      >
+        <DialogTitle sx={{}} id="customized-dialog-title">
+          <IconButton
+            aria-label="close"
+            onClick={handleCloseDialog}
+            sx={{
+              position: "absolute",
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </DialogTitle>
+        <Divider sx={{ mb: "8px" }} />
+        <DialogContent sx={{ padding: "8px 0px 0px 0px", width: "100%" }}>
+          {typeOpenDialog === "ADDNEWWORD" && (
+            <AddNewVocabulary dataWords={dataWords} />
+          )}
+          {typeOpenDialog === "IMPORTWORDFROMEXCEL" && (
+            <ImportVocabularyFromExcel
+              handleSubmitImportVocab={handleSubmitImportVocab}
+              handleCloseDialog={handleCloseDialog}
+            />
+          )}
+          {typeOpenDialog === "ADDTAGS" && <TagsManagerCpn />}
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 }

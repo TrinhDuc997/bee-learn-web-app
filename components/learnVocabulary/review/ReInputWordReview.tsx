@@ -42,7 +42,7 @@ function ReInputWordReview(
     example,
     translateExample,
   } = examples[0] || {};
-  const pos = dataPOSMap[type];
+  const pos = dataPOSMap[type] || type;
   const [input, setInput] = useState<string>("");
   const pronunciation = _.getIpaPronunciation(word);
 

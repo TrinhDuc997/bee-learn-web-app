@@ -11,12 +11,7 @@ import { useSession } from "next-auth/react";
 // import Cookies from 'cookies';
 export const LearningLayout = (props: LayoutProps) => {
   const { children } = props;
-  const { status, data: session } = useSession();
-  console.log(
-    "🚀 ~ file: LearningLayout.tsx:15 ~ LearningLayout ~ status:",
-    status,
-    session
-  );
+  const { status } = useSession();
   const router = useRouter();
 
   React.useEffect(() => {
@@ -38,22 +33,22 @@ export const LearningLayout = (props: LayoutProps) => {
           width: "100%",
           top: 0,
           zIndex: 999,
-          height: "70px",
+          height: "65px",
+          boxShadow: "0px -4px 4px -4px rgba(0,0,0,.2)",
         }}
       >
         <HeaderPageLearningVocab />
       </Box>
-      <Box component="main" height={"calc(100vh - 70px - 50px)"}>
+      <Box component="main" height={"calc(100vh - 65px - 50px)"}>
         {children}
       </Box>
       <Box
         component="footer"
         sx={{
-          // position: "fixed",
           width: "100%",
           bottom: 0,
           zIndex: 999,
-          backgroundColor: "white",
+          boxShadow: "0px -4px 4px -4px rgba(0,0,0,.2)",
           height: 50,
         }}
       >

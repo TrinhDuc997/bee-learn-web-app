@@ -18,7 +18,7 @@ const Home: NextPageWithLayout<IHomePageProps> = (props: IHomePageProps) => {
     <Box>
       <HeroSection />
       <HeroSectionMobile />
-      <ListPostsSection data={listPosts} />
+      {/* <ListPostsSection data={listPosts} /> */}
     </Box>
   );
 };

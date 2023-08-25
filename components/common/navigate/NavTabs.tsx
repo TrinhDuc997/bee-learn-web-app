@@ -57,7 +57,7 @@ export default function NavTabs() {
   };
   const widthLinkTab = 100 / 3;
   return (
-    <Box width={"100%"} sx={{ mb: "1px" }}>
+    <Box width={"100%"}>
       <Tabs
         value={tabHighlight}
         onChange={handleChange}

@@ -1,17 +1,31 @@
 import * as React from "react";
 import { LearningLayout } from "@components/layouts";
-import { Box, Grid } from "@mui/material";
+import {
+  Box,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  Grid,
+  IconButton,
+} from "@mui/material";
 import NoteBookTab from "@components/learnVocabulary/noteBooks/NoteBookTab";
 import { wordsAPI } from "@api-client";
 // import { useAuth } from "@hooks";
-import { IWord } from "@interfaces";
+import { ITag, IWord } from "@interfaces";
 import { NoteBookContext } from "contexts";
 import { useSession } from "next-auth/react";
+import CloseIcon from "@mui/icons-material/Close";
+import { EditWords } from "@components/learnVocabulary/noteBooks/EditWords";
 
 export interface INoteBooksContext {
-  handleChangeListWords?: Function;
-  handleFilterListWords?: Function;
-  handleSubmit?: Function;
+  handleChangeListWords: Function;
+  handleChangeItems: Function;
+  handleFilterListWords: Function;
+  // handleSubmit: Function;
+  handleSubmitImportVocab: Function;
+  handleOpenEditWord: Function;
+  tags?: ITag[];
 }
 
 export interface INoteBookProps {}
@@ -19,6 +33,7 @@ export interface IExpandWord extends IWord {
   levelOfWord?: number;
   idOfWord?: number;
   isChanged?: boolean;
+  tags?: ITag[];
 }
 const genDataFollowLevel = (level: number) => {
   let numberOfReview = 4,
@@ -48,21 +63,101 @@ export default function NoteBook(props: INoteBookProps) {
   );
   const dataWordsRef = React.useRef(dataWords);
 
+  // Handle Dialog --- START
+  const [wordEdit, setWordEdit] = React.useState<IExpandWord | null>(null);
+  const handleCloseEditWord = () => {
+    setWordEdit(null);
+  };
+  const handleOpenEditWord = (params: IExpandWord) => {
+    setWordEdit(params);
+  };
+  // Handle Dialog --- END
+
   const handleChangeListWords = React.useCallback((params: IExpandWord) => {
     setDataWords((oldListWords: IExpandWord[]) => {
       const newArray = [...oldListWords];
-      const index = oldListWords.findIndex(
-        (i) => i.idOfWord === params.idOfWord
-      );
+      const index = oldListWords.findIndex((i) => i._id === params._id);
       newArray[index] = {
         ...newArray[index],
         ...params,
-        isChanged: true,
       };
       dataWordsRef.current = newArray;
       return newArray;
     });
   }, []);
+  const handleChangeItems = React.useCallback(
+    async (params: IExpandWord) => {
+      const index = dataWordsRef.current.findIndex(
+        (i) => i.idOfWord === params.idOfWord
+      );
+      const { tags = [] } = params;
+      const changedItem = {
+        ...dataWordsRef.current[index],
+        ...params,
+        tagIds: tags.map((i) => i._id),
+      };
+      const dataSubmit = {
+        id,
+        isReturnWordLearned: true,
+        wordsLearned: [
+          {
+            ...changedItem,
+            ...genDataFollowLevel(changedItem.levelOfWord || 1),
+          },
+        ],
+      };
+      const newdata = await wordsAPI.updateWordsUserLearned(dataSubmit);
+      const { hierarchicalArrayOfWords } = newdata;
+      if (!!newdata) {
+        setDataWords((oldListWords: IExpandWord[]) => {
+          const newArray = [
+            ...oldListWords.map((item) => {
+              if (item.idOfWord === params.idOfWord) {
+                return {
+                  ...item,
+                  ...params,
+                };
+              } else {
+                return item;
+              }
+            }),
+          ];
+          dataWordsRef.current = newArray;
+          return newArray;
+        });
+        if (filterDataWords.length > 0) {
+          // updating data of items when filtering
+          setFilterDataWords((oldListWords: IExpandWord[]) => {
+            const newArray = [
+              ...oldListWords.map((item) => {
+                if (item.idOfWord === params.idOfWord) {
+                  return {
+                    ...item,
+                    ...params,
+                  };
+                } else {
+                  return item;
+                }
+              }),
+            ];
+            return newArray;
+          });
+        }
+      }
+
+      // update data session
+      const newSession = {
+        ...session,
+        user: {
+          ...session?.user,
+          hierarchicalArrayOfWords,
+        },
+      };
+      await update(newSession);
+    },
+    [id]
+  );
+
   const handleFilterListWords = React.useCallback((filterValue: string) => {
     setFilterDataWords(() => {
       const newArray = dataWordsRef.current.filter((item) => {
@@ -72,41 +167,42 @@ export default function NoteBook(props: INoteBookProps) {
     });
   }, []);
 
-  const handleSubmit = async () => {
-    const listItemChanged = dataWords.filter((i) => i.isChanged);
-    const dataSubmit = {
-      id,
-      isLearnNewWord: false,
-      wordsLeaned: listItemChanged.map((item) => {
-        return {
-          ...item,
-          ...genDataFollowLevel(item.levelOfWord || 1),
-        };
-      }),
-    };
-    const newdata = await wordsAPI.updateWordsUserLearned(dataSubmit);
-    const newSession = {
-      ...session,
-      user: {
-        ...session?.user,
-        ...newdata,
-      },
-    };
-    await update(newSession);
-    setDataWords((oldListWords: IExpandWord[]) => {
-      const newArray = [
-        ...oldListWords.map((item) => {
+  const handleSubmitImportVocab = React.useCallback(
+    async (dataImport: IExpandWord[]) => {
+      const dataSubmit = {
+        id,
+        wordsLearned: dataImport.map((item) => {
           return {
             ...item,
-            isChanged: false,
+            ...genDataFollowLevel(item.levelOfWord || 1),
           };
         }),
-      ];
+      };
+      const newdata = await wordsAPI.importWordsUserLearned(dataSubmit);
+      const { hierarchicalArrayOfWords = [], wordsLearned } = newdata;
+      const newSession = {
+        ...session,
+        user: {
+          ...session?.user,
+          hierarchicalArrayOfWords,
+        },
+      };
+      await update(newSession);
+      setDataWords((oldListWords: IExpandWord[]) => {
+        let dataMatched = oldListWords;
+        wordsLearned.forEach((item) => {
+          const checkExisted = oldListWords.find((i) => i.word === item.word);
+          if (!checkExisted) {
+            dataMatched = [item, ...dataMatched];
+          }
+        });
+        dataWordsRef.current = dataMatched;
+        return dataMatched;
+      });
+    },
+    [id]
+  );
 
-      dataWordsRef.current = newArray;
-      return newArray;
-    });
-  };
   React.useEffect(() => {
     const fetchDataVocabSubject = async () => {
       const listWords: IExpandWord[] = await wordsAPI.getListWordsToReview({
@@ -138,17 +234,20 @@ export default function NoteBook(props: INoteBookProps) {
   const valueNoteBookContext = React.useMemo(() => {
     return {
       handleChangeListWords,
+      handleChangeItems,
       handleFilterListWords,
+      handleSubmitImportVocab,
+      handleOpenEditWord,
     };
-  }, []);
-  const quantityItemChanged = dataWordsRef.current.filter(
-    (i) => i.isChanged
-  ).length;
+  }, [user]);
+  // const quantityItemChanged = dataWordsRef.current.filter(
+  //   (i) => i.isChanged
+  // ).length;
   return (
     <NoteBookContext.Provider value={valueNoteBookContext}>
       <Grid container height={"100%"}>
         <Grid item lg={3} md={1} sm={1} xs={0} height={"100%"}></Grid>
-        <Grid item lg={6} md={10} sm={10} xs={12} height={"100%"}>
+        <Grid item lg={6} md={10} sm={10} xs={12} height={"100%"} pt={"8px"}>
           <Box
             sx={{
               boxShadow: "0px 30px 20px 20px #f0f0f0",
@@ -159,8 +258,9 @@ export default function NoteBook(props: INoteBookProps) {
             height={"100%"}
           >
             <NoteBookTab
-              handleSubmit={handleSubmit}
-              quantityItemChanged={quantityItemChanged}
+              // handleSubmit={handleSubmit}
+              // quantityItemChanged={quantityItemChanged}
+              dataWords={dataWords}
               dataWordsLV1={
                 filterDataWords.length > 0 ? filterDataWords : dataWordsLV1
               }
@@ -179,6 +279,47 @@ export default function NoteBook(props: INoteBookProps) {
         <Grid item lg={3} md={1} sm={1} xs={0} height={"100%"}>
           <Box height={"100%"} width={"100%"}></Box>
         </Grid>
+        <Dialog
+          open={!!wordEdit}
+          onClose={handleCloseEditWord}
+          aria-labelledby="dialog-title"
+          PaperProps={{
+            sx: {
+              borderRadius: "15px",
+              height: "80%",
+              width: "80%",
+              maxWidth: "800px",
+              padding: "1rem",
+            },
+          }}
+        >
+          <DialogTitle sx={{}} id="customized-dialog-title">
+            <IconButton
+              aria-label="close"
+              onClick={handleCloseEditWord}
+              sx={{
+                position: "absolute",
+                right: 8,
+                top: 8,
+                color: (theme) => theme.palette.grey[500],
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
+          </DialogTitle>
+          <Divider />
+          <DialogContent sx={{ padding: "8px", width: "100%" }}>
+            {!!wordEdit && (
+              <EditWords
+                wordEdit={wordEdit}
+                user={user}
+                setWordEdit={setWordEdit}
+                handleChangeItems={handleChangeItems}
+                handleCloseEditWord={handleCloseEditWord}
+              />
+            )}
+          </DialogContent>
+        </Dialog>
       </Grid>
     </NoteBookContext.Provider>
   );

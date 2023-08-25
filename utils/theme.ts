@@ -1,10 +1,8 @@
-import {
-  createTheme,
-  experimental_extendTheme as extendTheme,
-} from "@mui/material/styles";
+import { createTheme } from "@mui/material/styles";
 import { green, grey, orange, red, yellow } from "@mui/material/colors";
 
 // Create a theme instance.
+const paperColor = grey[200];
 export const theme = createTheme({
   typography: {
     fontFamily: "Open Sans, sans-serif",
@@ -19,6 +17,7 @@ export const theme = createTheme({
       dark: green[700],
       contrastText: "#000000",
       gradient: `linear-gradient(to right, ${green[700]}, ${green[400]})`,
+      //linear-gradient(130deg, rgb(23, 173, 55), rgb(152, 236, 45))
     },
     secondary: {
       main: yellow[700],
@@ -28,8 +27,7 @@ export const theme = createTheme({
 
     background: {
       default: grey[50],
-      second: grey[200],
-      paper: grey[300],
+      paper: paperColor,
     },
     error: {
       main: red.A200,
@@ -69,48 +67,69 @@ export const theme = createTheme({
         },
       },
     },
+    MuiTableContainer: {
+      styleOverrides: {
+        root: {
+          "&::-webkit-scrollbar": {
+            width: "8px",
+            background: "fixed",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            width: "8px",
+            borderRadius: "10px",
+            background: grey[300],
+          },
+        },
+      },
+    },
+    MuiDialogContent: {
+      styleOverrides: {
+        root: {
+          "&::-webkit-scrollbar": {
+            width: "8px",
+            background: "fixed",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            width: "8px",
+            borderRadius: "10px",
+            background: grey[500],
+          },
+        },
+      },
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        head: {
+          fontWeight: "bold",
+          backgroundColor: paperColor,
+        },
+      },
+    },
+    MuiTable: {
+      styleOverrides: {
+        root: {},
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: "10px",
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          borderRadius: "10px",
+        },
+      },
+    },
+    MuiAutocomplete: {
+      styleOverrides: {
+        root: {
+          borderRadius: "10px",
+        },
+      },
+    },
   },
 });
-
-// export const themeExtend = extendTheme({
-//   typography: {
-//     fontFamily: "Open Sans, sans-serif",
-//     strong: {
-//       fontWeight: "bold",
-//     },
-//   },
-//   colorSchemes: {
-//     light: {
-//       palette: {
-//         primary: {
-//           main: green[500],
-//           contrastText: "#000000",
-//         },
-//         secondary: {
-//           main: yellow[600],
-//           contrastText: "#000000",
-//         },
-//         gradient:
-//           "linear-gradient(to right, var(--mui-palette-primary-main), var(--mui-palette-primary-light))",
-//         border: {
-//           subtle: "var(--mui-palette-neutral-200)",
-//         },
-//       },
-//     },
-//     dark: {
-//       palette: {
-//         primary: {
-//           main: "#56ab2f",
-//           contrastText: "#000000",
-//         },
-//         secondary: {
-//           main: yellow[800],
-//           contrastText: "#000000",
-//         },
-//         border: {
-//           subtle: "var(--mui-palette-neutral-600)",
-//         },
-//       },
-//     },
-//   },
-// });

@@ -18,7 +18,6 @@ import ReInputWord, {
 } from "@components/learnVocabulary/newVocab/ReInputWord";
 import SliderBee from "@components/common/SliderBee";
 // import { useAuth } from "@hooks";
-import axios from "axios";
 import { useSession } from "next-auth/react";
 export interface IListWordsProps {}
 // const variants = {
@@ -49,10 +48,10 @@ export default function LearnNewWord(props: IListWordsProps) {
   const [isLoading, setLoading] = React.useState(false);
   const [loadingFinish, setLoadingFinish] = React.useState(false);
   const [step, setStep] = React.useState(1);
-  const [[pageWord, direction], setPageWord] = React.useState([0, 0]);
+  const [[pageWord, direction], setPageWord] = React.useState([18, 18]);
   const { data: session, update } = useSession();
   const { user } = session || {};
-  const { id = "" } = user || {};
+  const { id = "", tags = [] } = user || {};
 
   const dataFetchedRef = React.useRef(false);
   const flashcardRef = React.useRef<IRefFlascard>(null);
@@ -114,18 +113,20 @@ export default function LearnNewWord(props: IListWordsProps) {
   async function handleSubmit() {
     setLoadingFinish(true);
     // những field cần lưu: số lần review: defaule 1, số lần review đúng, thời gian review gần nhất, word
-    const wordsLeaned: IWordLeaned[] = dataWords.map((item) => {
+    const defaultTagId = tags[0]._id || "";
+    const wordsLearned: IWordLeaned[] = dataWords.map((item) => {
       return {
         word: item.word || "",
         numberOfReview: 4,
         numberOfReviewCorrect: 0,
+        tagIds: [defaultTagId],
       };
     });
     const course = localStorage.getItem("subject") || "TOEIC";
     const dataSubmit = {
       id: id,
       isLearnNewWord: true,
-      wordsLeaned,
+      wordsLearned,
       courseLearned: {
         course,
         subject: query.subject,
@@ -134,7 +135,7 @@ export default function LearnNewWord(props: IListWordsProps) {
     };
     setLoadingFinish(true);
     const newdata = await wordsAPI.updateWordsUserLearned(dataSubmit);
-    update((data: any) => ({ ...data, ...newdata }));
+    await update({ ...session, user: newdata });
     router.push("/learning/vocabulary/subjects/");
     // setLoadingFinish(false);
   }
@@ -164,7 +165,7 @@ export default function LearnNewWord(props: IListWordsProps) {
         const listWords: IWords = await wordsAPI.getListVocabulary({
           limit: 20,
           subject: query.subject || "",
-          page: query.numberPack, // với trường hợp khóa học là từ vựng cơ bản thì sẽ giới hạn mỗi pack sẽ là 20 từ và gửi số pack lên để lấy dữ liệu
+          page: query.numberPack, // In case the course is basic vocabulary, limiting each pack is 20 words and sending the pack numbers to get data.
         });
         setDataWords(listWords);
         setLoading(false);
@@ -251,8 +252,13 @@ export default function LearnNewWord(props: IListWordsProps) {
               <Button
                 variant="text"
                 onClick={() => {
-                  paginate(1);
                   setStep(1);
+                  if (pageWord === dataWords.length - 1) {
+                    // Once the user learned all the new words
+                    handleSubmit();
+                  } else {
+                    paginate(1);
+                  }
                 }}
                 id="btn-continue-learn-new-word"
               >

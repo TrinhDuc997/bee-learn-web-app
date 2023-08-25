@@ -25,7 +25,7 @@ const ChartReview: React.FC<ChartReviewProps> = ({ data }) => {
     return {
       type: "bar",
       data: {
-        labels: ["Level 1", "Level 2", "Level 3", "Level 4"],
+        labels: ["Cấp 1", "Cấp 2", "Cấp 3", "Cấp 4"],
         datasets: [
           {
             label: "Số lượng từ vựng",

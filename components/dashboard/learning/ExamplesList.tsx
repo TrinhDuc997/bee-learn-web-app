@@ -11,7 +11,10 @@ import * as React from "react";
 import { Add, Remove } from "@mui/icons-material";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { DashBoardVocabulryContext } from "contexts";
-import { IExpandWord } from "pages/dashboard/learning/vocabulary";
+import {
+  IDashBoardVocabularyContext,
+  IExpandWord,
+} from "pages/dashboard/learning/vocabulary";
 import { IExampleOfWord } from "@interfaces";
 import { POS, dataPOS } from "utils/dataCommon";
 export interface IExamplesListProps {
@@ -23,7 +26,9 @@ export default function ExamplesList(props: IExamplesListProps) {
   const { examples = [] } = dataWord;
   const [openCollape, setOpenCollape] = React.useState(true);
 
-  const { handleChangeListWords } = React.useContext(DashBoardVocabulryContext);
+  const { handleChangeListWords } = React.useContext(
+    DashBoardVocabulryContext
+  ) as IDashBoardVocabularyContext;
   const handleChangeExamplesList = (params: IExampleOfWord) => {
     const newArray = [...examples];
     const index = newArray.findIndex((i) => i._id === params._id);

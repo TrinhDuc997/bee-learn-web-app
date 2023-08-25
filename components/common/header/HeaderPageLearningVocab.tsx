@@ -11,11 +11,10 @@ export default function HeaderPageLearningVocab() {
     <Grid
       sx={{
         background: theme.palette.primary.gradient,
-        height: 70,
+        height: "100%",
         alignItems: "center",
       }}
       container
-      spacing={1}
     >
       <Grid item xs={3}>
         <Box
@@ -32,8 +31,8 @@ export default function HeaderPageLearningVocab() {
           >
             <Image
               src="/LogoBee.png"
-              width={140}
-              height={60}
+              width={120}
+              height={35}
               layout="intrinsic"
             />
           </a>
@@ -47,7 +46,6 @@ export default function HeaderPageLearningVocab() {
         <Box sx={{ height: "100%" }} className="headerRight">
           <Stack
             direction="row"
-            spacing={1}
             sx={{
               height: "100%",
               alignItems: "center",

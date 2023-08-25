@@ -17,7 +17,7 @@ export default function Review(props: ILearningVocabularyProps) {
   return (
     <Grid container height={"100%"}>
       <Grid item lg={3} md={1} sm={1} xs={0} height={"100%"}></Grid>
-      <Grid item lg={6} md={10} sm={10} xs={12} height={"100%"}>
+      <Grid item lg={6} md={10} sm={10} xs={12} height={"100%"} pt={"1rem"}>
         <Box
           sx={{
             boxShadow: "0px 30px 20px 20px #f0f0f0",
@@ -63,7 +63,7 @@ export default function Review(props: ILearningVocabularyProps) {
                   fontSize={{ xs: "18px", sm: "24px", md: "28px" }}
                   mr={3}
                 >
-                  Wellcome To Bee Learning
+                  Chào Mừng Bạn Đến Với Bee Learning
                 </Typography>
               </Box>
             </Grid>

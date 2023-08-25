@@ -35,7 +35,7 @@ const TableDataVocabulary = React.memo(function StickyHeadTable(
         overflow: "hidden",
         borderRadius: "15px",
         border: "1px solid",
-        borderColor: "background.second",
+        borderColor: "divider",
       }}
     >
       <TableContainer sx={{ height: "calc(100% - 60px)" }}>
@@ -45,7 +45,7 @@ const TableDataVocabulary = React.memo(function StickyHeadTable(
               <TableCell
                 align={"left"}
                 style={{ width: 30 }}
-                sx={{ backgroundColor: "background.second" }}
+                sx={{ backgroundColor: "background.paper" }}
               >
                 <Checkbox
                   checked={isCheckedAll}
@@ -57,64 +57,22 @@ const TableDataVocabulary = React.memo(function StickyHeadTable(
                   }}
                 />
               </TableCell>
-              <TableCell
-                align={"left"}
-                style={{ minWidth: 150 }}
-                sx={{
-                  backgroundColor: "background.second",
-                  fontWeight: "bold",
-                }}
-              >
+              <TableCell align={"left"} style={{ minWidth: 150 }}>
                 Word
               </TableCell>
-              <TableCell
-                align={"left"}
-                style={{ minWidth: 150 }}
-                sx={{
-                  backgroundColor: "background.second",
-                  fontWeight: "bold",
-                }}
-              >
+              <TableCell align={"left"} style={{ minWidth: 150 }}>
                 POS
               </TableCell>
-              <TableCell
-                align={"left"}
-                style={{ minWidth: 180 }}
-                sx={{
-                  backgroundColor: "background.second",
-                  fontWeight: "bold",
-                }}
-              >
+              <TableCell align={"left"} style={{ minWidth: 180 }}>
                 Definition
               </TableCell>
-              <TableCell
-                align={"right"}
-                style={{ minWidth: 90 }}
-                sx={{
-                  backgroundColor: "background.second",
-                  fontWeight: "bold",
-                }}
-              >
+              <TableCell align={"right"} style={{ minWidth: 90 }}>
                 Topics
               </TableCell>
-              <TableCell
-                align={"right"}
-                style={{ minWidth: 90 }}
-                sx={{
-                  backgroundColor: "background.second",
-                  fontWeight: "bold",
-                }}
-              >
+              <TableCell align={"right"} style={{ minWidth: 90 }}>
                 examples
               </TableCell>
-              <TableCell
-                align={"right"}
-                style={{ minWidth: 90 }}
-                sx={{
-                  backgroundColor: "background.second",
-                  fontWeight: "bold",
-                }}
-              ></TableCell>
+              <TableCell align={"right"} style={{ minWidth: 90 }}></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -135,7 +93,7 @@ const TableDataVocabulary = React.memo(function StickyHeadTable(
         onPageChange={handleChangePage}
         sx={{
           borderTop: "1px solid",
-          borderColor: "background.second",
+          borderColor: "background.paper",
         }}
       />
     </Box>

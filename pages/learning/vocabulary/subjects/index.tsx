@@ -89,23 +89,25 @@ export default function SubjectVocabulary(props: ISubjectVocabularyProps) {
             pl: "0px",
             pr: "0px",
             overflow: "auto",
+            "&::-webkit-scrollbar": {
+              width: "8px",
+              background: "fixed",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              width: "8px",
+              borderRadius: "10px",
+              backgroundColor: "divider",
+            },
           }}
           height={"100%"}
-          paddingTop={"4rem"}
           paddingBottom={"1rem"}
         >
           <Grid
             container
-            rowSpacing={5}
-            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
             sx={{ pl: "1rem", pr: "1rem" }}
             justifyContent={"center"}
           >
-            <Box
-              width={{ lg: "60%", md: "65%", xs: "90%" }}
-              margin={"auto"}
-              mt={0}
-            >
+            <Box width={{ lg: "60%", md: "65%", xs: "90%" }} margin={"1rem"}>
               <BannerTitle
                 title="Chọn Chủ Đề Học"
                 sxTypography={{ fontSize: { xs: "18px", sm: "1.5rem" } }}
@@ -133,22 +135,19 @@ export default function SubjectVocabulary(props: ISubjectVocabularyProps) {
                     md={6}
                     lg={10}
                     xl={6}
+                    // marginBottom={"1rem"}
+                    // marginTop={"1rem"}
+                    padding={"1rem"}
                   >
                     {sizePagination > 1 ? (
                       <Paper
                         sx={{
-                          background: "#f3f3f3",
                           width: "100%",
-                          boxShadow: "-3px 5px 1px -1px rgb(0 0 0 / 20%)",
+                          boxShadow: "-3px 5px 5px 0px rgb(0 0 0 / 20%)",
                           borderRadius: "15px",
                         }}
                       >
-                        <Grid
-                          container
-                          flexWrap={"nowrap"}
-                          spacing={3}
-                          justifyContent={"center"}
-                        >
+                        <Grid container flexWrap={"nowrap"}>
                           <Grid
                             item
                             sx={{
@@ -204,7 +203,12 @@ export default function SubjectVocabulary(props: ISubjectVocabularyProps) {
                             container
                             sx={{ textAlign: "left" }}
                           >
-                            <Grid item container direction={"column"}>
+                            <Grid
+                              item
+                              container
+                              direction={"column"}
+                              justifyContent={"space-around"}
+                            >
                               <Grid item>
                                 <Typography
                                   variant="h6"
@@ -242,38 +246,38 @@ export default function SubjectVocabulary(props: ISubjectVocabularyProps) {
                         </Grid>
                       </Paper>
                     ) : (
-                      <ButtonBase
+                      <Paper
                         sx={{
                           width: "100%",
-                          "&:click": {
-                            backgroundColor: "primary.light",
-                          },
-                          display: "block",
-                        }}
-                        onClick={() => {
-                          router.push({
-                            pathname: router.asPath + "/list-words",
-                            query: {
-                              subject:
-                                courseSelected === "BASIC"
-                                  ? "BASIC"
-                                  : item.title,
-                            },
-                          });
+                          boxShadow: `-3px 5px 5px 0px ${
+                            numberPacks[0] === 0
+                              ? "rgb(152 203 151)"
+                              : "rgb(0 0 0 / 20%)"
+                          }`,
+                          borderRadius: "15px",
+                          backgroundColor:
+                            numberPacks[0] === 0 ? "primary.light" : "",
                         }}
                       >
-                        <Paper
+                        <ButtonBase
                           sx={{
                             width: "100%",
-                            boxShadow: "-3px 5px 1px -1px rgb(0 0 0 / 20%)",
                             borderRadius: "15px",
-                            backgroundColor:
-                              numberPacks[0] === 0
-                                ? "primary.light"
-                                : "#f3f3f3",
+                            height: 128,
+                          }}
+                          onClick={() => {
+                            router.push({
+                              pathname: router.asPath + "/list-words",
+                              query: {
+                                subject:
+                                  courseSelected === "BASIC"
+                                    ? "BASIC"
+                                    : item.title,
+                              },
+                            });
                           }}
                         >
-                          <Grid container flexWrap={"nowrap"} spacing={3}>
+                          <Grid container flexWrap={"nowrap"}>
                             <Grid
                               item
                               sx={{
@@ -327,7 +331,7 @@ export default function SubjectVocabulary(props: ISubjectVocabularyProps) {
                               xs={12}
                               sm
                               container
-                              sx={{ textAlign: "left" }}
+                              sx={{ textAlign: "left", mt: "8px" }}
                             >
                               <Grid item container direction={"column"}>
                                 <Grid item>
@@ -344,8 +348,8 @@ export default function SubjectVocabulary(props: ISubjectVocabularyProps) {
                               </Grid>
                             </Grid>
                           </Grid>
-                        </Paper>
-                      </ButtonBase>
+                        </ButtonBase>
+                      </Paper>
                     )}
                   </Grid>
                   // </Box>
@@ -442,17 +446,6 @@ export default function SubjectVocabulary(props: ISubjectVocabularyProps) {
               >
                 <ListItemText primary="Từ Vựng IELTS" />
               </ListItemButton>
-              {/* <ListItemButton
-                sx={{
-                  border: "1px solid",
-                  borderColor: "primary.dark",
-                  mb: "1rem",
-                }}
-                selected={courseSelected === "ALL"}
-                onClick={() => handleChangeCourse("ALL")}
-              >
-                <ListItemText primary="Tất cả các từ" />
-              </ListItemButton> */}
             </MenuList>
           </Paper>
           <Drawer

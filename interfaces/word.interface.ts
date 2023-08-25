@@ -49,7 +49,10 @@ export interface IWords extends Array<IWord> {}
 
 export interface IWordLeaned {
   word: string;
-  numberOfReview: number;
-  numberOfReviewCorrect: number;
+  description?: string;
+  examples?: IExampleOfWord[];
+  numberOfReview?: number;
+  numberOfReviewCorrect?: number;
   lastTimeReview?: number;
+  tagIds?: string[];
 }
